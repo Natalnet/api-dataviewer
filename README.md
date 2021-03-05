@@ -26,7 +26,7 @@ Nossos dados são obtidos por meio da API da plataforma LoP.
 
 Hoje coletamos 5 tipos de dados. São eles
 
-* Detalhes das turmas e seus respectivos professores 
+* Turmas e seus professores 
 * Submissões
 * Questões
 * Listas
