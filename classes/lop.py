@@ -21,17 +21,24 @@ class Lop:
 
 
   def lop_consult(self, url):
+    #Instancia o urllib3
     http = urllib3.PoolManager()
+    #Realização uma requisição GET na url
     req = http.request('GET',url)
+    #Se for correta, os dados são convertidos em dataframe
     if req.status == 200:
       return pd.read_json(req.data, orient = 'RECORDS', encoding = 'utf-8').copy()
+    #Se não, retorna falso      
     else: 
       return False    
 
 
   #Modificação em relação a função original, aqui precisar passar por parâmetro o endpoint e a key    
   def lop_question(self, endpoint_question, key):
-    url_question = endpoint_question + key
+    #Data do primeiro registro
+    date = '2020-01-01'
+    #Formação da url
+    url_question = endpoint_question + key + '&createdAt=' + date
     df_lop_question = self.lop_consult(url_question)
     df_lop_question.rename(columns = {'id':'id_question','title':'question'}, inplace = True)
     return df_lop_question
@@ -135,18 +142,70 @@ class Lop:
     df_submission[['user','registration']] = df_submission['user'].str.split('-',expand=True)
     return df_submission
 
-  def lop_lists(self, endpoint_lists, data, key):#Data é a turma em dataframe
-    url_lists = endpoint_lists + data.iloc[0,0] + '/list/all?key=' + key
+  def lop_submission_db(self, endpoint_submissions, key, date):
+    #Date é o parâmetro que informa a´última data presente no banco.
+    #Importante: se você estiver usando essa função sem o uso do banco de dados, se 
+    #certifique de passar uma data como string
+    #Montagem da url
+    url_submission = endpoint_submissions + key + '&createdAt=' + date
+    #Realizando requisição
+    df_submission = self.lop_consult(url_submission)
+    #Renomeando pro padrão antigo
+    df_submission.rename(columns={'enrollment':'registration'}, inplace = True)
+    return df_submission
+
+  def lop_lists(self, endpoint_lists, key, data = pd.DataFrame()):#Data é a turma em dataframe
+    #Data do primeiro registro
+    date = '2020-01-01'
+    #Formação da url
+    url_lists = endpoint_lists + key + '&createdAt=' + date
+    #Consultando no LoP todas as listas cadastradas até hoje
     df_lop_lists = self.lop_consult(url_lists)
+    #Renomeando campos
+    df_lop_lists.rename(columns = {'id':'id_list','title':'list'}, inplace = True)
+    #Caso eu não queira listas de somente de uma turma    
+    if data.empty:      
+      return df_lop_lists
+    else: 
+      #Retornando apenas as listas cadastradas numa turma
+      return df_lop_lists.loc[df_lop_lists['id_class'].str.contains(data.iloc[0,0])].copy()
+  
+  def lop_lists_db(self, endpoint_lists, key, date):
+    #Onde date é data que vai servir de início na consulta
+    #Montagem da url
+    url_lists = endpoint_lists + key + '&createdAt=' + date
+    #Consultando as listas a partir da data 
+    df_lop_lists = self.lop_consult(url_lists)
+    #Renomeando campos
     df_lop_lists.rename(columns = {'id':'id_list','title':'list'}, inplace = True)
     return df_lop_lists
 
-  def lop_tests(self, endpoint_tests, data, key):#Data é a turma em dataframe
-    url_tests = endpoint_tests + data.iloc[0,0] + '/test/all?key=' + key
+  def lop_tests(self, endpoint_tests, key, data = pd.DataFrame()):#Data é a turma em dataframe
+    #Data do primeiro registro
+    date = '2020-01-01'
+    #Formação da url
+    url_tests = endpoint_tests + key + '&createdAt=' + date
+    #Consultando no LoP todas as provas cadastradas até hoje
     df_lop_tests = self.lop_consult(url_tests)
+    #Renomeando campos
+    df_lop_tests.rename(columns = {'id':'id_test','title':'test'}, inplace = True)
+    #Caso eu não queira provas de somente de uma turma    
+    if data.empty:
+      return df_lop_tests
+    else:
+      #Retornando apenas as provas cadastradas numa turma
+      return df_lop_tests.loc[df_lop_tests['id_class'].str.contains(data.iloc[0,0])].copy()
+
+  def lop_tests_db(self, endpoint_tests, key, date):
+    #Onde date é data que vai servir de início na consulta
+    #Montagem da url
+    url_tests = endpoint_tests + key + '&createdAt=' + date
+    #Consultando as provas a partir da data 
+    df_lop_tests = self.lop_consult(url_tests)
+    #Renomeando campos
     df_lop_tests.rename(columns = {'id':'id_test','title':'test'}, inplace = True)
     return df_lop_tests
-  
+    
   #--------------------------------------------------------------------------Função de Seleção de Dados-------------------------------------
   def select_questions(self, df_question_data,df_lop_lists,df_lop_tests):
     #Selecionando onde List não é NaN
