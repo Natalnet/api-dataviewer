@@ -15,13 +15,6 @@ class Config:
 		    'port'      : '5432',
 		    'password'  : 'root'
 
-		    ''' pronta pra utilizar variaveis de ambiente
-		    'host'      : os.environ['HOST_DB'],
-		    'database'  : os.environ['DATABASE_DB'],
-		    'user'      : os.environ['USER_DB'],
-		    'port'      : os.environ['PORT_DB'],
-		    'password'  : os.environ['PASSWORD_DB']
-		    '''
 		}
 		#'postgresql+psycopg2://usuario:senha@ip-servidor:porta/banco-de-dados'
 		self.connect_alchemy = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (
@@ -71,4 +64,16 @@ data={'cod_cliente': [5], 'nome_cliente': ['Rogerio'], 'sobrenome_cliente':['Cen
 df = pd.DataFrame(data)
 psql.insert_df(table = 'clientes', df=df)
 print(psql.search(table='clientes'))
+
+pronta pra utilizar variaveis de ambiente
+		    'host'      : os.environ['HOST_DB'],
+		    'database'  : os.environ['DATABASE_DB'],
+		    'user'      : os.environ['USER_DB'],
+		    'port'      : os.environ['PORT_DB'],
+		    'password'  : os.environ['PASSWORD_DB']
+
+
 '''
+
+
+		    
