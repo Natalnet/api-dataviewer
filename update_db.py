@@ -3,6 +3,7 @@ import urllib3
 import time
 import os
 import pandas as pd
+from datetime import datetime
 from classes.manage_lop import Lop
 from classes.manage_db import Manage_db
 
@@ -41,16 +42,18 @@ def update_questions():
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
 	key = os.environ['SECRET_KEY']
-	endpoint_question = os.environ['ENDPOINT_ALL_QUESTIONS']
+	endpoint_all_questions = os.environ['ENDPOINT_ALL_QUESTIONS']
 	#Consulta na API do LoP
-	df = lop.lop_question(endpoint_question, key)
+	df = lop.lop_question_db(endpoint_all_questions, key, date)
 	#Se a consulta não retornar nenhum dado então retorne
 	if df.empty:
 		return
 	#Se tiver algum dado
 	else:
-		#Tenta inserir no bd
 		try:
+			#Transformando os dados antes de inserir
+			df = lop.question_data(df_question = df)
+			#Tenta inserir no bd
 			psql.insert_df(table = name_table, df=df)
 			return
 		except Exception as e:
@@ -65,34 +68,77 @@ def update_teachers_classes():
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
 	key = os.environ['SECRET_KEY']
-	endpoint_classes = os.environ['ENDPOINT_ALL_TEACHERS_CLASSES']
-	#Montagem da url
-	url = endpoint_classes + key + '&createdAt=' + date
+	endpoint_all_classes = os.environ['ENDPOINT_ALL_CLASSES']
+	endpoint_teacher = os.environ['ENDPOINT_TEACHER'] 
 	#Consulta
-	df = query_lop_data(url)
-	#Tenta inserir no bd
-	try:
-		psql.insert_df(table = name_table, df=df)
+	df = lop.lop_class_db(endpoint_all_classes, endpoint_teacher, key, date)
+	#Se a consulta não retornar nenhum dado então retorne
+	if df.empty:
 		return
-	except Exception as e:
-		#Caso a inserção não de certo
-		#pensar em algo como enviar por email
-		print('Erro em inserir na tabela de professores', e)
-		return
+	#Se tiver algum dado
+	else:			
+		#Tenta inserir no bd
+		try:
+			psql.insert_df(table = name_table, df=df)
+			return
+		except Exception as e:
+			#Caso a inserção não de certo
+			#pensar em algo como enviar por email
+			print('Erro em inserir na tabela de professores', e)
+			return
 
 def update_submissions():
 	print('iniciando a coleta dos dados')
 	name_table = 'submissions'
 	#Coletando a data mais recente dessa tabela no bd
-	#date = verify_database(name_table)
-	date = '2021-03-11'
+	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	#key = os.environ['SECRET_KEY']
-	key = 'd41d8cd98f00b204e9800998ecf8427e'
-	#endpoint_submissions = os.environ['ENDPOINT_ALL_SUBMISSIONS']
-	endpoint_submissions = 'https://api.lop.natalnet.br:3001/dataScience/submission?key='
+	key = os.environ['SECRET_KEY']
+	endpoint_submissions = os.environ['ENDPOINT_ALL_SUBMISSIONS']
 	#Consulta
-	df = lop.lop_submission_db(endpoint_submissions, key, date)
+	#Se a data retornada for a data inicial, ou seja, o banco estiver vazio
+	#então, para não forçar demais a API do LoP faremos consultas em pequenos intervalos
+	#usando os campos date e o date_limit
+	if date == '2020-01-01':
+		#Coletando a data atual para usar como limite
+		actual_data = datetime.now()
+		#Convertendo para o formato americano de datas
+		actual_data = actual_data.strftime('%d-%m-%Y %H:%M:%S')
+		#Gerando intervalo de tempo de 3 dias em dataframes
+		df_dates = pd.date_range(start = date, end = actual_data, freq = '3D', closed = None)
+		#Criando um dataframe para armazenar as consultas
+		df = pd.DataFrame()
+		#Itera no intervalo das datas
+		for i in range (len(df_dates) - 1):
+			#Data de início
+  			date = str(df_dates[i])
+  			#Data limite
+  			date_limit = str(df_dates[i+1])
+  			#Flag, iterador que limita as 5 tentativas
+  			i = 1
+  			#Flag, indica que a consulta deu certo
+  			requisition_accepted = False
+  			while i != 5:
+  				try:
+  					#Consulta na API
+  					df_prov = lop.lop_submission_db(endpoint_all_submissions, key, date, date_limit)
+  					#Se funcionar o iterador recebe 5 que é o valor que sai do laço de tentativas
+  					i = 5
+  					#Mudamos o estado da flag pra mostrar que a consulta foi realizada com sucesso
+  					requisition_accepted = True  					
+  				except:
+  					#Incrementador que limita o número de tentativas
+  					i = i + 1
+  			#Se a consulta não foi aceita		
+  			if requisition_accepted == False:
+  				#***** local de futuro envio de email
+  				return
+  			else:		
+  				#Com a consulta realizada com sucesso, concatena
+  				df = df.append(df_prov, ignore_index = True)
+	#Se não, faz a consulta normalmente sem precisar impor limite de dia
+	else:
+		df = lop.lop_submission_db(endpoint_all_submissions, key, date)
 	#Removendo valores NaN e trocando por 0
 	df = df.fillna(0)
 	#Se a consulta não retornar nenhum dado então retorne
@@ -102,14 +148,13 @@ def update_submissions():
 	else:
 		#Tenta inserir no bd
 		try:
-			print('inserindo')
 			psql.insert_df(table = name_table, df=df)
 			return
 		except Exception as e:
 			#Caso a inserção não de certo
 			#pensar em algo como enviar por email
-			print('Erro em inserir na tabela de professores', e)
-			return
+			return 'Erro em inserir na tabela de professores ' + str(e)
+			
 
 def update_lists():
 	name_table = 'lists'
@@ -167,20 +212,18 @@ def update_db():
 		#para a próxima chamada de função
 		schedule.every().day.at('03:00').do(update_submissions)
 		time.sleep(60)
-		schedule.every().day.at('03:10').do(update_lists)
+		schedule.every().day.at('03:35').do(update_lists)
 		time.sleep(60)
-		schedule.every().day.at('03:15').do(update_tests)
+		schedule.every().day.at('03:45').do(update_tests)
 		time.sleep(60)
-		schedule.every().day.at('03:20').do(update_teachers_classes)
+		schedule.every().day.at('03:55').do(update_teachers_classes)
 		time.sleep(60)
-		schedule.every().day.at('03:25').do(update_questions)		
+		schedule.every().day.at('04:00').do(update_questions)		
 		time.sleep(60)
-	except:
-		print('Erro na função de update')
+	except Exception as e:
+	    return 'Error: update function' + str(e)
 
 while True:
-	update_dbd()
+	update_db()
 	schedule.run_pending()
 	time.sleep(1)
-
-#https://github.com/vilsonrodrigues/AutomacaoPython/blob/master/automacao_tarefas_schedule.py

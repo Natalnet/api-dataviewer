@@ -5,8 +5,8 @@ import pandas as pd
 import os
 import re
 from datetime import datetime
-from classes.lop import Lop
-from classes.psql import Manage_db
+from classes.manage_lop import Lop
+from classes.manage_db import Manage_db
 import urllib3
 import json
 import time
@@ -36,7 +36,7 @@ def home():
 @app.route('/get_class', methods = ['GET'])  
 def get_class():
   try:
-    df_class = psql.search(table='teacher', condition=None)
+    df_class = psql.search(table='teachers')
     json_classes = df_class.to_json(force_ascii = False, orient = 'records')
     return json_classes
   except:
@@ -45,7 +45,7 @@ def get_class():
 @app.route('/get_question_data', methods = ['GET'])  
 def get_question_data():
   try:
-    df_question_data = psql.search(table='question', condition=None)
+    df_question_data = psql.search(table='questions')
     json_questions = df_question_data.to_json(force_ascii = False, orient = 'records')
     return json_questions
   except:
@@ -55,21 +55,20 @@ def get_question_data():
 def get_graphs(id_class):
   #collect data
   data = pd.DataFrame([id_class], columns = ['id_class'])
-  key = lop.read_txt('key/key.txt')
-  endpoint_lists_tests = lop.read_txt('endpoints/endpoint_lists_tests.txt')
   try:
-    condition = "id_class = '" + data.iloc[0,0] + "'"
-    df_submission = psql.search(table='submission', condition=condition)
-    df_lop_lists = lop.lop_lists(endpoint_lists_tests, data, key)
-    df_lop_tests = lop.lop_tests(endpoint_lists_tests, data, key)    
-  except:
-    return 'Error: connection refused by server'
+    condition = "WHERE id_class = '" + data.iloc[0,0] + "'"
+    df_submission = psql.search(table='submissions', condition=condition)
+    df_lop_lists = psql.search(table='lists', condition=condition)
+    df_lop_tests = psql.search(table='tests', condition=condition) 
+    df_question_data = psql.search(table='questions')
+    df_class = psql.search(table='teachers_classes')
+  except Exception as e:
+    return 'Error: consult at database ' + str(e)
   #Se não tiver nenhuma submissão na turma
   if df_submission.empty:
     return 'Error: class without data'
-  df_question_data = psql.search(table='question', condition=None)
+  #Selecionando apenas as questões dessa turma
   df_questions_selected = lop.select_questions(df_question_data, df_lop_lists, df_lop_tests)
-  df_class = psql.search(table='teacher', condition=None)
   #Dados de lista
   try:
     #Dados de performance
