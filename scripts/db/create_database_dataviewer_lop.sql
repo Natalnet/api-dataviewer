@@ -33,15 +33,19 @@ CREATE TABLE IF NOT EXISTS questions (
 );
 
 CREATE TABLE IF NOT EXISTS teachers_classes(
-	"id_teacher" VARCHAR(36) NOT NULL, 
-	"id_class" VARCHAR(50) NOT NULL,
-	"name_teacher" VARCHAR(100) NOT NULL,
-	"name_class" VARCHAR(100) NOT NULL,  
+	"author" VARCHAR(50) NOT NULL, 
 	"code" VARCHAR(20) NOT NULL, 
-	"year" NUMERIC(5,1) NOT NULL, 
-	"semester" NUMERIC(2,1) NOT NULL, 
+	"createdAt" VARCHAR(25) NOT NULL,
+	"id_class" VARCHAR(50) NOT NULL, 
+	"id_teacher" VARCHAR(36) NOT NULL, 
+	"name_class" VARCHAR(100) NOT NULL,  
+	"semester" INT NOT NULL, 
+	"state" VARCHAR(200) NOT NULL,
 	"studentsCount" NUMERIC(5,1) NOT NULL,
-	"teachersCount" NUMERIC(3,1) NOT NULL 
+	"teachersCount" NUMERIC(3,1) NOT NULL, 
+	"year" NUMERIC INT NOT NULL, 
+	"email" VARCHAR(100) NOT NULL,
+	"name_teacher" VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS lists (
