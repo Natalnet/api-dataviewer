@@ -10,6 +10,8 @@ from classes.manage_db import Manage_db
 import urllib3
 import json
 import time
+import warnings
+warnings.filterwarnings("ignore")
 urllib3.disable_warnings()
 #import sklearn
 
@@ -33,25 +35,25 @@ def home():
     return 'REST API do DataView'
 
 #get classes
-@app.route('/get_class', methods = ['GET'])  
-def get_class():
+@app.route('/get_classes', methods = ['GET'])  
+def get_classes():
   try:
-    df_class = psql.search(table='teachers')
+    df_class = psql.search(table='teachers_classes')
     json_classes = df_class.to_json(force_ascii = False, orient = 'records')
     return json_classes
-  except:
-    return 'Error: reading df class'
+  except Exception as e:
+    raise ValueError('Error: reading table classes, ' + str(e))
 
-@app.route('/get_question_data', methods = ['GET'])  
-def get_question_data():
+@app.route('/get_questions', methods = ['GET'])  
+def get_questions():
   try:
     df_question_data = psql.search(table='questions')
     json_questions = df_question_data.to_json(force_ascii = False, orient = 'records')
     return json_questions
-  except:
-    return 'Error: reading df question data'
+  except Exception as e:
+    raise ValueError('Error: reading table questions, ' + str(e))
 
-@app.route('/get_graphs/<id_class>', methods = ['GET'])
+@app.route('/get_graphs_teacher/<id_class>', methods = ['GET'])
 def get_graphs(id_class):
   #collect data
   data = pd.DataFrame([id_class], columns = ['id_class'])
@@ -63,10 +65,10 @@ def get_graphs(id_class):
     df_question_data = psql.search(table='questions')
     df_class = psql.search(table='teachers_classes')
   except Exception as e:
-    return 'Error: consult at database ' + str(e)
+    raise ValueError('Error: consult at database. ' + str(e))
   #Se não tiver nenhuma submissão na turma
   if df_submission.empty:
-    return 'Error: class without data'
+    raise ValueError('Error: class without data')
   #Selecionando apenas as questões dessa turma
   df_questions_selected = lop.select_questions(df_question_data, df_lop_lists, df_lop_tests)
   #Dados de lista
@@ -87,8 +89,8 @@ def get_graphs(id_class):
     media_GTNL = lop.media_graph_performance_student_list_test(df_performance_list, df_questions_selected, 'list')
     media_GEDL = lop.media_graph_performance_student_difficulty_list_test(df_performance_difficulty_list, df_questions_selected)
     media_GEAL = lop.media_graph_performance_subject_list_test(df_performance_subject_list)
-  except:
-    return 'Error: generate data lists'
+  except Exception as e:
+    raise ValueError('Error: generate data lists. ' + str(e))
   #Se não tiver nenhuma prova cadastrada  
   if df_lop_tests.empty:
     #Insere vazio e não realiza a geração dos dados
@@ -106,7 +108,7 @@ def get_graphs(id_class):
       media_GEDP = json.dumps([{}])
       media_GEAP = json.dumps([{}])
     except:
-      return 'Error: insert empty in data tests'
+      raise ValueError('Error: insert empty in data tests')
   #Se existe provas cadastradas, gera os dados normalmente      
   else:
     try:
@@ -126,14 +128,14 @@ def get_graphs(id_class):
       media_GEDP = lop.media_graph_performance_student_difficulty_list_test(df_performance_difficulty_test, df_questions_selected)
       media_GEAP = lop.media_graph_performance_subject_list_test(df_performance_subject_test)
     except:
-      return 'Error: generate data tests'
+      raise ValueError('Error: generate data tests')
   #Histograma do dias gastos para concluir uma lista/assunto/dificuldade
   try:
     GTDGL = lop.graph_days_spent_list(df_submission)
     GTDGA = lop.graph_days_spent_subject(df_submission, df_questions_selected)
     GTDGD = lop.graph_days_spent_difficulty(df_submission, df_questions_selected)
   except:
-    return 'Error: generate graph days spent per list/subject/difficulty' 
+    raise ValueError('Error: generate graph days spent per list/subject/difficulty')
   #Transformando em um só json
   name_graphs = ['"GENL"','"GENP"','"GTDL"','"GTDP"','"GTAL"','"GTAP"',
                  '"GTNL"','"GTNP"','"GEDL"','"GEDP"','"GEAL"','"GEAP"',
