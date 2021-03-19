@@ -96,7 +96,8 @@ class Lop:
     df_tag_data.columns = columns_tags
     df_list_data = pd.merge(df_list_data, df_tag_data, on = 'question', how = 'outer')#.fillna(0)
     df_test_data = pd.merge(df_test_data, df_tag_data, on = 'question', how = 'outer')#.fillna(0)
-    return  pd.concat([df_list_data, df_test_data],axis=0).copy()
+    df = pd.concat([df_list_data, df_test_data],axis=0).copy()
+    return df.sort_values(by = 'createdAt')
 
 
   #Modificação em relação a função original, aqui precisar passar por parâmetro o endpoint e a key    
@@ -146,6 +147,10 @@ class Lop:
         row[1]['id_teacher'] = id_teacher
         #Concatena no novo dataframe a turma com o professor
         df = df.append(row[1])
+    #Se estiver vazio retorne para impedir que o código quebre
+    if df.empty or df == False:
+      df = pd.DataFrame()
+      return df
     df.drop(columns='teachers', inplace = True)
     #Formação da url de professor
     url_teacher = endpoint_teacher + key      
@@ -157,6 +162,8 @@ class Lop:
     #df_teacher = df_teacher[['id_teacher','name_teacher']]
     #Juntando no campo id_teacher a tabela das turmas com o nome do professor
     df = df.merge(df_teacher, on = 'id_teacher', how = 'inner')
+    #Ordenando pela data de criação da turma
+    df = df.sort_values(by = 'createdAt')
     return df
 
 
@@ -192,12 +199,26 @@ class Lop:
     #Se o campo não estiver vazio
     if date_limit != '':
       #Inseri a data que limita a consulta
-      url_all_submissions = url_all_submissions + '&untilAt' + date_limit
+      url_all_submissions = url_all_submissions + '&untilAt=' + date_limit
+      print(url_all_submissions)
     #Realizando requisição
     df_submissions = self.lop_consult(url_all_submissions)
-    #Os dados estão vindo em ordem decrescente necessita reeordenar
-    df_submissions = df_submissions.sort_values(by='createdAt')
-    return df_submissions
+    #Caso retorne vazio não faz sentido aplicar a ordenação, apenas retorna
+    try:
+      if df_submissions == False:
+        raise ValueError('Connection recused')
+    except:
+      pass
+    try:
+      if df_submissions.empty:
+        return df_submissions
+      else:
+        #Os dados estão vindo em ordem decrescente necessita reeordenar
+        df_submissions = df_submissions.sort_values(by='createdAt')
+        df_submissions.rename(columns={'enrollment':'registration'}, inplace = True)
+        return df_submissions
+    except:
+      return
 
   def lop_lists(self, endpoint_all_lists, key, data = pd.DataFrame()):#Data é a turma em dataframe
     #Data do primeiro registro
@@ -221,6 +242,12 @@ class Lop:
     url_lists = endpoint_all_lists + key + '&createdAt=' + date
     #Consultando as listas a partir da data 
     df_lop_lists = self.lop_consult(url_lists)
+    #Se vazio retorne
+    if df_lop_lists.empty or df_lop_lists == False:
+      df_lop_lists = pd.DataFrame()
+      return df_lop_lists
+    #Removendo o author da prova
+    df_lop_lists.drop(columns = 'author', inplace = True)
     #Renomeando campos
     df_lop_lists.rename(columns = {'id':'id_list','title':'list'}, inplace = True)
     #Os dados estão vindo em ordem decrescente necessita reeordenar
@@ -236,6 +263,8 @@ class Lop:
     df_lop_tests = self.lop_consult(url_tests)
     #Renomeando campos
     df_lop_tests.rename(columns = {'id':'id_test','title':'test'}, inplace = True)
+    #Removendo o author da prova
+    df_lop_tests.drop(columns = 'author', inplace = True)
     #Caso eu não queira provas de somente de uma turma    
     if data.empty:
       return df_lop_tests
@@ -249,6 +278,12 @@ class Lop:
     url_tests = endpoint_all_tests + key + '&createdAt=' + date
     #Consultando as provas a partir da data 
     df_lop_tests = self.lop_consult(url_tests)
+    #Se vazio retorne
+    if df_lop_tests.empty or df_lop_tests == False:
+      df_lop_tests = pd.DataFrame()
+      return df_lop_tests
+    #Removendo o author da prova
+    df_lop_tests.drop(columns = 'author', inplace = True)
     #Renomeando campos
     df_lop_tests.rename(columns = {'id':'id_test','title':'test'}, inplace = True)
     #Os dados estão vindo em ordem decrescente necessita reeordenar
@@ -311,8 +346,8 @@ class Lop:
       #Criando campo com a data
       df_lop_lists['dateList'] = df_lop_lists['createdAt'].dt.date
       #Merge
-      df_performance = pd.merge(df_performance, df_lop_lists.drop(columns = ['author','createdAt']), on='list')
-    
+      df_performance = pd.merge(df_performance, df_lop_lists.drop(columns = ['createdAt']), on='list')
+    #****************alterei tirando o author do drop
     elif listORtest == 'test':
       #Me traz as porcentagens maximas de acerto por questão
       df_performance = df_submission.groupby(['user','registration','test','question'])['hitPercentage'].max().reset_index()
@@ -346,7 +381,8 @@ class Lop:
       #Criando campo com a data
       df_lop_tests['dateTest'] = df_lop_tests['createdAt'].dt.date
       #Merge
-      df_performance = pd.merge(df_performance, df_lop_tests.drop(columns = ['author','createdAt']), on='test')            
+      df_performance = pd.merge(df_performance, df_lop_tests.drop(columns = ['createdAt']), on='test')  
+    #****************alterei tirando o author do drop          
     return df_performance
 
   def performance_difficulty_list_test(self, df_submission, df_questions_selected, listORtest = 'list'):
