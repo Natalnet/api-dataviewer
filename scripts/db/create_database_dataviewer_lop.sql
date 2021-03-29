@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS questions (
         "list" VARCHAR(100) NULL,
         "question" VARCHAR(200) NOT NULL,
         "difficulty" SMALLINT NULL,
+	"createdAt" VARCHAR(25) NULL,
         "tag1" VARCHAR(100) NULL, 
         "tag2" VARCHAR(100) NULL,
         "tag3" VARCHAR(100) NULL,
@@ -32,7 +33,7 @@ CREATE TABLE IF NOT EXISTS questions (
         "test" VARCHAR(100) NULL 
 );
 
-CREATE TABLE IF NOT EXISTS teachers_classes(
+CREATE TABLE IF NOT EXISTS teachers_classes (
 	"author" VARCHAR(50) NOT NULL, 
 	"code" VARCHAR(20) NOT NULL, 
 	"createdAt" VARCHAR(25) NOT NULL,
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS teachers_classes(
 	"state" VARCHAR(200) NOT NULL,
 	"studentsCount" NUMERIC(5,1) NOT NULL,
 	"teachersCount" NUMERIC(3,1) NOT NULL, 
-	"year" NUMERIC INT NOT NULL, 
+	"year" INT NOT NULL, 
 	"email" VARCHAR(100) NOT NULL,
 	"name_teacher" VARCHAR(100) NOT NULL
 );
@@ -53,7 +54,6 @@ CREATE TABLE IF NOT EXISTS lists (
 	"list" VARCHAR(100) NOT NULL, 
 	"shortTitle" VARCHAR(15) NOT NULL,
 	"id_class" VARCHAR(50) NOT NULL,
-	"author" VARCHAR(200) NOT NULL, 
 	"createdAt" VARCHAR(25) NOT NULL 
 );
 
@@ -62,6 +62,5 @@ CREATE TABLE IF NOT EXISTS tests (
 	"test" VARCHAR(100) NOT NULL, 
 	"shortTitle" VARCHAR(15) NOT NULL,
 	"id_class" VARCHAR(50) NOT NULL,
-	"author" VARCHAR(200) NOT NULL,
 	"createdAt" VARCHAR(25) NOT NULL  
 );
