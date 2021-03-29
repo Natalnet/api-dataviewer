@@ -16,15 +16,6 @@ from classes.manage_db import Manage_db
 lop = Lop()		
 psql = Manage_db()
 
-#Endpoints
-os.environ['ENDPOINT_ALL_CLASSES'] = 'https://api.lop.natalnet.br:3001/dataScience/class?key='
-os.environ['ENDPOINT_ALL_LISTS'] = 'https://api.lop.natalnet.br:3001/dataScience/list?key='
-os.environ['ENDPOINT_ALL_QUESTIONS'] = 'https://api.lop.natalnet.br:3001/dataScience/question?key='
-os.environ['ENDPOINT_ALL_SUBMISSIONS'] = 'https://api.lop.natalnet.br:3001/dataScience/submission?key='
-os.environ['ENDPOINT_ALL_TESTS'] = 'https://api.lop.natalnet.br:3001/dataScience/test?key='
-os.environ['ENDPOINT_TEACHER']  = 'https://api.lop.natalnet.br:3001/dataScience/teacher?key='
-os.environ['SECRET_KEY'] = 'd41d8cd98f00b204e9800998ecf8427e'
-
 
 #Essa função verifica a base de dados e definirá a data em que
 #será realizada a consulta dessa tabela. Caso a tabela esteja vazia
