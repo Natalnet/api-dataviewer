@@ -10,7 +10,7 @@ class Config:
 	def __init__(self):
 		self.conn_params_dic = {
 		    'host'      : 'localhost',
-		    'database'  : 'dataview_bd',
+		    'database'  : 'dataview_db',
 		    'user'      : 'postgres',
 		    'port'      : '5432',
 		    'password'  : 'root'
@@ -32,7 +32,7 @@ class Manage_db(Config):
 			#Estabelece a conexão com os dados da classe config
 			self.engine = sql.create_engine(self.connect_alchemy, convert_unicode=True, client_encoding='utf8')
 		except Exception as e:
-			print('Connection error', e)
+			raise ValueError('Error: failed to establish connection. ' + str(e))
 
 	def search(self, table, columns = '*', condition = None):
 		#Selecionamos sempre todas as colunas pois demandamos de todas elas
@@ -44,7 +44,7 @@ class Manage_db(Config):
 				query = f'SELECT {columns} FROM {table}' 
 			return pd.read_sql_query(query, self.engine)
 		except Exception as e:
-			print('Query error', e)
+			raise ValueError('Error: consult recused. ' + str(e))
 
 	def insert_df(self, table, df):
 		try:
@@ -56,15 +56,9 @@ class Manage_db(Config):
 				if_exists = 'append'
 				)
 		except Exception as e:
-			print('Insert error', e)
+			raise ValueError('Error: inserting dataframe. ' + str(e))
 
 '''	
-psql = Manage_db()
-data={'cod_cliente': [5], 'nome_cliente': ['Rogerio'], 'sobrenome_cliente':['Ceni']}
-df = pd.DataFrame(data)
-psql.insert_df(table = 'clientes', df=df)
-print(psql.search(table='clientes'))
-
 pronta pra utilizar variaveis de ambiente
 		    'host'      : os.environ['HOST_DB'],
 		    'database'  : os.environ['DATABASE_DB'],
