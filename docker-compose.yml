@@ -1,0 +1,79 @@
+version: "3.7"
+
+
+services:
+
+
+  dataviewerapi:
+    build:
+      context: . # o dockerfile por default coloca a pasta raiz como sendo a mesma pasta q ele tá, e não consegue acessar pastas superiores. definindo o context como raiz, conseguimos ter acesso a todas as pastas do projeto.
+      dockerfile: ./container-dataviewerapi/Dockerfile #havendo definido o context, agora será necessário definir onde está o dockerfile necessário
+    container_name: dataviewerapi-container
+    restart: always # caso o container quebre, iniciar novamente
+    depends_on:
+      - sqldb # inicializar após a inicialização do sqldb
+      #sqldb: # acho q isso n vai ser necessário
+        #condition: service_healthy
+    ports:
+      - "5000:5000" # padrão do flask
+    links:
+      - sqldb
+    networks:
+      - backend
+      
+      
+  sqldb:
+    image: postgres:13.2-alpine
+    hostname: postgres
+    container_name: sqldb-container
+    restart: always
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root #${POSTGRES_PASSWORD} # isso é provisório, qnd o projeto ja estiver tudo ok a gente vai inserir essa senha na hora de dar o docker-compose up
+      POSTGRES_DB: dataviewer_db
+    volumes:
+      - ./scripts/db/create_database_dataviewer_lop.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_lop.sql
+      - ./container-sqldb/data:/var/lib/postgresql/data
+    networks:
+      - backend
+    #healthcheck: # acho q isso n vai ser necessário
+    #  test: ["CMD-SHELL", "pg_isready -U postgres"] 
+    #  interval: 5s
+    #  timeout: 5s
+    #  retries: 5
+      
+      
+  updatedb:
+    build:
+      context: . 
+      dockerfile: ./container-updatedb/Dockerfile
+    container_name: updatedb-container
+    restart: always
+    depends_on:
+      - sqldb
+      #sqldb:# acho q isso n vai ser necessário
+      #  condition: service_healthy
+    ports:
+      - "3000:3000" # coloquei essa porta pq ja tinha a 5000 do dataviewerapi
+    environment:
+      #SECRET_KEY: ${SECRET_KEY}
+      ENDPOINT_ALL_CLASSES: https://api.lop.natalnet.br:3001/dataScience/class?key=
+      ENDPOINT_ALL_TEACHERS_CLASSES: https://api.lop.natalnet.br:3001/dataScience/class?key= # n sei pra q isso é usado
+      ENDPOINT_ALL_LISTS: https://api.lop.natalnet.br:3001/dataScience/list?key=
+      ENDPOINT_ALL_QUESTIONS: https://api.lop.natalnet.br:3001/dataScience/question?key=
+      ENDPOINT_ALL_SUBMISSIONS: https://api.lop.natalnet.br:3001/dataScience/submission?key=
+      ENDPOINT_ALL_TESTS: https://api.lop.natalnet.br:3001/dataScience/test?key=
+      ENDPOINT_TEACHER: 'https://api.lop.natalnet.br:3001/dataScience/teacher?key='
+    links:
+      - sqldb
+    networks:
+      - backend
+    #command: ["./scripts/db/wait-for-it.sh", # acho q isso n vai ser necessário
+      
+networks:
+  backend:
+    driver: "bridge"
