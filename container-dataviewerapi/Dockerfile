@@ -21,5 +21,5 @@ RUN pip install -r requirements.txt
 
 # Run app.py when the container launches
 #COPY ./handler_db.py /app
-COPY ./container-dataviewerapi/handler_db.py /app
-CMD python handler_db.py
+COPY ./container-dataviewerapi/handler_lop.py /app
+CMD python handler_lop.py
