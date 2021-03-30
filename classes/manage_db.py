@@ -9,8 +9,8 @@ import os
 class Config:
 	def __init__(self):
 		self.conn_params_dic = {
-		    'host'      : 'localhost',
-		    'database'  : 'dataview_db',
+		    'host'      : 'sqldb', # aqui é o nome do container ao qual ele se conecta
+		    'database'  : 'dataviewer_db',
 		    'user'      : 'postgres',
 		    'port'      : '5432',
 		    'password'  : 'root'
