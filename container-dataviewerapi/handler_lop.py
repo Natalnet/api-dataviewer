@@ -17,7 +17,7 @@ urllib3.disable_warnings()
 
 #Instanciando classes
 lop = Lop()
-psql = Manage_db()
+psql = Manage_db(database = 'dataviewer_db')
 
 #Instanciate Flask
 app = Flask(__name__)
