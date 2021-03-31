@@ -9,7 +9,7 @@ import os
 class Config:
 	def __init__(self, database):
 		self.conn_params_dic = {
-		    'host'      : 'localhost',
+		    'host'      : 'sqldb',
 		    'database'  :  database,
 		    'user'      : 'postgres',
 		    'port'      : '5432',
