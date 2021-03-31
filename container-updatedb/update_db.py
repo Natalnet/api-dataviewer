@@ -14,7 +14,7 @@ from classes.manage_db import Manage_db
 
 #Instanciando as classes
 lop = Lop()		
-psql = Manage_db(database = 'dataview_bd')
+psql = Manage_db(database = 'dataviewer_bd')
 
 #Essa função verifica a base de dados e definirá a data em que
 #será realizada a consulta dessa tabela. Caso a tabela esteja vazia
