@@ -7,10 +7,10 @@ import os
 
 #Classe com parâmetros de configuração da conexão
 class Config:
-	def __init__(self):
+	def __init__(self, database):
 		self.conn_params_dic = {
-		    'host'      : 'sqldb', # aqui é o nome do container ao qual ele se conecta
-		    'database'  : 'dataviewer_db',
+		    'host'      : 'localhost',
+		    'database'  :  database,
 		    'user'      : 'postgres',
 		    'port'      : '5432',
 		    'password'  : 'root'
@@ -26,8 +26,8 @@ class Config:
 		)	
 
 class Manage_db(Config):
-	def __init__(self):
-		Config.__init__(self)
+	def __init__(self, database):
+		Config.__init__(self, database)
 		try:
 			#Estabelece a conexão com os dados da classe config
 			self.engine = sql.create_engine(self.connect_alchemy, convert_unicode=True, client_encoding='utf8')

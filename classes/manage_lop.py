@@ -34,7 +34,6 @@ class Lop:
     else: 
       return False    
 
-
   #Modificação em relação a função original, aqui precisar passar por parâmetro o endpoint e a key    
   def lop_question(self, endpoint_question, key):
     #Data do primeiro registro
@@ -147,24 +146,31 @@ class Lop:
         row[1]['id_teacher'] = id_teacher
         #Concatena no novo dataframe a turma com o professor
         df = df.append(row[1])
-    #Se estiver vazio retorne para impedir que o código quebre
-    if df.empty or df == False:
-      df = pd.DataFrame()
-      return df
-    df.drop(columns='teachers', inplace = True)
-    #Formação da url de professor
-    url_teacher = endpoint_teacher + key      
-    #Coletando na rota de professores o nome do professor
-    df_teacher = self.lop_consult(url_teacher)
-    #Renomeando
-    df_teacher.rename(columns={'id':'id_teacher','name':'name_teacher'}, inplace = True)
-    #Pegando apenas os campos de interesse
-    #df_teacher = df_teacher[['id_teacher','name_teacher']]
-    #Juntando no campo id_teacher a tabela das turmas com o nome do professor
-    df = df.merge(df_teacher, on = 'id_teacher', how = 'inner')
-    #Ordenando pela data de criação da turma
-    df = df.sort_values(by = 'createdAt')
-    return df
+    try:
+      if df == False:
+        raise ValueError('Connection recused')
+    except:
+      pass
+    try:
+      if df.empty:
+        return df
+      else:
+        df.drop(columns='teachers', inplace = True)
+        #Formação da url de professor
+        url_teacher = endpoint_teacher + key      
+        #Coletando na rota de professores o nome do professor
+        df_teacher = self.lop_consult(url_teacher)
+        #Renomeando
+        df_teacher.rename(columns={'id':'id_teacher','name':'name_teacher'}, inplace = True)
+        #Pegando apenas os campos de interesse
+        #df_teacher = df_teacher[['id_teacher','name_teacher']]
+        #Juntando no campo id_teacher a tabela das turmas com o nome do professor
+        df = df.merge(df_teacher, on = 'id_teacher', how = 'inner')
+        #Ordenando pela data de criação da turma
+        df = df.sort_values(by = 'createdAt')
+        return df
+    except:
+      pass
 
 
   #Modificação em relação a função original, aqui precisar passar por parâmetro o endpoint e a key  
@@ -242,17 +248,24 @@ class Lop:
     url_lists = endpoint_all_lists + key + '&createdAt=' + date
     #Consultando as listas a partir da data 
     df_lop_lists = self.lop_consult(url_lists)
-    #Se vazio retorne
-    if df_lop_lists.empty or df_lop_lists == False:
-      df_lop_lists = pd.DataFrame()
-      return df_lop_lists
-    #Removendo o author da prova
-    df_lop_lists.drop(columns = 'author', inplace = True)
-    #Renomeando campos
-    df_lop_lists.rename(columns = {'id':'id_list','title':'list'}, inplace = True)
-    #Os dados estão vindo em ordem decrescente necessita reeordenar
-    df_lop_lists = df_lop_lists.sort_values(by='createdAt')
-    return df_lop_lists
+    try:
+      if df_lop_lists == False:
+        raise ValueError('Connection recused')
+    except:
+      pass
+    try:
+      if df_lop_lists.empty:
+        return df_lop_lists
+      else:
+        #Removendo o author da prova
+        df_lop_lists.drop(columns = 'author', inplace = True)
+        #Renomeando campos
+        df_lop_lists.rename(columns = {'id':'id_list','title':'list'}, inplace = True)
+        #Os dados estão vindo em ordem decrescente necessita reeordenar
+        df_lop_lists = df_lop_lists.sort_values(by='createdAt')
+        return df_lop_lists
+    except:
+      return
 
   def lop_tests(self, endpoint_tests, key, data = pd.DataFrame()):#Data é a turma em dataframe
     #Data do primeiro registro
@@ -278,18 +291,25 @@ class Lop:
     url_tests = endpoint_all_tests + key + '&createdAt=' + date
     #Consultando as provas a partir da data 
     df_lop_tests = self.lop_consult(url_tests)
-    #Se vazio retorne
-    if df_lop_tests.empty or df_lop_tests == False:
-      df_lop_tests = pd.DataFrame()
-      return df_lop_tests
-    #Removendo o author da prova
-    df_lop_tests.drop(columns = 'author', inplace = True)
-    #Renomeando campos
-    df_lop_tests.rename(columns = {'id':'id_test','title':'test'}, inplace = True)
-    #Os dados estão vindo em ordem decrescente necessita reeordenar
-    df_lop_tests = df_lop_tests.sort_values(by='createdAt')
-    return df_lop_tests
-    
+    try:
+      if df_lop_tests == False:
+        raise ValueError('Connection recused')
+    except:
+      pass
+    try:
+      if df_lop_tests.empty:
+        return df_lop_tests  
+      else:
+        #Removendo o author da prova
+        df_lop_tests.drop(columns = 'author', inplace = True)
+        #Renomeando campos
+        df_lop_tests.rename(columns = {'id':'id_test','title':'test'}, inplace = True)
+        #Os dados estão vindo em ordem decrescente necessita reeordenar
+        df_lop_tests = df_lop_tests.sort_values(by='createdAt')
+        return df_lop_tests
+    except:
+      return
+        
   #--------------------------------------------------------------------------Função de Seleção de Dados-------------------------------------
   def select_questions(self, df_question_data,df_lop_lists,df_lop_tests):
     #Selecionando onde List não é NaN
@@ -381,8 +401,7 @@ class Lop:
       #Criando campo com a data
       df_lop_tests['dateTest'] = df_lop_tests['createdAt'].dt.date
       #Merge
-      df_performance = pd.merge(df_performance, df_lop_tests.drop(columns = ['createdAt']), on='test')  
-    #****************alterei tirando o author do drop          
+      df_performance = pd.merge(df_performance, df_lop_tests.drop(columns = ['createdAt']), on='test')      
     return df_performance
 
   def performance_difficulty_list_test(self, df_submission, df_questions_selected, listORtest = 'list'):
