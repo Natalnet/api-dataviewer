@@ -62,7 +62,6 @@ services:
     environment:
       #SECRET_KEY: ${SECRET_KEY}
       ENDPOINT_ALL_CLASSES: https://api.lop.natalnet.br:3001/dataScience/class?key=
-      ENDPOINT_ALL_TEACHERS_CLASSES: https://api.lop.natalnet.br:3001/dataScience/class?key= # n sei pra q isso é usado
       ENDPOINT_ALL_LISTS: https://api.lop.natalnet.br:3001/dataScience/list?key=
       ENDPOINT_ALL_QUESTIONS: https://api.lop.natalnet.br:3001/dataScience/question?key=
       ENDPOINT_ALL_SUBMISSIONS: https://api.lop.natalnet.br:3001/dataScience/submission?key=
