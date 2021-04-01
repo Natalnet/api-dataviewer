@@ -49,11 +49,8 @@ class Authentication:
 	#e em seguida verifica se a senha que está no banco de dados corresponde a senha
 	#que veio no json
 	def authenticate_user(self, username_json, password_json):
-		print(username_json)
+		#Verifica a existência do usuário
 		query = self.verify_user(username_json)
-		print('resultado da query')
-		print(query)
-		print('fim do resultado')
 		#Se o retorno for vazio então o usuário não existe no banco
 		if query.empty == True:
 			raise ValueError('Error: User does not exist.')
