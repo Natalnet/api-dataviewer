@@ -1,52 +1,82 @@
+# O docker-compose.yml consiste em um programa que define as condições de criação e execução de múltiplas imagens pertencentes a um mesmo projeto.
+# As imagens podem tanto ser criadas exclusivamente pelo próprio docker-compose (ao baixar uma imagem, pelo parâmetro 'image'), como podem ser criadas em conjunto
+# com o dockerfile, sendo este utilizado quando desejamos criar nossa própria imagem de forma mais maleável (mesmo que para isso precisemos utilizar outra imagem como base)
+
+# Observação: uma vez que determinado parâmetro tenha sido comentado, ele só será comentado novamente caso apresente alguma particularidade.
+
+# Versão do docker-compose a ser utilizada
 version: "3.7"
 
-
+# Define os serviços do projeto (containers a serem criados)
 services:
 
-
+  # Aqui definiremos as condições de inicialização do serviço de api em flask do dataviewer: 
   dataviewerapi:
+    # O parâmetro build é utilizado quando desejamos construir uma imagem com base em um dockerfile
     build:
-      context: . # o dockerfile por default coloca a pasta raiz como sendo a mesma pasta q ele tá, e não consegue acessar pastas superiores. definindo o context como raiz, conseguimos ter acesso a todas as pastas do projeto.
-      dockerfile: ./container-dataviewerapi/Dockerfile #havendo definido o context, agora será necessário definir onde está o dockerfile necessário
+      # o dockerfile por default define como pasta raiz a mesma em que ele está localizado. Desse modo, por padrão, ele não consegue acessar pastas superiores.
+      # Para contornar esse problema, definimos como nova pasta default a pasta raiz do projeto através do comando abaixo.
+      context: . 
+      # Define a localização do dockerfile relativo a este container
+      dockerfile: ./container-dataviewerapi/Dockerfile 
+    # Define o nome do container (a forma como ele será visualizado pelo docker, uma vez que o container for criado) 
     container_name: dataviewerapi-container
-    restart: always # caso o container quebre, iniciar novamente
+    # Define o comportamento do container caso ele venha a cair. Neste caso, definimos que sempre que ele cair, irá ser inicializado novamente
+    restart: always
+    # Define que só irá ser inicializado após o serviço sqldb ser inicalizado (isso não quer dizer que ele espera o container sqldb ser totalmente construído)
     depends_on:
-      - sqldb # inicializar após a inicialização do sqldb
-      #sqldb: # acho q isso n vai ser necessário
+      - sqldb
+    # Os comentários abaixo eram para inicializar o container desta api apenas quando o container do sqldb estivesse totalmente construído. Contudo, por enquanto estamos deixando isso de lado
+      #sqldb: 
         #condition: service_healthy
+    # Define qual porta local estará associado a qual porta do container (Porta local:porta exposta pelo container)
     ports:
-      - "5000:5000" # padrão do flask
+      # Como padrão do Flask, associamos a porta local 5000 como sendo a porta 5000 do container
+      - "5000:5000"
+    # Não sei exatamente como isso funciona, nem se isso é necessário, mas estamos linkando a todos os serviços que será necessário uma comunicação direta
     links:
       - sqldb
+    # Define a qual network o serviço irá se conectar (por padrão, o docker-compose já cria uma network sem precisar especificar, mas pode ser que mais pra frente seja necessário por conta do nginx)
     networks:
       - backend
       
-      
+  # Aqui definiremos as condições de inicialização do serviço de banco de dados do lop no dataviewer: 
   sqldb:
+    # Esse serviço não contem o parâmetro build, pois utilizamos diretamente uma imagem pré-existente, fazendo as configurações pertinentes no próprio docker-compose
     image: postgres:13.2-alpine
+    # Parâmetro encontrado na documentação do postgres p/ o docker
     hostname: postgres
     container_name: sqldb-container
     restart: always
+    # A porta padrão do postgres é a 5432
     ports:
       - "5432:5432"
+    # talvez essa linha não seja necessária, mas garante que a porta 5432 está exposta para todos os containers
     expose:
       - 5432
+    # Define variáveis de ambientes para o container, as quais serão utilizadas para autenticar o usuário. Todas estão na documentação do postgres para o docker
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root #${POSTGRES_PASSWORD} # isso é provisório, qnd o projeto ja estiver tudo ok a gente vai inserir essa senha na hora de dar o docker-compose up
+      # Define o nome do database a se conectar
       POSTGRES_DB: dataviewer_db
+    # O parâmetro volumes se relaciona a onde os dados armazenados no container estarão localizados fisicamente, na máquina local. Obs: todas são informações 
+    # Sintaxe: - (local:virtual)
     volumes:
+      # Define onde o script de inicialização das tabelas está localizado.
       - ./scripts/db/create_database_dataviewer_lop.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_lop.sql
+      # Onde os dados do banco de dados estarão armazenados. Essa pasta não existe no repositório, mas ela é criada na máquina local.
       - ./container-sqldb/data:/var/lib/postgresql/data
     networks:
       - backend
-    #healthcheck: # acho q isso n vai ser necessário
+    # Os comentários abaixo eram para que outros serviços pudessem verificar quando este container estivesse 100% construído, como condição de inicialização de outros serviços. Por enquanto, não está sendo utilizado
+    # healthcheck: # acho q isso n vai ser necessário
     #  test: ["CMD-SHELL", "pg_isready -U postgres"] 
     #  interval: 5s
     #  timeout: 5s
     #  retries: 5
       
-      
+  # Aqui definiremos as condições de inicialização do serviço de atualização do nosso banco de dados do lop no dataviewer
   updatedb:
     build:
       context: . 
@@ -55,24 +85,29 @@ services:
     restart: always
     depends_on:
       - sqldb
-      #sqldb:# acho q isso n vai ser necessário
-      #  condition: service_healthy
+    # Os comentários abaixo eram para inicializar o container desta api apenas quando o container do sqldb estivesse totalmente construído. Contudo, por enquanto estamos deixando isso de lado
+      #sqldb: 
+        #condition: service_healthy
     ports:
-      - "3000:3000" # coloquei essa porta pq ja tinha a 5000 do dataviewerapi
+      - "3000:3000"
+    # Variáveis locais as quais serão utilizadas por este serviço. 
     environment:
+      # O SECRET_KEY não foi especificado pois é conteúdo sensível, e deve ser inserido previamente na máquina
       #SECRET_KEY: ${SECRET_KEY}
       ENDPOINT_ALL_CLASSES: https://api.lop.natalnet.br:3001/dataScience/class?key=
       ENDPOINT_ALL_LISTS: https://api.lop.natalnet.br:3001/dataScience/list?key=
       ENDPOINT_ALL_QUESTIONS: https://api.lop.natalnet.br:3001/dataScience/question?key=
       ENDPOINT_ALL_SUBMISSIONS: https://api.lop.natalnet.br:3001/dataScience/submission?key=
       ENDPOINT_ALL_TESTS: https://api.lop.natalnet.br:3001/dataScience/test?key=
-      ENDPOINT_TEACHER: 'https://api.lop.natalnet.br:3001/dataScience/teacher?key='
+      ENDPOINT_TEACHER: https://api.lop.natalnet.br:3001/dataScience/teacher?key=
     links:
       - sqldb
     networks:
       - backend
-    #command: ["./scripts/db/wait-for-it.sh", # acho q isso n vai ser necessário
-      
+    # O comando abaixo não será utilizado, estamos guardando por enquanto apenas para termos uma alternativa de onde recorrer caso seja necessário aguardar o container do banco de dados estar 100% construído
+    #command: ["./scripts/db/wait-for-it.sh", 
+
+# Cria a network a ser utilizada no projeto
 networks:
   backend:
     driver: "bridge"
