@@ -11,7 +11,7 @@ Os usuários da API podem fazer:
 * Acessar as rotas que geram dados
 
 Os usuários do frontend, professores e alunos podem:
-* Solicitar por meio do frontend os seus dados Do LoP
+* Solicitar por meio do frontend os seus dados do LoP
 
 ## Funcionamento da API
 
