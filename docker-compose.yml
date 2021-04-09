@@ -140,8 +140,9 @@ services:
       - backend
       
   nginx:
-    context: .
-    build: ./container-nginx/Dockerfile
+    build:
+      context: .
+      dockerfile: ./container-nginx/Dockerfile
     container_name: nginx-container
     restart: always
     ports:
