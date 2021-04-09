@@ -14,7 +14,7 @@ urllib3.disable_warnings()
 
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_users', port = '5431', host = os.environ['NAME_CONTAINER_USERS_DB'])
+psql = Manage_db(database = 'dataviewer_users', port = '5431', host = 'db-users')
 email = Email()
 
 #Instanciate Flask
@@ -234,6 +234,7 @@ def update_user():
 		auth.authenticate_user(user_api, password_user_api)
 	except Exception as e:
 	    raise ValueError(str(e))
+	new_password = auth.generate_hash(password)
 	try:
 		auth.update_user(table = table, 
 						 column_new_data = 'password',
@@ -242,7 +243,7 @@ def update_user():
 						 data_reference = new_password)
 		return 'Successful update user.'
 	except Exception as e:
-	    raise ValueError('Error: update password ' + str(e))
+	    raise ValueError('Error: update password. ' + str(e))
 
 def main():
  	port = int(os.environ.get('PORT', 5050))
