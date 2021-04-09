@@ -18,8 +18,8 @@ urllib3.disable_warnings()
 
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = os.environ['NAME_CONTAINER_LOP_DB'])
-psql_users = Manage_db(database = 'dataviewer_users', port = '5431', host = os.environ['NAME_CONTAINER_USERS_DB'])
+psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop')
+psql_users = Manage_db(database = 'dataviewer_users', port = '5431', host = 'db-users')
 
 #Instanciate Flask
 app = Flask(__name__)
