@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 import os
 
 class Email:
-    def __init__(self, email_adress, password):
+    def __init__(self):
         '''
         O iniciador da classe recebe como parâmetros de entrada um email e uma senha, referente ao email.
         Ele também faz a conexão com os servidores da google e seta a porta.
@@ -14,9 +14,9 @@ class Email:
         self.__email_adress = os.environ['EMAIL_ADRESS']
         self.__password = os.environ['PASSWORD_EMAIL']
 
-    def send_email(self, message, message_subject):
+    def send_email(self, message, subject):
         '''
-        O método send_email() recebe como parâmetro uma mensagem e um título, message_subject, ele faz a conexão
+        O método send_email() recebe como parâmetro uma mensagem e um título, subject, ele faz a conexão
         com o servidor e logo após ele loga na sua conta de email. Detalhe que vale ressaltar, as contas do google 
         tem uma proteção de não aceitar acesso de aplicativos menos seguros como por exemplo o google colab, por isso
         é necessário autorizar que o seu email faça login por meio de aplicativos menos seguros a partir deste link:
@@ -25,7 +25,7 @@ class Email:
         servidor.
         '''
         message = MIMEText(message)
-        message['subject'] = message_subject
+        message['subject'] = subject
 
         message['from'] = self.__email_adress
         message['to'] = self.__email_adress

@@ -2,7 +2,7 @@ from passlib.hash import pbkdf2_sha512
 from classes.manage_db import Manage_db
 import pandas as pd
 
-psql = Manage_db(database = 'dataviewer_users')
+psql = Manage_db(database = 'dataviewer_users', port = '5431', host = os.environ['NAME_CONTAINER_USERS_DB'])
 
 class Authentication:
 
@@ -62,6 +62,16 @@ class Authentication:
 				return
 			else:
 				raise ValueError('Error: different passwords. '  + str(e))
+
+	#Função para atualizar a senha do usuário a partir do username dele
+	#Onde os campos com _reference são onde ele vai fazer a busca
+	#e os com new são os novos dados
+	def update_user(self, table, column_new_data, column_reference, new_data, data_reference):
+		new_data = "'" + new_data + "'"
+		data_reference = "'" + data_reference + "'"
+		#Atualiza senha do usuário
+		psql.update(table, column_new_data, column_reference, new_data, data_reference)
+		return
 		
 '''
 auth = Authentication(table = 'users')
