@@ -35,7 +35,6 @@ services:
       POSTGRES_DB: dataviewer_db
     volumes:
       - ./scripts/db/create_database_dataviewer_lop.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_lop.sql
-      - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
       - ./container-sqldb/data:/var/lib/postgresql/data
     networks:
       - backend
@@ -79,14 +78,33 @@ services:
     container_name: dataviewerusers_container # define o nome do container
     restart: always # reinicia o container sempre 
     depends_on: 
-      - sqldb # especifica que o container 
+      - usersdb # especifica que o container usersdb precisa ser inicializado antes
     ports:
       - "5050:5050"
     links:
-      - sqldb
+      - usersdb
     networks:
       - backend
- 
+
+  usersdb:
+    image: postgres:13.2-alpine
+    hostname: postgres
+    container_name: dataviewer_users-container
+    restart: always
+    ports:
+      - "5433:5433"
+    expose:
+      - 5433
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root 
+      POSTGRES_DB: dataviewer_users # nome do db de usuários cadastrados
+    volumes:
+      - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
+      - ./container-usersdb/data_users:/var/lib/postgresql/data_users
+    networks:
+      - backend
+
 networks:
   backend:
     driver: "bridge"
