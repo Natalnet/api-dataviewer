@@ -138,7 +138,14 @@ services:
       - ./container-usersdb/data_users:/var/lib/postgresql/data_users
     networks:
       - backend
-
+      
+  nginx:
+    context: .
+    build: ./container-nginx/Dockerfile
+    container_name: nginx-container
+    restart: always
+    ports:
+      - "80:80"
   
 
 # Cria a network a ser utilizada no projeto
