@@ -13,7 +13,7 @@ urllib3.disable_warnings()
 
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_users', host = 'localhost')
+psql = Manage_db(database = 'dataviewer_users')
 
 #Variavel de teste
 os.environ['PASSWORD_MASTER_USER'] = 'mymasterpassword'

@@ -2,7 +2,7 @@ from passlib.hash import pbkdf2_sha512
 from classes.manage_db import Manage_db
 import pandas as pd
 
-psql = Manage_db(database = 'dataviewer_users', host = 'localhost')
+psql = Manage_db(database = 'dataviewer_users')
 
 class Authentication:
 
