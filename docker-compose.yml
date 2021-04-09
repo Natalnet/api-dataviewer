@@ -2,25 +2,25 @@ version: "3.7"
 
 
 services:
-  dataviewerapi:
+  api-lop:
     build:
       context: . # o dockerfile por default coloca a pasta raiz como sendo a mesma pasta q ele tá, e não consegue acessar pastas superiores. definindo o context como raiz, conseguimos ter acesso a todas as pastas do projeto.
       dockerfile: ./container-dataviewerapi/Dockerfile #havendo definido o context, agora será necessário definir onde está o dockerfile necessário
     container_name: dataviewerapi-container
     restart: always # caso o container quebre, iniciar novamente
     depends_on:
-      - sqldb # inicializar após a inicialização do sqldb
+      - db-lop # inicializar após a inicialização do sqldb
       #sqldb: # acho q isso n vai ser necessário
         #condition: service_healthy
     ports:
       - "5000:5000" # padrão do flask
     links:
-      - sqldb
+      - db-lop
     networks:
       - backend
       
       
-  sqldb:
+  db-lop:
     image: postgres:13.2-alpine
     hostname: postgres
     container_name: sqldb-container
@@ -45,14 +45,14 @@ services:
     #  retries: 5
       
       
-  updatedb:
+  update-db-lop:
     build:
       context: . 
       dockerfile: ./container-updatedb/Dockerfile
     container_name: updatedb-container
     restart: always
     depends_on:
-      - sqldb
+      - db-lop
       #sqldb:# acho q isso n vai ser necessário
       #  condition: service_healthy
     ports:
@@ -66,35 +66,35 @@ services:
       ENDPOINT_ALL_TESTS: https://api.lop.natalnet.br:3001/dataScience/test?key=
       ENDPOINT_TEACHER: 'https://api.lop.natalnet.br:3001/dataScience/teacher?key='
     links:
-      - sqldb
+      - db-lop
     networks:
       - backend
     #command: ["./scripts/db/wait-for-it.sh", # acho q isso n vai ser necessário
     
-  usersapi:
+  api-users:
     build:
       context: . #na construção deste container, essa linha permite que o dockerfile se localize através da pasta principal todos os diretórios
       dockerfile: ./container-api-users/Dockerfile # por ser definido um contexto diferente do habitual, é necessário especificar onde está o dockerifle de construção deste container
     container_name: dataviewerusers_container # define o nome do container
     restart: always # reinicia o container sempre 
     depends_on: 
-      - usersdb # especifica que o container usersdb precisa ser inicializado antes
+      - db-users # especifica que o container usersdb precisa ser inicializado antes
     ports:
       - "5050:5050"
     links:
-      - usersdb
+      - db-users
     networks:
       - backend
 
-  usersdb:
+  db-users:
     image: postgres:13.2-alpine
     hostname: postgres
     container_name: dataviewer_users-container
     restart: always
     ports:
-      - "5433:5433"
+      - "5431:5431"
     expose:
-      - 5433
+      - 5431
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root 
