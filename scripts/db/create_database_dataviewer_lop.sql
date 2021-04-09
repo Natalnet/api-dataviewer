@@ -1,7 +1,7 @@
-SELECT 'CREATE DATABASE dataviewer_db'
-WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'dataviewer_db')\gexec
+SELECT 'CREATE DATABASE dataviewer_lop'
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'dataviewer_lop')\gexec
 	
-\c dataviewer_db;
+\c dataviewer_lop;
 
 CREATE TABLE IF NOT EXISTS submissions (
 	"environment" VARCHAR(30),
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS lists (
 	"list" VARCHAR(100) NOT NULL, 
 	"shortTitle" VARCHAR(15) NOT NULL,
 	"id_class" VARCHAR(50) NOT NULL,
-	"createdAt" VARCHAR(25) NOT NULL 
+	"createdAt" VARCHAR(25) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tests (
