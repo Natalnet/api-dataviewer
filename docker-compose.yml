@@ -92,9 +92,9 @@ services:
     container_name: dataviewer_users-container
     restart: always
     ports:
-      - "5433:5433"
+      - "5431:5431"
     expose:
-      - 5433
+      - 5431
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root 
