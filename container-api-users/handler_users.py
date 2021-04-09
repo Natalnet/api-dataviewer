@@ -5,25 +5,24 @@ import os
 from classes.manage_lop import Lop
 from classes.manage_db import Manage_db
 from classes.manage_authentication import Authentication
+from classes.manage_email import Email
 import urllib3
 import json
 import warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings('ignore')
 urllib3.disable_warnings()
 
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_users')
-
-#Variavel de teste
-os.environ['PASSWORD_MASTER_USER'] = 'mymasterpassword'
+psql = Manage_db(database = 'dataviewer_users', port = '5431', host = os.environ['NAME_CONTAINER_USERS_DB'])
+email = Email()
 
 #Instanciate Flask
 app = Flask(__name__)
 
 api_cors_config = {
   'origins':'*',
-  'methods':['POST','GET','OPTIONS'],
+  'methods':['POST','GET'],
   'allow_headers':['Authorization','Content-Type']
 }
 cors = CORS(app, resource={r'/*':api_cors_config})
@@ -31,7 +30,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def home():
-    return 'API de users do Data Viewer'
+    return 'Data Viewer API-users'
 
 #Função que verifica se o usuário master que autoriza os cadastros
 #foi inserido. Se não, ele vai ser criado
@@ -69,19 +68,21 @@ def register_user_student():
 		name = request.json['name']
 		registration = request.json['registration']
 		email = request.json['email']
-		user_master = request.json['user_master']
-		password_master = request.json['password_master']
+		user_api = request.json['user_api']
+		password_user_api = request.json['password_user_api']
 	except Exception as e:
 		raise ValueError('Error: read json. ' + str(e))
+	#Data da criação do usuário
+	createdAt = datetime.now()
 	#Verifica se o usuário mestre passado no post é o que permite
 	#cadastro no banco de dados, se for correto, o cadastro do usuário 
 	#prossegue
 	try:
-		auth.authenticate_user(user_master, password_master)
+		auth.authenticate_user(user_api, password_user_api)
 	except Exception as e:
 		raise ValueError(str(e))		
-	list_datas = [username, user, name, registration, email]
-	list_labels = ['username','user', 'name', 'registration', 'email','password']
+	list_datas = [username, user, name, registration, email, createdAt]
+	list_labels = ['username','user', 'name', 'registration', 'email','createdAt','password']
 	try:
 		auth.insert_new_user(username_json = username,
 		  					 password_json = password,
@@ -102,19 +103,21 @@ def register_user_teacher():
 		name_teacher = request.json['name_teacher']
 		id_teacher = request.json['id_teacher']
 		email = request.json['email']
-		user_master = request.json['user_master']
-		password_master = request.json['password_master']
+		user_api = request.json['user_api']
+		password_user_api = request.json['password_user_api']
 	except Exception as e:
 		raise ValueError('Error: read json. ' + str(e))
+	#Data da criação do usuário
+	createdAt = datetime.now()
 	#Verifica se o usuário mestre passado no post é o que permite
 	#cadastro no banco de dados, se for correto, o cadastro do usuário 
 	#prossegue
 	try:
-		auth.authenticate_user(user_master, password_master)
+		auth.authenticate_user(user_api, password_user_api)
 	except Exception as e:
 		raise ValueError(str(e))
-	list_datas = [username, name_teacher, id_teacher, email]
-	list_labels = ['username','name_teacher', 'id_teacher', 'email', 'password']
+	list_datas = [username, name_teacher, id_teacher, email, createdAt]
+	list_labels = ['username','name_teacher', 'id_teacher', 'email', 'createdAt', 'password']
 	try:
 		auth.insert_new_user(username_json = username,
 		  					 password_json = password,
@@ -132,19 +135,22 @@ def register_user_api():
 	try:
 	   	username = request.json['username']
 	   	password = request.json['password']
-	   	user_master = request.json['user_master']
-	   	password_master = request.json['password_master']
+		user_api = request.json['user_api']
+		password_user_api = request.json['password_user_api']
 	except Exception as e:
 		raise ValueError('Error: read json. ' + str(e))
+	#Data da criação do usuário
+	createdAt = datetime.now()
 	#Verifica se o usuário mestre passado no post é o que permite
 	#cadastro no banco de dados, se for correto, o cadastro do usuário 
 	#prossegue
 	try:
-		auth.authenticate_user(user_master, password_master)
+		if user_api == 'Master':
+			auth.authenticate_user(user_api, password_user_api)
 	except Exception as e:
 		raise ValueError(str(e))
-	list_datas = [username]
-	list_labels = ['username','password']
+	list_datas = [username, createdAt]
+	list_labels = ['username', 'createdAt', 'password']
 	try:
 		auth.insert_new_user(username_json = username,
 		  					 password_json = password,
@@ -183,6 +189,60 @@ def authenticate_user_teacher():
 	except Exception as e:
 		raise ValueError(str(e))
 
+
+@app.route('/forgot_password', methods = ['POST'])
+def forgot_password():
+	#Lê o username do usuário que quer ser alterado e os dados do usuário da api
+	try:
+	    user_api = request.json['user_api']
+	    password_user_api = request.json['password_user_api']
+	    username = request.json['username']
+	    table = request.json['table']
+	except Exception as e:
+	    raise ValueError('Error: read json. ' + str(e))
+	try:
+		#Instancia a classe de autenticação na tabela que o front passar
+		auth = Authentication(table = table)
+		auth.authenticate_user(user_api, password_user_api)
+	except Exception as e:
+	    raise ValueError(str(e))
+	try:
+		#Coletando dados desse usuário
+		query = auth.verify_user(username)
+		#Coletando email do usuário
+		email_user = query['email']
+		#Envia email do usuário
+		email.send_email(message = 'padrao', subject = email_user)
+		return 'Successful send email.'
+	except Exception as e:
+	    raise ValueError('Error: user does not exist. ' + str(e))
+
+#Atualiza a senha do usuário
+@app.route('/update_user', methods = ['POST'])
+def update_user():
+	try:
+        user_api = request.json['user_api']
+	    password_user_api = request.json['password_user_api']
+	    username = request.json['username']
+	    new_password = request.json['new_password']
+	    table = request.json['table']
+	except Exception as e:
+	    raise ValueError('Error: read json. ' + str(e))
+	try:
+		#Instancia a classe de autenticação na tabela que o front passar
+		auth = Authentication(table = table)
+		auth.authenticate_user(user_api, password_user_api)
+	except Exception as e:
+	    raise ValueError(str(e))
+	try:
+		auth.update_user(table = table, 
+						 column_new_data = 'password',
+						 column_reference = 'username',
+						 new_data = username, 
+						 data_reference = new_password)
+		return 'Successful update user.'
+	except Exception as e:
+	    raise ValueError('Error: update password ' + str(e))
 
 def main():
  	port = int(os.environ.get('PORT', 5050))
