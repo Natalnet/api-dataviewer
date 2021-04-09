@@ -26,6 +26,6 @@ COPY ./classes /app/classes
 RUN pip install -r requirements.txt
 
 # Copia o programa principal (update_db.py) para o diretório padrão (/app)
-COPY ./container-updatedb/update_db.py /app
+COPY ./container-update-db-lop/update_db.py /app
 # Roda o programa principal do container (update_db.py) do diretório /app quando o container for inicializado.
 CMD python update_db.py

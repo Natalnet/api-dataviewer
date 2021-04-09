@@ -26,6 +26,6 @@ COPY ./classes /app/classes
 RUN pip install -r requirements.txt
 
 # Copia o programa principal (handler_lop.py) para o diretório padrão (/app)
-COPY ./container-dataviewerapi/handler_lop.py /app
+COPY ./container-api-lop/handler_lop.py /app
 # Roda o programa principal do container (handler_lop.py) do diretório /app quando o container for inicializado.
 CMD python handler_lop.py
