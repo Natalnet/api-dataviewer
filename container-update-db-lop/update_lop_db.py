@@ -14,17 +14,7 @@ from classes.manage_db import Manage_db
 
 #Instanciando as classes
 lop = Lop()		
-psql = Manage_db(database = 'dataviewer_db', host = 'localhost')
-
-#Endpoints
-os.environ['ENDPOINT_ALL_CLASSES'] = 'https://api.lop.natalnet.br:3001/dataScience/class?key='
-os.environ['ENDPOINT_ALL_LISTS'] = 'https://api.lop.natalnet.br:3001/dataScience/list?key='
-os.environ['ENDPOINT_ALL_QUESTIONS'] = 'https://api.lop.natalnet.br:3001/dataScience/question?key='
-os.environ['ENDPOINT_ALL_SUBMISSIONS'] = 'https://api.lop.natalnet.br:3001/dataScience/submission?key='
-os.environ['ENDPOINT_ALL_TESTS'] = 'https://api.lop.natalnet.br:3001/dataScience/test?key='
-os.environ['ENDPOINT_TEACHER']  = 'https://api.lop.natalnet.br:3001/dataScience/teacher?key='
-os.environ['SECRET_KEY'] = 'd41d8cd98f00b204e9800998ecf8427e'
-
+psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = os.environ['NAME_SERVICE_LOP_DB'])
 
 #Essa função verifica a base de dados e definirá a data em que
 #será realizada a consulta dessa tabela. Caso a tabela esteja vazia
@@ -185,11 +175,11 @@ def update_tests():
 def update_db():
 	try:
 		print('Na função enquanto não é chegada a hora da tarefa programada')
-		schedule.every().day.at('11:42').do(update_lists)
-		schedule.every().day.at('11:43').do(update_tests)
-		schedule.every().day.at('11:44').do(update_teachers_classes)
-		schedule.every().day.at('22:17').do(update_questions)		
-		schedule.every().day.at('04:00').do(update_submissions)
+		schedule.every().day.at('03:00').do(update_lists)
+		schedule.every().day.at('03:03').do(update_tests)
+		schedule.every().day.at('03:06').do(update_teachers_classes)
+		schedule.every().day.at('03:10').do(update_questions)		
+		schedule.every().day.at('03:15').do(update_submissions)
 		#Para não chamar a função mais uma vez, é inserido um intervalo de tempo
 		#para a próxima chamada de função
 		time.sleep(20)
@@ -197,7 +187,6 @@ def update_db():
 	    return 'Error: update function' + str(e)
 
 while True:
-	#update_db()
-	update_submissions()
+	update_db()
 	schedule.run_pending()
 	time.sleep(1)
