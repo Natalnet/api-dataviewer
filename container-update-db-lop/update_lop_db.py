@@ -6,6 +6,7 @@ import pandas as pd
 from datetime import datetime
 from classes.manage_lop import Lop
 from classes.manage_db import Manage_db
+from classes.manage_email import Email
 
 #Esse arquivo realiza as atualiações no db. Os dados vem da API do LoP
 #Se faz uso da lib schedule que permite agendar eventos
@@ -15,6 +16,7 @@ from classes.manage_db import Manage_db
 #Instanciando as classes
 lop = Lop()		
 psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop')
+email = Email()
 
 #Essa função verifica a base de dados e definirá a data em que
 #será realizada a consulta dessa tabela. Caso a tabela esteja vazia
@@ -54,6 +56,10 @@ def insert_in_db(df, name_table):
 			return
 		except Exception as e:
 			#Caso a inserção não de certo
+			email.send_email(type_message = 'forgot_password', 
+							 subject = 'Erro na função de inserção no banco',
+							 error_message = str(e)
+							 )			
 			#pensar em algo como enviar por email
 			return
 
@@ -140,7 +146,10 @@ def update_submissions():
   				j = j + 1
   		#Se a consulta não foi aceita		
   		if requisition_accepted == False:
-  			#***** local de futuro envio de email
+			email.send_email(type_message = 'forgot_password', 	
+							 subject = 'Requisições recusadas',					
+							 error_message = 'Servidor do LoP rejeitou 5 vezes as requesições de submissão.'
+							 )			
   			return
   		else:		
   			return
@@ -174,7 +183,6 @@ def update_tests():
 #Função que atualiza os dados conforme a data e a hora escolhida
 def update_db():
 	try:
-		print('Na função enquanto não é chegada a hora da tarefa programada')
 		schedule.every().day.at('03:00').do(update_lists)
 		schedule.every().day.at('03:03').do(update_tests)
 		schedule.every().day.at('03:06').do(update_teachers_classes)
