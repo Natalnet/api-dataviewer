@@ -19,7 +19,6 @@ urllib3.disable_warnings()
 #Instanciando classes
 lop = Lop()
 psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop')
-psql_users = Manage_db(database = 'dataviewer_users', port = '5431', host = 'db-users')
 
 #Instanciate Flask
 app = Flask(__name__)
@@ -55,11 +54,9 @@ def get_questions():
   except Exception as e:
     raise ValueError('Error: reading table questions, ' + str(e))
 
-@app.route('/post_get_graphs', methods = ['POST'])
+@app.route('/post_graphs', methods = ['POST'])
 def post_graphs():
   try:
-    username = request.json['username']
-    password = request.json['password']
     id_class = request.json['id_class']
     user_api = request.json['user_api']
     password_user_api = request.json['password_user_api']
@@ -69,7 +66,8 @@ def post_graphs():
   #cadastro no banco de dados, se for correto, o cadastro do usuário 
   #prossegue
   try:
-    auth.authenticate_user(user_api, password_user_api)
+    auth_users_api = Authentication(table = 'users_api')
+    auth_users_api.authenticate_user(user_api, password_user_api)
   except Exception as e:
     raise ValueError(str(e))
   #Cria o dataframe com a turma informada
