@@ -6,12 +6,13 @@ import os
 #Esta classe possibilita manipular o banco de dados postgresql, seja fazendo querys ou inserções no banco
 
 #Classe com parâmetros de configuração da conexão
+
 class Config:
 	def __init__(self, database, host, port):
 		self.conn_params_dic = {
 		    'host'      :  host,
 		    'database'  :  database,
-		    'user'      :  os.environ['USER_DB']
+		    'user'      :  os.environ['USER_DB'],
 		    'port'      :  port,
 		    'password'  :  os.environ['PASSWORD_DB']
 
@@ -26,7 +27,7 @@ class Config:
 		)	
 
 class Manage_db(Config):
-	def __init__(self, database, port):
+	def __init__(self, database, host, port):
 		Config.__init__(self, database, host, port)
 		try:
 			#Estabelece a conexão com os dados da classe config
@@ -70,7 +71,7 @@ class Manage_db(Config):
 		query = f'UPDATE {table} SET {column} = {new_data} WHERE {column_reference} = {data_reference}'
 		try:
 			with connect.begin() as conn:
-			   conn.execute(query)
+				conn.execute(query)
 		except Exception as e:
 			raise ValueError('Error: update. ' + str(e))
 
@@ -81,6 +82,6 @@ class Manage_db(Config):
 		query = f'DELETE FROM {table} WHERE {column} = {data_reference}'
 		try:
 			with connect.begin() as conn:
-			   conn.execute(query)		    
+				conn.execute(query)		    
 		except Exception as e:
 			raise ValueError('Error: delete. ' + str(e))
