@@ -18,6 +18,7 @@ lop = Lop()
 psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop')
 email = Email()
 
+
 #Essa função verifica a base de dados e definirá a data em que
 #será realizada a consulta dessa tabela. Caso a tabela esteja vazia
 #o retorno será a primeira data que se tem cadastro no lop
@@ -146,7 +147,7 @@ def update_submissions():
   				j = j + 1
   		#Se a consulta não foi aceita		
   		if requisition_accepted == False:
-			email.send_email(type_message = 'forgot_password', 	
+  			email.send_email(type_message = 'forgot_password', 	
 							 subject = 'Requisições recusadas',					
 							 error_message = 'Servidor do LoP rejeitou 5 vezes as requesições de submissão.'
 							 )			
@@ -183,6 +184,7 @@ def update_tests():
 #Função que atualiza os dados conforme a data e a hora escolhida
 def update_db():
 	try:
+		print('Na função enquanto não é chegada a hora da tarefa programada')
 		schedule.every().day.at('03:00').do(update_lists)
 		schedule.every().day.at('03:03').do(update_tests)
 		schedule.every().day.at('03:06').do(update_teachers_classes)
