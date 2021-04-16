@@ -25,6 +25,9 @@ services:
     depends_on:
       - db-lop 
       - db-users
+    environment:
+      USER_DB: ${USER_DB}
+      PASSWORD_DB: ${PASSWORD_DB}
    # Os comentários abaixo eram para inicializar o container desta api apenas quando o container do db_lop estivesse totalmente construído. Contudo, por enquanto estamos deixando isso de lado
       #sqldb: 
         #condition: service_healthy
@@ -56,8 +59,8 @@ services:
       - 5432
     # Define variáveis de ambientes para o container, as quais serão utilizadas para autenticar o usuário. Todas estão na documentação do postgres para o docker
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root #${POSTGRES_PASSWORD} # isso é provisório, qnd o projeto ja estiver tudo ok a gente vai inserir essa senha na hora de dar o docker-compose up
+      POSTGRES_USER: ${USER_DB}
+      POSTGRES_PASSWORD: ${PASSWORD_DB} #${POSTGRES_PASSWORD} # isso é provisório, qnd o projeto ja estiver tudo ok a gente vai inserir essa senha na hora de dar o docker-compose up
       # Define o nome do database a se conectar
       POSTGRES_DB: dataviewer_lop
     # O parâmetro volumes se relaciona a onde os dados armazenados no container estarão localizados fisicamente, na máquina local. Obs: todas são informações 
@@ -94,6 +97,8 @@ services:
     environment:
       # O SECRET_KEY não foi especificado pois é conteúdo sensível, e deve ser inserido previamente na máquina
       SECRET_KEY: ${SECRET_KEY}
+      USER_DB: ${USER_DB}
+      PASSWORD_DB: ${PASSWORD_DB}
       ENDPOINT_ALL_CLASSES: https://api.lop.natalnet.br:3001/dataScience/class?key=
       ENDPOINT_ALL_LISTS: https://api.lop.natalnet.br:3001/dataScience/list?key=
       ENDPOINT_ALL_QUESTIONS: https://api.lop.natalnet.br:3001/dataScience/question?key=
@@ -115,6 +120,9 @@ services:
     restart: always # reinicia o container sempre 
     depends_on: 
       - db-users # especifica que o container usersdb precisa ser inicializado antes
+    environment:
+      EMAIL_PROJECT: ${EMAIL_PROJECT}
+      PASSWORD_EMAIL: ${PASSWORD_EMAIL}
     ports:
       - "5050:5050"
     links:
@@ -132,8 +140,8 @@ services:
     expose:
       - 5431
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root 
+      POSTGRES_USER: ${USER_DB}
+      POSTGRES_PASSWORD: ${PASSWORD_DB}
       POSTGRES_DB: dataviewer_users # nome do db de usuários cadastrados
     volumes:
       - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
