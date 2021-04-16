@@ -147,10 +147,10 @@ def update_submissions():
   				j = j + 1
   		#Se a consulta não foi aceita		
   		if requisition_accepted == False:
-  			email.send_email(type_message = 'forgot_password', 	
-							 subject = 'Requisições recusadas',					
-							 error_message = 'Servidor do LoP rejeitou 5 vezes as requesições de submissão.'
-							 )			
+  			email.send_email(type_message = 'forgot_password',
+  							 subject = 'Requisições recusadas',
+  							 error_message = 'Servidor do LoP rejeitou 5 vezes as requesições de submissão.'
+  							 )			
   			return
   		else:		
   			return
