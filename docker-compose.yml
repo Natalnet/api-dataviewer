@@ -121,6 +121,7 @@ services:
     depends_on: 
       - db-users # especifica que o container usersdb precisa ser inicializado antes
     environment:
+      PASSWORD_MASTER_USER: ${PASSWORD_MASTER_USER}
       EMAIL_PROJECT: ${EMAIL_PROJECT}
       PASSWORD_EMAIL: ${PASSWORD_EMAIL}
     ports:
@@ -145,7 +146,7 @@ services:
       POSTGRES_DB: dataviewer_users # nome do db de usuários cadastrados
     volumes:
       - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
-      - ./container-db-users/data_users:/var/lib/postgresql/data-users
+      - ./container-db-users/data:/var/lib/postgresql/data-users
     networks:
       - backend
       
@@ -153,6 +154,9 @@ services:
     build:
       context: .
       dockerfile: ./container-nginx/Dockerfile
+    depends_on:
+      - api-users
+      - api-lop
     container_name: nginx-container
     restart: always
     ports:
