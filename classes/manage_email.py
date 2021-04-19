@@ -11,8 +11,8 @@ class Email:
         self.smtp_ssl_host = 'smtp.gmail.com'
         self.smtp_ssl_port = 465
 
-        self.__email_project = os.environ['EMAIL_PROJECT']
-        self.__password = os.environ['PASSWORD_EMAIL']
+        self.__email_project = os.getenv('EMAIL_PROJECT')
+        self.__password = os.getenv('PASSWORD_EMAIL')
 
     def send_email(self, type_message, subject, name_addressee = None, token = None, error_message = None, email_address = None):
         '''
