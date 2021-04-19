@@ -12,9 +12,9 @@ class Config:
 		self.conn_params_dic = {
 		    'host'      :  host,
 		    'database'  :  database,
-		    'user'      :  os.environ['USER_DB'],
+		    'user'      :  os.getenv('USER_DB'),
 		    'port'      :  port,
-		    'password'  :  os.environ['PASSWORD_DB']
+		    'password'  :  os.getenv('PASSWORD_DB')
 
 		}
 		#'postgresql+psycopg2://usuario:senha@ip-servidor:porta/banco-de-dados'
