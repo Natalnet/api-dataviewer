@@ -15,11 +15,14 @@ urllib3.disable_warnings()
 
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_users', port = '5431', host = 'db-users')
+#psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'db-users')
+psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'localhost')
 email = Email()
 
 #Instanciate Flask
 app = Flask(__name__)
+
+#os.environ['PASSWORD_MASTER_USER'] = 'root'
 
 api_cors_config = {
   'origins':'*',
