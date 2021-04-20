@@ -15,8 +15,8 @@ urllib3.disable_warnings()
 
 #Instanciando classes
 lop = Lop()
-#psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'db-users')
-psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'localhost')
+psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'db-users')
+#psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'localhost')
 email = Email()
 
 #Instanciate Flask
