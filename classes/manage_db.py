@@ -7,14 +7,17 @@ import os
 
 #Classe com parâmetros de configuração da conexão
 
+os.environ['USER_DB'] = 'postgres'
+os.environ['PASSWORD_DB'] = 'root'
+
 class Config:
 	def __init__(self, database, host, port):
 		self.conn_params_dic = {
 		    'host'      :  host,
 		    'database'  :  database,
-		    'user'      :  os.getenv('USER_DB'),
+		    'user'      :  os.environ['USER_DB'],
 		    'port'      :  port,
-		    'password'  :  os.getenv('PASSWORD_DB')
+		    'password'  :  os.environ['PASSWORD_DB']
 
 		}
 		#'postgresql+psycopg2://usuario:senha@ip-servidor:porta/banco-de-dados'
