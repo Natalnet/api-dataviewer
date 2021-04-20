@@ -137,7 +137,7 @@ services:
     container_name: db-users-container
     restart: always
     ports:
-      - "5431:5431"
+      - "5431:5432"
     expose:
       - 5431
     environment:
