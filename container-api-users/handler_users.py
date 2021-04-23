@@ -22,7 +22,7 @@ email = Email()
 #Instanciate Flask
 app = Flask(__name__)
 
-#os.environ['PASSWORD_MASTER_USER'] = 'root'
+os.environ['PASSWORD_MASTER_USER'] = 'root'
 
 api_cors_config = {
   'origins':'*',
