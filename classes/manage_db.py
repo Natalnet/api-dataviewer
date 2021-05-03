@@ -15,9 +15,9 @@ class Config:
 		self.conn_params_dic = {
 		    'host'      :  host,
 		    'database'  :  database,
-		    'user'      :  os.getenv('USER_DB'),
+		    'user'      :  user,
 		    'port'      :  port,
-		    'password'  :  os.getenv('PASSWORD_DB')
+		    'password'  :  password
 
 		}
 		#'postgresql+psycopg2://usuario:senha@ip-servidor:porta/banco-de-dados'
@@ -30,8 +30,8 @@ class Config:
 		)	
 
 class Manage_db(Config):
-	def __init__(self, database, host, port):
-		Config.__init__(self, database, host, port)
+	def __init__(self, database, host, port, user, password):
+		Config.__init__(self, database, host, port, user, password)
 		try:
 			#Estabelece a conexão com os dados da classe config
 			self.engine = sql.create_engine(self.connect_alchemy, convert_unicode=True, client_encoding='utf8')
