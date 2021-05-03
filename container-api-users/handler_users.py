@@ -13,16 +13,20 @@ import warnings
 warnings.filterwarnings('ignore')
 urllib3.disable_warnings()
 
+
+#Lendo variáveis de ambiente
+PASSWORD_DB = os.getenv('PASSWORD_DB')
+USER_DB = os.getenv('USER_DB')
+
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'db-users')
+psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'db-users',
+				 user = USER_DB, password = PASSWORD_DB)
 #psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'localhost')
 email = Email()
 
 #Instanciate Flask
 app = Flask(__name__)
-
-os.environ['PASSWORD_MASTER_USER'] = 'root'
 
 api_cors_config = {
   'origins':'*',
@@ -50,7 +54,7 @@ def verify_master_user():
 		list_datas = [username, createdAt]
 		list_labels = ['username','createdAt','password']
 		#Lendo a senha que foi passada como variável de ambiente
-		password = os.environ['PASSWORD_MASTER_USER']
+		password = os.getenv('PASSWORD_MASTER_USER')
 		try:
 			#Inserindo o usuário master
 			auth.insert_new_user(username_json = username,
@@ -265,7 +269,7 @@ def update_user():
 
 def main():
  	port = int(os.environ.get('PORT', 5050))
- 	app.run(host = '0.0.0.0', port = port,debug=True)   
+ 	#app.run(host = '0.0.0.0', port = port,debug=True)   
 
 if __name__ == '__main__':
 	verify_master_user()
