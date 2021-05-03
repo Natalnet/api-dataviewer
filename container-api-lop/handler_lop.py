@@ -16,9 +16,14 @@ warnings.filterwarnings('ignore')
 urllib3.disable_warnings()
 #import sklearn
 
+#Lendo variáveis de ambiente
+PASSWORD_DB = os.getenv('PASSWORD_DB')
+USER_DB = os.getenv('USER_DB')
+
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop')
+psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop', 
+                 user = USER_DB, password = PASSWORD_DB)
 
 #Instanciate Flask
 app = Flask(__name__)
@@ -260,7 +265,7 @@ def get_graphs(id_class):
 
 def main():
   port = int(os.environ.get('PORT', 5000))
-  app.run(host = '0.0.0.0', port = port,debug=True)   
+  #app.run(host = '0.0.0.0', port = port,debug=True)   
 
 if __name__ == '__main__':
   main()
