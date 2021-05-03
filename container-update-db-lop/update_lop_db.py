@@ -13,9 +13,14 @@ from classes.manage_email import Email
 #nesse caso vamos agendar a atualização do db em uma hora definida
 
 
+#Lendo variáveis de ambiente
+PASSWORD_DB = os.getenv('PASSWORD_DB')
+USER_DB = os.getenv('USER_DB')
+
 #Instanciando as classes
 lop = Lop()		
-psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop')
+psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop',
+				 user = USER_DB, password = PASSWORD_DB)
 email = Email()
 
 
@@ -74,7 +79,7 @@ def update_questions():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.environ['SECRET_KEY']
+	key = os.getenv('SECRET_KEY')
 	endpoint_all_questions = os.environ['ENDPOINT_ALL_QUESTIONS']
 	#Consulta na API do LoP
 	df = lop.lop_question_db(endpoint_all_questions, key, date)
@@ -87,9 +92,9 @@ def update_teachers_classes():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.environ['SECRET_KEY']
-	endpoint_all_classes = os.environ['ENDPOINT_ALL_CLASSES']
-	endpoint_teacher = os.environ['ENDPOINT_TEACHER'] 
+	key = os.getenv('SECRET_KEY')
+	endpoint_all_classes = os.getenv('ENDPOINT_ALL_CLASSES')
+	endpoint_teacher = os.environ('ENDPOINT_TEACHER')
 	try:
 		#Consulta
 		df = lop.lop_class_db(endpoint_all_classes, endpoint_teacher, key, date)
@@ -106,8 +111,8 @@ def update_submissions():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.environ['SECRET_KEY']
-	endpoint_all_submissions = os.environ['ENDPOINT_ALL_SUBMISSIONS']
+	key = os.getenv('SECRET_KEY')
+	endpoint_all_submissions = os.environ('ENDPOINT_ALL_SUBMISSIONS')
 	#Coletando a data atual para usar como limite
 	actual_date = datetime.now()
 	#Retira problemas para a conversão de data
@@ -160,8 +165,8 @@ def update_lists():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.environ['SECRET_KEY']
-	endpoint_all_lists = os.environ['ENDPOINT_ALL_LISTS']
+	key = os.getenv('SECRET_KEY')
+	endpoint_all_lists = os.getenv('ENDPOINT_ALL_LISTS')
 	#Consulta
 	df = lop.lop_lists_db(endpoint_all_lists, key, date)
 	#Insere os dados novos na tabela respectiva no db
@@ -173,8 +178,8 @@ def update_tests():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.environ['SECRET_KEY']
-	endpoint_tests = os.environ['ENDPOINT_ALL_TESTS']
+	key = os.getenv('SECRET_KEY')
+	endpoint_tests = os.getenv('ENDPOINT_ALL_TESTS')
 	#Consulta
 	df = lop.lop_tests_db(endpoint_tests, key, date)
 	#Insere os dados novos na tabela respectiva no db
