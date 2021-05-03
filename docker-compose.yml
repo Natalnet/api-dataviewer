@@ -120,10 +120,12 @@ services:
     restart: always # reinicia o container sempre 
     depends_on: 
       - db-users # especifica que o container usersdb precisa ser inicializado antes
-    #environment:
-      #PASSWORD_MASTER_USER: ${PASSWORD_MASTER_USER}
-      #EMAIL_PROJECT: ${EMAIL_PROJECT}
-      #PASSWORD_EMAIL: ${PASSWORD_EMAIL}
+    environment:
+      USER_DB: ${USER_DB}
+      PASSWORD_DB: ${PASSWORD_DB}
+      PASSWORD_MASTER_USER: ${PASSWORD_MASTER_USER}
+      EMAIL_PROJECT: ${EMAIL_PROJECT}
+      PASSWORD_EMAIL: ${PASSWORD_EMAIL}
     ports:
       - "5050:5050"
     links:
@@ -160,9 +162,7 @@ services:
     container_name: nginx-container
     restart: always
     ports:
-      - "80:80"
-    networks:
-      - backend
+      - "443:443"
   
 
 # Cria a network a ser utilizada no projeto
