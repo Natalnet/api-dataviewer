@@ -7,11 +7,11 @@ import os
 
 #Classe com parâmetros de configuração da conexão
 
-os.environ['USER_DB'] = 'postgres'
-os.environ['PASSWORD_DB'] = 'root'
+#os.environ['USER_DB'] = 'postgres'
+#os.environ['PASSWORD_DB'] = 'root'
 
 class Config:
-	def __init__(self, database, host, port):
+	def __init__(self, database, host, port, user, password):
 		self.conn_params_dic = {
 		    'host'      :  host,
 		    'database'  :  database,

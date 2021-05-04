@@ -38,7 +38,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def home():
-    return 'REST API do DataView'
+    return 'REST API do DataViewer'
 
 #get classes
 @app.route('/get_classes', methods = ['GET'])  
@@ -265,7 +265,7 @@ def get_graphs(id_class):
 
 def main():
   port = int(os.environ.get('PORT', 5000))
-  #app.run(host = '0.0.0.0', port = port,debug=True)   
+  app.run(host = '0.0.0.0', port = port,debug=False)   
 
 if __name__ == '__main__':
   main()

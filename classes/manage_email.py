@@ -2,8 +2,8 @@ import smtplib
 from email.mime.text import MIMEText
 import os
 
-os.getenv('EMAIL_PROJECT') 
-os.getenv('PASSWORD_EMAIL') 
+#os.getenv('EMAIL_PROJECT') 
+#os.getenv('PASSWORD_EMAIL') 
 
 class Email:
     def __init__(self):

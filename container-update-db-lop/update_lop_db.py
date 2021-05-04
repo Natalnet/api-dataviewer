@@ -19,8 +19,7 @@ USER_DB = os.getenv('USER_DB')
 
 #Instanciando as classes
 lop = Lop()		
-psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop',
-				 user = USER_DB, password = PASSWORD_DB)
+psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop', user = USER_DB, password = PASSWORD_DB)
 email = Email()
 
 

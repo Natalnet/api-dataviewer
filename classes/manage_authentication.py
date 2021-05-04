@@ -1,6 +1,7 @@
 from passlib.hash import pbkdf2_sha512
 from classes.manage_db import Manage_db
 import pandas as pd
+import os
 
 #Lendo variáveis de ambiente
 PASSWORD_DB = os.getenv('PASSWORD_DB')
