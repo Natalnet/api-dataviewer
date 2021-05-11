@@ -188,7 +188,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/admin/dataviewer/views/
+      device: /home/admin/api-dataviewer/views/
       o: bind
 
 
