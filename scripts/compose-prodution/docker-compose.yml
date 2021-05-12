@@ -46,7 +46,7 @@ services:
       - 5432
     volumes:
       # Define onde o script de inicialização das tabelas está localizado.
-     # - ./scripts/db/create_database_dataviewer_lop.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_lop.sql
+      - create_database_dataviewer_lop.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_lop.sql
       # Onde os dados do banco de dados estarão armazenados. Essa pasta não existe no repositório, mas ela é criada na máquina local.
       - ./container-lop-db/data:/var/lib/postgresql/data-lop
     networks:
@@ -99,7 +99,7 @@ services:
     expose:
       - 5431
     volumes:
-      - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
+      - create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
       - ./container-db-users/data:/var/lib/postgresql/data-users
     networks:
       - backend
