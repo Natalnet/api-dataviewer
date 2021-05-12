@@ -11,7 +11,7 @@ version: "3.7"
 services:
   # Aqui definiremos as condições de inicialização do serviço de api em flask do dataviewer: 
   api-lop:
-    image: api-lop:${TAG}
+    image: dataviewer/api-lop:${TAG}
     container_name: container-api-lop
     # Define o comportamento do container caso ele venha a cair. Neste caso, definimos que sempre que ele cair, irá ser inicializado novamente
     restart: always 
@@ -75,7 +75,7 @@ services:
       
   # Aqui definiremos as condições de inicialização do serviço de atualização do nosso banco de dados do lop no dataviewer    
   update-db-lop:
-    image: update-db-lop:${TAG}
+    image: dataviewer/update-db-lop:${TAG}
     restart: always
     depends_on:
       - db-lop
@@ -104,7 +104,7 @@ services:
     #command: ["./scripts/db/wait-for-it.sh", 
 
   api-users:
-    image: api-users:${TAG}
+    image: dataviewer/api-users:${TAG}
     container_name: api-users-container # define o nome do container
     restart: always # reinicia o container sempre 
     depends_on: 
@@ -142,7 +142,7 @@ services:
       - backend
       
   nginx:
-    image: nginx-container:${TAG}
+    image: dataviewer/nginx-container:${TAG}
     depends_on:
       - api-users
       - api-lop
