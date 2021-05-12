@@ -19,13 +19,6 @@ services:
     depends_on:
       - db-lop 
       - db-users
-    environment:
-      USER_DB: ${USER_DB}
-      PASSWORD_DB: ${PASSWORD_DB}
-   # Os comentários abaixo eram para inicializar o container desta api apenas quando o container do db_lop estivesse totalmente construído. Contudo, por enquanto estamos deixando isso de lado
-      #sqldb: 
-        #condition: service_healthy
-    # Define qual porta local estará associado a qual porta do container (Porta local:porta exposta pelo container)
     ports:
       # Como padrão do Flask, associamos a porta local 5000 como sendo a porta 5000 do container
       - "5000:5000" 
@@ -40,7 +33,7 @@ services:
   # Aqui definiremos as condições de inicialização do serviço de banco de dados do lop no dataviewer:    
   db-lop:
     # Esse serviço não contem o parâmetro build, pois utilizamos diretamente uma imagem pré-existente, fazendo as configurações pertinentes no próprio docker-compose
-    image: postgres:13.2-alpine
+    image: dataviewer/api-dataviewer:$(TAG)-db-lop
     # Parâmetro encontrado na documentação do postgres p/ o docker
     hostname: postgres
     container_name: db-lop-container
@@ -51,17 +44,9 @@ services:
     # talvez essa linha não seja necessária, mas garante que a porta 5432 está exposta para todos os containers
     expose:
       - 5432
-    # Define variáveis de ambientes para o container, as quais serão utilizadas para autenticar o usuário. Todas estão na documentação do postgres para o docker
-    environment:
-      POSTGRES_USER: ${USER_DB}
-      POSTGRES_PASSWORD: ${PASSWORD_DB} #${POSTGRES_PASSWORD} # isso é provisório, qnd o projeto ja estiver tudo ok a gente vai inserir essa senha na hora de dar o docker-compose up
-      # Define o nome do database a se conectar
-      POSTGRES_DB: dataviewer_lop
-    # O parâmetro volumes se relaciona a onde os dados armazenados no container estarão localizados fisicamente, na máquina local. Obs: todas são informações 
-    # Sintaxe: - (local:virtual)
     volumes:
       # Define onde o script de inicialização das tabelas está localizado.
-      - ./scripts/db/create_database_dataviewer_lop.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_lop.sql
+     # - ./scripts/db/create_database_dataviewer_lop.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_lop.sql
       # Onde os dados do banco de dados estarão armazenados. Essa pasta não existe no repositório, mas ela é criada na máquina local.
       - ./container-lop-db/data:/var/lib/postgresql/data-lop
     networks:
@@ -84,18 +69,6 @@ services:
         #condition: service_healthy
     ports:
       - "3000:3000" 
-    # Variáveis locais as quais serão utilizadas por este serviço. 
-    environment:
-      # O SECRET_KEY não foi especificado pois é conteúdo sensível, e deve ser inserido previamente na máquina
-      SECRET_KEY: ${SECRET_KEY}
-      USER_DB: ${USER_DB}
-      PASSWORD_DB: ${PASSWORD_DB}
-      ENDPOINT_ALL_CLASSES: https://api.lop.natalnet.br:3001/dataScience/class?key=
-      ENDPOINT_ALL_LISTS: https://api.lop.natalnet.br:3001/dataScience/list?key=
-      ENDPOINT_ALL_QUESTIONS: https://api.lop.natalnet.br:3001/dataScience/question?key=
-      ENDPOINT_ALL_SUBMISSIONS: https://api.lop.natalnet.br:3001/dataScience/submission?key=
-      ENDPOINT_ALL_TESTS: https://api.lop.natalnet.br:3001/dataScience/test?key=
-      ENDPOINT_TEACHER: https://api.lop.natalnet.br:3001/dataScience/teacher?key=
     links:
       - db-lop
     networks:
@@ -109,12 +82,6 @@ services:
     restart: always # reinicia o container sempre 
     depends_on: 
       - db-users # especifica que o container usersdb precisa ser inicializado antes
-    environment:
-      USER_DB: ${USER_DB}
-      PASSWORD_DB: ${PASSWORD_DB}
-      PASSWORD_MASTER_USER: ${PASSWORD_MASTER_USER}
-      EMAIL_PROJECT: ${EMAIL_PROJECT}
-      PASSWORD_EMAIL: ${PASSWORD_EMAIL}
     ports:
       - "5050:5050"
     links:
@@ -123,7 +90,7 @@ services:
       - backend
 
   db-users:
-    image: postgres:13.2-alpine
+    image: dataviewer/api-dataviewer:$(TAG)-db-users
     hostname: postgres
     container_name: db-users-container
     restart: always
@@ -131,10 +98,6 @@ services:
       - "5431:5432"
     expose:
       - 5431
-    environment:
-      POSTGRES_USER: ${USER_DB}
-      POSTGRES_PASSWORD: ${PASSWORD_DB}
-      POSTGRES_DB: dataviewer_users # nome do db de usuários cadastrados
     volumes:
       - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
       - ./container-db-users/data:/var/lib/postgresql/data-users
