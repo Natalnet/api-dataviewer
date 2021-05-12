@@ -7,10 +7,10 @@ build:
 login:
 	docker login
 tag: login
-	docker tag api-lop dataviewer/api-dataviewer:$(TAG)
-	docker tag api-users dataviewer/api-dataviewer:$(TAG)
-	docker tag update-db-lop dataviewer/api-dataviewer:$(TAG)
-	docker tag nginx-container dataviewer/api-dataviewer:$(TAG)
+	docker tag api-lop dataviewer/api-lop:$(TAG)
+	docker tag api-users dataviewer/api-users:$(TAG)
+	docker tag update-db-lop dataviewer/update-db-lop:$(TAG)
+	docker tag nginx-container dataviewer/nginx-container:$(TAG)
 push: tag
 	docker push dataviewer/api-lop:$(TAG)
 	docker push dataviewer/api-users:$(TAG)
