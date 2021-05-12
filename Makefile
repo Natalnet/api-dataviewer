@@ -12,7 +12,10 @@ tag: login
 	docker tag update-db-lop dataviewer/api-dataviewer:$(TAG)
 	docker tag nginx-container dataviewer/api-dataviewer:$(TAG)
 push: tag
-	docker push dataviewer/api-dataviewer:$(TAG)
+	docker push dataviewer/api-lop:$(TAG)
+	docker push dataviewer/api-users:$(TAG)
+	docker push dataviewer/update-db-lop:$(TAG)
+	docker push dataviewer/nginx-container:$(TAG)
 
 #No console usar a seguinte sequência de comandos para subir a img para o docker hub
 #make
