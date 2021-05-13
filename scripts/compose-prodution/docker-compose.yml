@@ -33,7 +33,7 @@ services:
   # Aqui definiremos as condições de inicialização do serviço de banco de dados do lop no dataviewer:    
   db-lop:
     # Esse serviço não contem o parâmetro build, pois utilizamos diretamente uma imagem pré-existente, fazendo as configurações pertinentes no próprio docker-compose
-    image: dataviewer/api-dataviewer:$(TAG)-db-lop
+    image: postgres:13.2-alpine
     # Parâmetro encontrado na documentação do postgres p/ o docker
     hostname: postgres
     container_name: db-lop-container
@@ -90,7 +90,7 @@ services:
       - backend
 
   db-users:
-    image: dataviewer/api-dataviewer:$(TAG)-db-users
+    image: postgres:13.2-alpine
     hostname: postgres
     container_name: db-users-container
     restart: always
