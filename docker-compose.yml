@@ -180,7 +180,8 @@ services:
     depends_on:
       - nginx
     command: certonly --webroot --webroot-path=/var/www/html --email erros.dataviewer@gmail.com --agree-tos --no-eff-email --staging -d dataviewer.natalnet.br  -d www.dataviewer.natalnet.br
-
+    networks:
+      - backend
 volumes:
   certbot-etc:
   certbot-var:
