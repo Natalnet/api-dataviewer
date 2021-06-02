@@ -43,7 +43,9 @@ services:
     networks:
       - backend
     logging:
-      driver: none
+      options:
+        max-size: "10m"
+        max-file: "3"
       
   # Aqui definiremos as condições de inicialização do serviço de banco de dados do lop no dataviewer:    
   db-lop:
@@ -71,12 +73,15 @@ services:
       # Define onde o script de inicialização das tabelas está localizado.
       - ./scripts/db/create_database_dataviewer_lop.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_lop.sql
       # Onde os dados do banco de dados estarão armazenados. Essa pasta não existe no repositório, mas ela é criada na máquina local.
-      - ./container-lop-db/data:/data/postgresql/data-lop
-      #- ./container-lop-db/data:/var/lib/postgresql/data-lop
+      - ./container-lop-db/data:/var/lib/postgresql/data-lop
+    networks:
+      - backend
     networks:
       - backend
     logging:
-      driver: none
+      options:
+        max-size: "10m"
+        max-file: "3"
     # Os comentários abaixo eram para que outros serviços pudessem verificar quando este container estivesse 100% construído, como condição de inicialização de outros serviços. Por enquanto, não está sendo utilizado
     # healthcheck: # acho q isso n vai ser necessário
     #  test: ["CMD-SHELL", "pg_isready -U postgres"] 
@@ -115,7 +120,9 @@ services:
     networks:
       - backend
     logging:
-      driver: none
+      options:
+        max-size: "10m"
+        max-file: "3"
     # O comando abaixo não será utilizado, estamos guardando por enquanto apenas para termos uma alternativa de onde recorrer caso seja necessário aguardar o container do banco de dados estar 100% construído
     #command: ["./scripts/db/wait-for-it.sh", 
 
@@ -140,7 +147,9 @@ services:
     networks:
       - backend
     logging:
-      driver: none
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   db-users:
     image: postgres:13.2-alpine
@@ -157,12 +166,13 @@ services:
       POSTGRES_DB: dataviewer_users # nome do db de usuários cadastrados
     volumes:
       - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
-      - ./container-db-users/data:/data/postgresql/data-users
-      #- ./container-db-users/data:/var/lib/postgresql/data-users
+      - ./container-db-users/data:/var/lib/postgresql/data-users
     networks:
       - backend
     logging:
-      driver: none
+      options:
+        max-size: "10m"
+        max-file: "3"
       
   nginx:
     build:
@@ -175,7 +185,6 @@ services:
     restart: always
     ports:
       - "443:443"
-      - "443:80"
     networks:
       - backend
     volumes:
@@ -183,7 +192,9 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
     logging:
-      driver: none
+      options:
+        max-size: "10m"
+        max-file: "3"
       
   certbot:
     image: certbot/certbot
@@ -194,12 +205,14 @@ services:
       - web-root:/var/www/html
     depends_on:
       - nginx
-    command: certonly --webroot --webroot-path=/var/www/html --email erros.dataviewer@gmail.com --agree-tos --no-eff-email --staging -d dataviewer.natalnet.br 
+    command: certonly --webroot --webroot-path=/var/www/html --email erros.dataviewer@gmail.com --agree-tos --no-eff-email --staging -d dataviewer.natalnet.br -d www.dataviewer.natalnet.br
     networks:
       - backend
     logging:
-      driver: none     
-
+      options:
+        max-size: "10m"
+        max-file: "3"
+        
 volumes:
   certbot-etc:
   certbot-var:
