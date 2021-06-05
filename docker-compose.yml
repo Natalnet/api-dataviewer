@@ -185,12 +185,17 @@ services:
     restart: always
     ports:
       - "443:443"
+      - "80:80"
+    expose:
+      - 80
+      - 443
     networks:
       - backend
     volumes:
       - web-root:/var/www/html
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
     logging:
       options:
         max-size: "10m"
@@ -221,6 +226,12 @@ volumes:
     driver_opts:
       type: none
       device: /home/admin/api-dataviewer/views/
+      o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/admin/api-dataviewer/dhparam/
       o: bind
 
 
