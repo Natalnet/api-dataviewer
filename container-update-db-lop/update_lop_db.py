@@ -79,7 +79,7 @@ def update_questions():
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
 	key = os.getenv('SECRET_KEY')
-	endpoint_all_questions = os.environ['ENDPOINT_ALL_QUESTIONS']
+	endpoint_all_questions = os.getenv('ENDPOINT_ALL_QUESTIONS')
 	#Consulta na API do LoP
 	df = lop.lop_question_db(endpoint_all_questions, key, date)
 	#Insere os dados novos na tabela respectiva no db
@@ -93,7 +93,7 @@ def update_teachers_classes():
 	#Leitura de variáveis de ambiente
 	key = os.getenv('SECRET_KEY')
 	endpoint_all_classes = os.getenv('ENDPOINT_ALL_CLASSES')
-	endpoint_teacher = os.environ('ENDPOINT_TEACHER')
+	endpoint_teacher = os.getenv('ENDPOINT_TEACHER')
 	try:
 		#Consulta
 		df = lop.lop_class_db(endpoint_all_classes, endpoint_teacher, key, date)
@@ -111,7 +111,7 @@ def update_submissions():
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
 	key = os.getenv('SECRET_KEY')
-	endpoint_all_submissions = os.environ('ENDPOINT_ALL_SUBMISSIONS')
+	endpoint_all_submissions = os.getenv('ENDPOINT_ALL_SUBMISSIONS')
 	#Coletando a data atual para usar como limite
 	actual_date = datetime.now()
 	#Retira problemas para a conversão de data
