@@ -43,7 +43,7 @@ def verify_database(name_table):
 #Essa função é responsável por inserir os novos dados no db
 def insert_in_db(df, name_table):
 	#Se a consulta não retornar nenhum dado então retorne
-	if df.empty:
+	if df is None:
 		return
 	#Se tiver algum dado
 	else:
