@@ -26,7 +26,7 @@ class Lop:
     #Instancia o urllib3
     http = urllib3.PoolManager()
     #Realização uma requisição GET na url
-    req = http.request('GET',url)
+    req = http.request('GET',url,timeout=7.0)
     #Se for correta, os dados são convertidos em dataframe
     if req.status == 200:
       return pd.read_json(req.data, orient = 'RECORDS', encoding = 'utf-8').copy()
