@@ -64,3 +64,7 @@ CREATE TABLE IF NOT EXISTS tests (
 	"id_class" VARCHAR(50) NOT NULL,
 	"createdAt" VARCHAR(25) NOT NULL  
 );
+
+CREATE TABLE IF NOT EXISTS last_consult_submissions(
+	"createdAt" VARCHAR(25) NOT NULL  
+);
