@@ -12,12 +12,14 @@ from classes.manage_email import Email
 #Se faz uso da lib schedule que permite agendar eventos
 #nesse caso vamos agendar a atualização do db em uma hora definida
 
+#Lendo variáveis de ambiente
+PASSWORD_DB = os.getenv('PASSWORD_DB')
+USER_DB = os.getenv('USER_DB')
 
 #Instanciando as classes
 lop = Lop()		
-psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop')
+psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop', user = USER_DB, password = PASSWORD_DB)
 email = Email()
-
 
 #Essa função verifica a base de dados e definirá a data em que
 #será realizada a consulta dessa tabela. Caso a tabela esteja vazia
