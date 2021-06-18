@@ -65,6 +65,6 @@ CREATE TABLE IF NOT EXISTS tests (
 	"createdAt" VARCHAR(25) NOT NULL  
 );
 
-CREATE TABLE IF NOT EXISTS last_consult_submissions(
+CREATE TABLE IF NOT EXISTS last_consult_submissions (
 	"createdAt" VARCHAR(25) NOT NULL  
 );
