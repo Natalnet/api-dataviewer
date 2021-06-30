@@ -26,7 +26,7 @@ class Lop:
     #Instancia o urllib3
     http = urllib3.PoolManager()
     #Realização uma requisição GET na url
-    req = http.request('GET',url,timeout=7.0)
+    req = http.request('GET',url)
     #Se for correta, os dados são convertidos em dataframe
     if req.status == 200:
       return pd.read_json(req.data, orient = 'RECORDS', encoding = 'utf-8').copy()
@@ -663,14 +663,159 @@ class Lop:
   def graph_days_spent_difficulty(self, df_submission, df_questions_selected):#Histogram
     #Fazendo o merge para pegar a coluna dificuldade
     df_submission = df_submission.merge(df_questions_selected[['question','difficulty']], on = 'question', how = 'inner')
+
     #Convertendo para datetime
     df_submission['createdAt'] = pd.to_datetime(df_submission['createdAt'])
+
     #Criando campo com a data
     df_submission['dateSubmission'] = df_submission['createdAt'].dt.date
+
     #Conversão de ms para s
     df_submission['timeInSecounds'] = df_submission['timeConsuming'].divide(1000).astype(int)
+
     #Dataframe sem duplicatas e com tempo maior que 0
     df_without_duplicates = df_submission[df_submission["timeInSecounds"] > 0].drop(['environment','hitPercentage','timeConsuming','createdAt','timeInSecounds','char_change_number'], axis=1).drop_duplicates()
+
     #Calculando em quantos dias diferentes a dificuldade foi submetida por aluno
     df_different_days_difficulties = df_without_duplicates.groupby(['user','registration','difficulty'])['dateSubmission'].count().reset_index(name='differentDaysList')
     return df_different_days_difficulties.to_json(force_ascii=False,orient='records')
+
+  #----------Gráfico 4
+  #Gráfico que em uma turma, verifica o tempo máximo gasto em uma questão e a quantidade máxima de dias diferentes nela - GTTMQQMDD
+  def graph_max_different_days_time(self, df_submission):#Scatter
+    #Convertendo para datetime
+    df_submission['createdAt'] = pd.to_datetime(df_submission['createdAt'])
+
+    #Criando o campo de tempo em segundos, já que vem em ms
+    df_submission['timeInSecounds'] = df_submission['timeConsuming'].divide(1000).astype(int)
+
+    #Criando campo com a data
+    df_submission['dateSubmission'] = df_submission['createdAt'].dt.date
+    
+    #Total de segundos gasto em cada questão por aluno
+    df_user_secounds = df_submission[df_submission["timeInSecounds"] > 0].groupby(['registration','question','list'])['timeInSecounds'].sum().reset_index(name='totalSecounds')
+
+    #Dataframe sem duplicatas e com tempo maior que 0
+    df_without_duplicates = df_submission[df_submission["timeInSecounds"] > 0].drop(['environment','hitPercentage','timeConsuming','createdAt','timeInSecounds','char_change_number'], axis=1).drop_duplicates()
+
+    #Contando em quantos dias diferentes a questão foi submetida
+    df_user_days = df_without_duplicates.groupby(['registration','question','list'])['dateSubmission'].count().reset_index(name='differentDays')
+
+    #União das tabelas que tem o tempo em segundos e a quantidade de dias diferentes gastos por questão em um aluno
+    df_user_secounds_days = pd.merge(df_user_secounds, df_user_days, on=['registration','question','list'])
+
+    #Adicionando o campo nome
+    df_user_secounds_days = pd.merge(df_user_secounds_days, df_submission[['user','registration']].drop_duplicates(), on='registration')
+
+    #Pegando o tempo máximo gasto por um aluno em uma questão
+    df_max_time = df_submission[df_submission["timeInSecounds"] > 0].groupby(['question'])['timeInSecounds'].max().reset_index(name='maxTime')
+    
+    #A quantidade máxima de dias que um aluno gastou em uma questão
+    df_max_different_days = df_user_secounds_days.groupby(['question'])['differentDays'].max().reset_index(name='maxDifferentDays')
+    
+    #Juntando df no campo de questões
+    df_max_different_days_time = pd.merge(df_max_time, df_max_different_days, on='question')
+
+    #Retornando json
+    return df_max_different_days_time.to_json(force_ascii=False,orient='records')
+
+  #Gráfico de tempo máximo e de dias diferentes, agora filtrado por uma lista específica
+  def max_day_time(self, df_submission):
+    #Convertendo para datetime
+    df_submission['createdAt'] = pd.to_datetime(df_submission['createdAt'])
+
+    #Criando o campo de tempo em segundos, já que vem em ms
+    df_submission['timeInSecounds'] = df_submission['timeConsuming'].divide(1000).astype(int)
+
+    #Agrupando por lista e questão e obtendo a quantidade máxima de tempo gasto
+    df_list_maxtime = df_submission[df_submission["timeInSecounds"] > 0].groupby(['list','question'])['timeInSecounds'].max().reset_index(name='maxTime')
+
+    #Total de segundos gasto em cada questão por aluno
+    df_user_secounds = df_submission[df_submission["timeInSecounds"] > 0].groupby(['registration','question','list'])['timeInSecounds'].sum().reset_index(name='totalSecounds')
+
+    #Dataframe sem duplicatas e com tempo maior que 0
+    df_without_duplicates = df_submission[df_submission["timeInSecounds"] > 0].drop(['environment','hitPercentage','timeConsuming','createdAt','timeInSecounds','char_change_number'], axis=1).drop_duplicates()
+
+    #Contando em quantos dias diferentes a questão foi submetida
+    df_user_days = df_without_duplicates.groupby(['registration','question','list'])['dateSubmission'].count().reset_index(name='differentDays')
+
+    #União das tabelas que tem o tempo em segundos e a quantidade de dias diferentes gastos por questão em um aluno
+    df_user_secounds_days = pd.merge(df_user_secounds, df_user_days, on=['registration','question','list'])
+
+    #Adicionando o campo nome
+    df_user_secounds_days = pd.merge(df_user_secounds_days, df_submission[['user','registration']].drop_duplicates(), on='registration')
+   
+    #Agrupando por lista e questão e obtendo a quantidade máxima de dias gastos
+    df_list_maxdays = df_user_secounds_days.groupby(['list','question'])['differentDays'].max().reset_index(name='maxDifferentDays')
+    
+    #União nos campoes de lista e questão
+    df_max_day_time = pd.merge(df_list_maxtime, df_list_maxdays, on=['list','question'])
+
+    #Retornando json
+    return df_max_day_time.to_json(force_ascii=False, orient='records') 
+
+  #Gráfico de pontos, que informa o tempo gasto vs a quantidade de submissões dessa questão
+  def df_questions_secounds(self, df_submission):#Scatter
+    #Convertendo para datetime
+    df_submission['createdAt'] = pd.to_datetime(df_submission['createdAt'])
+
+    #Criando o campo de tempo em segundos, já que vem em ms
+    df_submission['timeInSecounds'] = df_submission['timeConsuming'].divide(1000).astype(int)
+
+    #Descobrindo o tempo que cada questão levou para ser resolvida     
+    df_total_questions = df_submission[df_submission["timeInSecounds"] > 0].groupby(['question'])['question'].count().reset_index(name='quantity')
+    
+    #Quantidade total de submissões dela        
+    df_total_secounds = df_submission[df_submission["timeInSecounds"] > 0].groupby(['question'])['timeInSecounds'].sum().reset_index()
+    
+    #União no campo de questões
+    df_questions_secounds = pd.merge(df_total_questions, df_total_secounds, on='question')
+
+    #Retornando json
+    return df_questions_secounds.to_json(force_ascii=False, orient='records') 
+
+  #Gráfico por aluno, o tempo gasto por questão e o total de dias diferentes que ele tentou
+  def df_user_secounds_days(self, df_submission):#Scatter
+    #Convertendo para datetime
+    df_submission['createdAt'] = pd.to_datetime(df_submission['createdAt'])
+
+    #Criando o campo de tempo em segundos, já que vem em ms
+    df_submission['timeInSecounds'] = df_submission['timeConsuming'].divide(1000).astype(int)
+
+    #Criando campo com a data
+    df_submission['dateSubmission'] = df_submission['createdAt'].dt.date
+
+    #Dataframe sem duplicatas e com tempo maior que 0
+    df_without_duplicates = df_submission[df_submission["timeInSecounds"] > 0].drop(['environment','hitPercentage','timeConsuming','createdAt','timeInSecounds','char_change_number'], axis=1).drop_duplicates()
+
+    #Contando em quantos dias diferentes a questão foi submetida
+    df_user_days = df_without_duplicates.groupby(['registration','question','list'])['dateSubmission'].count().reset_index(name='differentDays')
+      
+    #Total de segundos gasto em cada questão por aluno
+    df_user_secounds = df_submission[df_submission["timeInSecounds"] > 0].groupby(['registration','question','list'])['timeInSecounds'].sum().reset_index(name='totalSecounds')
+    
+    #Unindo em matrícula, questão e lista
+    df_user_secounds_days = pd.merge(df_user_secounds, df_user_days, on=['registration','question','list'])
+    
+    #Adicionando o campo nome
+    df_user_secounds_days = pd.merge(df_user_secounds_days, df_submission[['user','registration']].drop_duplicates(), on='registration')
+    
+    #Retornando json
+    return df_user_secounds_days.to_json(force_ascii=False, orient='records') 
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
