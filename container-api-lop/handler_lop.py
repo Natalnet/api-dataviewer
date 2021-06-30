@@ -205,6 +205,11 @@ def get_graphs(id_class):
     media_GTNL = lop.media_graph_performance_student_list_test(df_performance_list, df_questions_selected, 'list')
     media_GEDL = lop.media_graph_performance_student_difficulty_list_test(df_performance_difficulty_list, df_questions_selected)
     media_GEAL = lop.media_graph_performance_subject_list_test(df_performance_subject_list)
+    #Gráfico 4, analise de questões e listas por tempo pra turma e alunos
+    GTTMQQMDD = lop.graph_max_different_days_time(df_submission)
+    GTTMDDL = lop.max_day_time(df_submission)
+    GATGQTDD = lop.df_user_secounds_days(df_submission)
+    GTTGQSQ = lop.df_questions_secounds(df_submission)    
   except Exception as e:
     raise ValueError('Error: generate data lists. ' + str(e))
   #Se não tiver nenhuma prova cadastrada  
@@ -223,6 +228,11 @@ def get_graphs(id_class):
       media_GTNP = json.dumps([{}])
       media_GEDP = json.dumps([{}])
       media_GEAP = json.dumps([{}])
+      #Gráfico 4, analise de questões e listas por tempo pra turma e alunos
+      GTTMQQMDD = json.dumps([{}])
+      GTTMDDL = json.dumps([{}])
+      GATGQTDD = json.dumps([{}])
+      GTTGQSQ = json.dumps([{}])
     except:
       raise ValueError('Error: insert empty in data tests')
   #Se existe provas cadastradas, gera os dados normalmente      
@@ -256,11 +266,13 @@ def get_graphs(id_class):
   name_graphs = ['"GENL"','"GENP"','"GTDL"','"GTDP"','"GTAL"','"GTAP"',
                  '"GTNL"','"GTNP"','"GEDL"','"GEDP"','"GEAL"','"GEAP"',
                  '"media_GTNL"','"media_GTNP"','"media_GEDL"','"media_GEDP"','"media_GEAL"','"media_GEAP"',
-                 '"GTDGL"','"GTDGA"','"GTDGD"']
+                 '"GTDGL"','"GTDGA"','"GTDGD"',
+                 '"GTTMQQMDD"','"GTTMDDL"','"GATGQTDD"','"GTTGQSQ"']
   graphs =      [GENL,GENP,GTDL,GTDP,GTAL,GTAP,
                  GTNL,GTNP,GEDL,GEDP,GEAL,GEAP,
                  media_GTNL,media_GTNP,media_GEDL,media_GEDP,media_GEAL,media_GEAP,
-                 GTDGL,GTDGA,GTDGD]
+                 GTDGL,GTDGA,GTDGD,
+                 GTTMQQMDD,GTTMDDL,GATGQTDD,GTTGQSQ]
   return lop.create_unique_json(name_graphs, graphs)
 
 def main():
