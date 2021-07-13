@@ -44,10 +44,7 @@ def verify_database(name_table):
 def insert_in_db(df, name_table):
 	#Se a consulta não retornar nenhum dado então retorne
 	if df is None:
-<<<<<<< HEAD
 		print('A consulta retornou sem nenhum dado novo, retornando')
-=======
->>>>>>> 3a1c158f351c157ecbdef1506191b3002f55cf4c
 		return
 	#Se tiver algum dado
 	else:
@@ -85,7 +82,6 @@ def update_questions():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-<<<<<<< HEAD
 	key = os.environ['SECRET_KEY']
 	endpoint_all_questions = os.environ['ENDPOINT_ALL_QUESTIONS']
 	try:
@@ -102,15 +98,6 @@ def update_questions():
 		return
 	except Exception as e:
 		print('O erro foi ' + str(e))
-=======
-	key = os.getenv('SECRET_KEY')
-	endpoint_all_questions = os.getenv('ENDPOINT_ALL_QUESTIONS')
-	#Consulta na API do LoP
-	df = lop.lop_question_db(endpoint_all_questions, key, date)
-	#Insere os dados novos na tabela respectiva no db
-	insert_in_db(df, name_table)
-	return
->>>>>>> 3a1c158f351c157ecbdef1506191b3002f55cf4c
 
 def update_teachers_classes():
 	name_table = 'teachers_classes'
@@ -118,15 +105,9 @@ def update_teachers_classes():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-<<<<<<< HEAD
 	key = os.environ['SECRET_KEY']
 	endpoint_all_classes = os.environ['ENDPOINT_ALL_CLASSES']
 	endpoint_teacher = os.environ['ENDPOINT_TEACHER'] 
-=======
-	key = os.getenv('SECRET_KEY')
-	endpoint_all_classes = os.getenv('ENDPOINT_ALL_CLASSES')
-	endpoint_teacher = os.getenv('ENDPOINT_TEACHER')
->>>>>>> 3a1c158f351c157ecbdef1506191b3002f55cf4c
 	try:
 		print('Realizando consulta na API')	
 		#Consulta
@@ -148,13 +129,8 @@ def update_submissions():
 	#Coletando a data mais recente de submissão na tabela específica para isso
 	date = verify_database('last_consult_submissions')
 	#Leitura de variáveis de ambiente
-<<<<<<< HEAD
 	key = os.environ['SECRET_KEY']
 	endpoint_all_submissions = os.environ['ENDPOINT_ALL_SUBMISSIONS']
-=======
-	key = os.getenv('SECRET_KEY')
-	endpoint_all_submissions = os.getenv('ENDPOINT_ALL_SUBMISSIONS')
->>>>>>> 3a1c158f351c157ecbdef1506191b3002f55cf4c
 	#Coletando a data atual para usar como limite
 	actual_date = datetime.now()
 	#Retira problemas para a conversão de data
