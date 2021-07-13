@@ -6,11 +6,11 @@ import pandas as pd
 from datetime import datetime
 from classes.manage_lop import Lop
 from classes.manage_db import Manage_db
+from classes.manage_email import Email
 
 #Esse arquivo realiza as atualiações no db. Os dados vem da API do LoP
 #Se faz uso da lib schedule que permite agendar eventos
 #nesse caso vamos agendar a atualização do db em uma hora definida
-
 
 #Lendo variáveis de ambiente
 PASSWORD_DB = os.getenv('PASSWORD_DB')
@@ -19,6 +19,7 @@ USER_DB = os.getenv('USER_DB')
 #Instanciando as classes
 lop = Lop()		
 psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop', user = USER_DB, password = PASSWORD_DB)
+email = Email()
 
 #Essa função verifica a base de dados e definirá a data em que
 #será realizada a consulta dessa tabela. Caso a tabela esteja vazia
@@ -37,12 +38,12 @@ def verify_database(name_table):
 	else:
 		print('A tabela ' + name_table + ' possui registros, sendo o último deles ' +  query['createdAt'][0])
 		#Retorna a ultima data
-		return query['createdAt'][0]
+		return query['createdAt'][0]		
 
 #Essa função é responsável por inserir os novos dados no db
 def insert_in_db(df, name_table):
 	#Se a consulta não retornar nenhum dado então retorne
-	if df.empty:
+	if df is None:
 		print('A consulta retornou sem nenhum dado novo, retornando')
 		return
 	#Se tiver algum dado
@@ -63,7 +64,10 @@ def insert_in_db(df, name_table):
 			return
 		except Exception as e:
 			#Caso a inserção não de certo
-			#pensar em algo como enviar por email
+			email.send_email(type_message = 'forgot_password', 
+							 subject = 'Erro na função de inserção no banco',
+							 error_message = str(e)
+							 )		
 			print('Erro em inserir na tabela de ' + name_table + ' ' + str(e))
 			return
 
@@ -78,8 +82,8 @@ def update_questions():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.getenv('SECRET_KEY')
-	endpoint_all_questions = os.getenv('ENDPOINT_ALL_QUESTIONS')
+	key = os.environ['SECRET_KEY']
+	endpoint_all_questions = os.environ['ENDPOINT_ALL_QUESTIONS']
 	print('Realizando consulta na API')
 	#Consulta na API do LoP
 	df = lop.lop_question_db(endpoint_all_questions, key, date)
@@ -93,9 +97,9 @@ def update_teachers_classes():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.getenv('SECRET_KEY')
-	endpoint_all_classes = os.getenv('ENDPOINT_ALL_CLASSES')
-	endpoint_teacher = os.getenv('ENDPOINT_TEACHER')
+	key = os.environ['SECRET_KEY']
+	endpoint_all_classes = os.environ['ENDPOINT_ALL_CLASSES']
+	endpoint_teacher = os.environ['ENDPOINT_TEACHER'] 
 	print('Realizando consulta na API')
 	try:
 		#Consulta
@@ -111,11 +115,11 @@ def update_teachers_classes():
 def update_submissions():
 	name_table = 'submissions'
 	print('Inicializando função de update de ' + name_table)
-	#Coletando a data mais recente dessa tabela no bd
-	date = verify_database(name_table)
+	#Coletando a data mais recente de submissão na tabela específica para isso
+	date = verify_database('last_consult_submissions')
 	#Leitura de variáveis de ambiente
-	key = os.getenv('SECRET_KEY')
-	endpoint_all_submissions = os.getenv('ENDPOINT_ALL_SUBMISSIONS')
+	key = os.environ['SECRET_KEY']
+	endpoint_all_submissions = os.environ['ENDPOINT_ALL_SUBMISSIONS']
 	#Coletando a data atual para usar como limite
 	actual_date = datetime.now()
 	#Retira problemas para a conversão de data
@@ -148,8 +152,23 @@ def update_submissions():
   				df = lop.lop_submission_db(endpoint_all_submissions, key, date, date_limit)
   				print('Requisição aceita. Os dados são:')
   				print(df)
-  				#Insere os dados novos na tabela respectiva no db
-  				insert_in_db(df, name_table)
+  				#Se não houver novos dados, vou inserir na tabela da lista de ultimas requisições
+  				#a data limite
+  				if df is None:
+  					#Transforma a data limite em dataframe
+  					df_actual_date = pd.DataFrame([date_limit], columns = ['createdAt'])
+  					#Inserindo no banco a data limite
+  					print('Sem novos inserindo no banco apenas a data limite')
+  					insert_in_db(df_actual_date, 'last_consult_submissions')
+  				#Se houver novos dados, então armazena os dados e armazena a data do último registro
+  				else:
+  					date_last_submissions = df['createdAt'][-1:].values
+  					df_date_last_sub = pd.DataFrame(date_last_submissions, columns = ['createdAt'])
+  					print('Inserindo a data da última submissão na tabela')
+  					insert_in_db(df_date_last_sub, 'last_consult_submissions')
+	  				#Insere os dados novos na tabela respectiva no db
+	  				print('Inserindo novos dados na tabela de submissões')
+	  				insert_in_db(df, name_table)
   				#Se funcionar o iterador recebe 5 que é o valor que sai do laço de tentativas
   				j = 5
   				#Mudamos o estado da flag pra mostrar que a consulta foi realizada com sucesso
@@ -160,7 +179,10 @@ def update_submissions():
   				j = j + 1
   		#Se a consulta não foi aceita		
   		if requisition_accepted == False:
-  			#***** local de futuro envio de email
+  			#email.send_email(type_message = 'forgot_password', 	
+							 #subject = 'Requisições recusadas',					
+							 #error_message = 'Servidor do LoP rejeitou 5 vezes as requesições de submissão.'
+							 #)	
   			print('Requisição recusada entre ' + date + ' e ' + date_limit)
   			return
   		else:		
@@ -172,8 +194,8 @@ def update_lists():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.getenv('SECRET_KEY')
-	endpoint_all_lists = os.getenv('ENDPOINT_ALL_LISTS')
+	key = os.environ['SECRET_KEY']
+	endpoint_all_lists = os.environ['ENDPOINT_ALL_LISTS']
 	print('Realizando consulta na API')
 	#Consulta
 	df = lop.lop_lists_db(endpoint_all_lists, key, date)
@@ -187,8 +209,8 @@ def update_tests():
 	#Coletando a data mais recente dessa tabela no bd
 	date = verify_database(name_table)
 	#Leitura de variáveis de ambiente
-	key = os.getenv('SECRET_KEY')
-	endpoint_tests = os.getenv('ENDPOINT_ALL_TESTS')
+	key = os.environ['SECRET_KEY']
+	endpoint_tests = os.environ['ENDPOINT_ALL_TESTS']
 	print('Realizando consulta na API')
 	#Consulta
 	df = lop.lop_tests_db(endpoint_tests, key, date)
@@ -200,18 +222,19 @@ def update_tests():
 def update_db():
 	try:
 		print('Na função enquanto não é chegada a hora da tarefa programada')
-		schedule.every().day.at('11:42').do(update_lists)
-		schedule.every().day.at('11:43').do(update_tests)
+		schedule.every().day.at('21:20').do(update_lists)
+		schedule.every().day.at('21:21').do(update_tests)
 		schedule.every().day.at('11:44').do(update_teachers_classes)
 		schedule.every().day.at('22:17').do(update_questions)		
-		schedule.every().day.at('04:00').do(update_submissions)
+		schedule.every().day.at('00:03').do(update_submissions)
 		#Para não chamar a função mais uma vez, é inserido um intervalo de tempo
 		#para a próxima chamada de função
-		time.sleep(20)
+		#time.sleep(20)
 	except Exception as e:
 	    return 'Error: update function' + str(e)
 
 while True:
 	update_db()
 	schedule.run_pending()
-	time.sleep(1)
+	#time.sleep(1)
+	#update_submissions()
