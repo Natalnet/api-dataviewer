@@ -5,6 +5,8 @@
 # Utiliza uma imagem oficial do python como base
 FROM python:3.8
 
+ENV PYTHONUNBUFFERED=1
+
 # Expõe a porta pela qual o container vai se comunicar. Nesse caso, escolhemos arbitrariamente a porta 3000
 EXPOSE 3000
 

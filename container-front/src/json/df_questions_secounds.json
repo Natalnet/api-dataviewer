@@ -1,0 +1,402 @@
+[
+  {
+    "question": "Alocação de matriz",
+    "quantity": 72,
+    "timeInSecounds": 22945
+  },
+  {
+    "question": "Batalha naval",
+    "quantity": 483,
+    "timeInSecounds": 175916
+  },
+  {
+    "question": "Batalha naval - 1 tiro",
+    "quantity": 18,
+    "timeInSecounds": 12460
+  },
+  {
+    "question": "Big int",
+    "quantity": 29,
+    "timeInSecounds": 10558
+  },
+  {
+    "question": "Bingo (ponteiros)",
+    "quantity": 2,
+    "timeInSecounds": 8518
+  },
+  {
+    "question": "Bubble sort recursivo",
+    "quantity": 8,
+    "timeInSecounds": 14672
+  },
+  {
+    "question": "C-Vector",
+    "quantity": 74,
+    "timeInSecounds": 91702
+  },
+  {
+    "question": "CRUD - Com alocação dinâmica - Rep",
+    "quantity": 54,
+    "timeInSecounds": 9511
+  },
+  {
+    "question": "CRUD 2 - Relações Entre os Dados",
+    "quantity": 4,
+    "timeInSecounds": 4786
+  },
+  {
+    "question": "Campos de altitude (height field)",
+    "quantity": 116,
+    "timeInSecounds": 46860
+  },
+  {
+    "question": "Caça-Palavras (ponteiros)",
+    "quantity": 124,
+    "timeInSecounds": 80427
+  },
+  {
+    "question": "Comparação com switch",
+    "quantity": 170,
+    "timeInSecounds": 58668
+  },
+  {
+    "question": "Conjunto de inteiros",
+    "quantity": 273,
+    "timeInSecounds": 606648
+  },
+  {
+    "question": "Conjunto de inteiros II",
+    "quantity": 290,
+    "timeInSecounds": 272952
+  },
+  {
+    "question": "Contador de maiúsculas e minúsculas",
+    "quantity": 21,
+    "timeInSecounds": 13988
+  },
+  {
+    "question": "Contador de substrings",
+    "quantity": 543,
+    "timeInSecounds": 425817
+  },
+  {
+    "question": "Contar quantos são maiores de 18 anos",
+    "quantity": 37,
+    "timeInSecounds": 28112
+  },
+  {
+    "question": "Conversão de CASE",
+    "quantity": 141,
+    "timeInSecounds": 16665
+  },
+  {
+    "question": "Create, read, update and delete - CRUD",
+    "quantity": 688,
+    "timeInSecounds": 590243
+  },
+  {
+    "question": "Crescente, decrescente ou nenhum dos dois",
+    "quantity": 377,
+    "timeInSecounds": 129092
+  },
+  {
+    "question": "Cruzamento de Retas",
+    "quantity": 196,
+    "timeInSecounds": 164185
+  },
+  {
+    "question": "Dados de aluno em struct",
+    "quantity": 742,
+    "timeInSecounds": 888563
+  },
+  {
+    "question": "Desenho vetorial",
+    "quantity": 45,
+    "timeInSecounds": 52729
+  },
+  {
+    "question": "Desenho vetorial II",
+    "quantity": 63,
+    "timeInSecounds": 14543
+  },
+  {
+    "question": "Dia da semana (ponteiros)",
+    "quantity": 1225,
+    "timeInSecounds": 8349149
+  },
+  {
+    "question": "Duplicatas",
+    "quantity": 479,
+    "timeInSecounds": 196976
+  },
+  {
+    "question": "Dígito na posição (com função)",
+    "quantity": 30,
+    "timeInSecounds": 38022
+  },
+  {
+    "question": "Exponencial do Número Neperiano - Recursivo",
+    "quantity": 12,
+    "timeInSecounds": 25231
+  },
+  {
+    "question": "Fluxograma",
+    "quantity": 163,
+    "timeInSecounds": 34761
+  },
+  {
+    "question": "Fluxograma 2",
+    "quantity": 678,
+    "timeInSecounds": 688276
+  },
+  {
+    "question": "Funções - Médias UFRN",
+    "quantity": 19,
+    "timeInSecounds": 36504
+  },
+  {
+    "question": "Funções - Ordenar vetor",
+    "quantity": 294,
+    "timeInSecounds": 432751
+  },
+  {
+    "question": "Funções - cifra de César",
+    "quantity": 446,
+    "timeInSecounds": 344363
+  },
+  {
+    "question": "Funções - número perfeito",
+    "quantity": 268,
+    "timeInSecounds": 112892
+  },
+  {
+    "question": "Funções - número primo",
+    "quantity": 35,
+    "timeInSecounds": 7318
+  },
+  {
+    "question": "Funções - ordenação vetor",
+    "quantity": 17,
+    "timeInSecounds": 16435
+  },
+  {
+    "question": "Funções - teorema de Pitágoras",
+    "quantity": 204,
+    "timeInSecounds": 231674
+  },
+  {
+    "question": "Gomoku",
+    "quantity": 671,
+    "timeInSecounds": 300003
+  },
+  {
+    "question": "Gomoku horizontal e vertical",
+    "quantity": 34,
+    "timeInSecounds": 58920
+  },
+  {
+    "question": "Hexadecimal",
+    "quantity": 149,
+    "timeInSecounds": 72662
+  },
+  {
+    "question": "Iniciais maiúsculas",
+    "quantity": 228,
+    "timeInSecounds": 173417
+  },
+  {
+    "question": "Inserir string em uma posição",
+    "quantity": 408,
+    "timeInSecounds": 583876
+  },
+  {
+    "question": "Inversor de números (ponteiros)",
+    "quantity": 7,
+    "timeInSecounds": 7462
+  },
+  {
+    "question": "Loop com recursão",
+    "quantity": 8,
+    "timeInSecounds": 8234
+  },
+  {
+    "question": "Maior e menor entre 3 números",
+    "quantity": 222,
+    "timeInSecounds": 117771
+  },
+  {
+    "question": "Maior partição com soma K ou menor - reucursiva",
+    "quantity": 8,
+    "timeInSecounds": 35186
+  },
+  {
+    "question": "Matriz de permutação (0\/1)",
+    "quantity": 291,
+    "timeInSecounds": 106379
+  },
+  {
+    "question": "Matriz identidade",
+    "quantity": 11,
+    "timeInSecounds": 8508
+  },
+  {
+    "question": "Multiplexador de strings",
+    "quantity": 456,
+    "timeInSecounds": 280431
+  },
+  {
+    "question": "Multiplicação de matrizes",
+    "quantity": 330,
+    "timeInSecounds": 409055
+  },
+  {
+    "question": "Máximo e mínimo de matriz quadrada (ponteiros)",
+    "quantity": 4,
+    "timeInSecounds": 3178
+  },
+  {
+    "question": "Média de 3 notas",
+    "quantity": 68,
+    "timeInSecounds": 69560
+  },
+  {
+    "question": "Média e desvio-padrão",
+    "quantity": 224,
+    "timeInSecounds": 144762
+  },
+  {
+    "question": "Numeros Fracionários",
+    "quantity": 12,
+    "timeInSecounds": 8196
+  },
+  {
+    "question": "Números de Fibonacci em um intervalo",
+    "quantity": 13,
+    "timeInSecounds": 45071
+  },
+  {
+    "question": "Números na sequencia de Fibnot em um intervalo",
+    "quantity": 156,
+    "timeInSecounds": 304566
+  },
+  {
+    "question": "Operações Enumeradas",
+    "quantity": 14,
+    "timeInSecounds": 7205
+  },
+  {
+    "question": "Ordenação de string",
+    "quantity": 451,
+    "timeInSecounds": 296110
+  },
+  {
+    "question": "Ordenação indireta (ponteiros)",
+    "quantity": 213,
+    "timeInSecounds": 157512
+  },
+  {
+    "question": "Palíndromo",
+    "quantity": 59,
+    "timeInSecounds": 50881
+  },
+  {
+    "question": "Palíndromo com recursão",
+    "quantity": 765,
+    "timeInSecounds": 651045
+  },
+  {
+    "question": "Pares, ímpares, positivos e negativos",
+    "quantity": 162,
+    "timeInSecounds": 42534
+  },
+  {
+    "question": "Pilha",
+    "quantity": 36,
+    "timeInSecounds": 17186
+  },
+  {
+    "question": "Ponto Fixo",
+    "quantity": 62,
+    "timeInSecounds": 284158
+  },
+  {
+    "question": "População de coelhos",
+    "quantity": 107,
+    "timeInSecounds": 73682
+  },
+  {
+    "question": "Produto escalar entre vetores",
+    "quantity": 222,
+    "timeInSecounds": 282381
+  },
+  {
+    "question": "Rotação de bits",
+    "quantity": 123,
+    "timeInSecounds": 29742
+  },
+  {
+    "question": "Separação numérica",
+    "quantity": 333,
+    "timeInSecounds": 131507
+  },
+  {
+    "question": "Soma de dois números pares",
+    "quantity": 236,
+    "timeInSecounds": 187161
+  },
+  {
+    "question": "Soma de dois vetores",
+    "quantity": 107,
+    "timeInSecounds": 21797
+  },
+  {
+    "question": "Soma de dois vetores (ponteiros)",
+    "quantity": 14,
+    "timeInSecounds": 2799
+  },
+  {
+    "question": "Soma de matrizes",
+    "quantity": 9,
+    "timeInSecounds": 2042
+  },
+  {
+    "question": "Soma de valores ímpares",
+    "quantity": 218,
+    "timeInSecounds": 61592
+  },
+  {
+    "question": "Soma dos dígitos",
+    "quantity": 109,
+    "timeInSecounds": 47373
+  },
+  {
+    "question": "Somando o intervalo",
+    "quantity": 123,
+    "timeInSecounds": 73006
+  },
+  {
+    "question": "Substring",
+    "quantity": 48,
+    "timeInSecounds": 30722
+  },
+  {
+    "question": "Substring (ponteiros)",
+    "quantity": 554,
+    "timeInSecounds": 203763
+  },
+  {
+    "question": "União e ordenação de vetores",
+    "quantity": 81,
+    "timeInSecounds": 53333
+  },
+  {
+    "question": "Valor de Pi Recursivo",
+    "quantity": 199,
+    "timeInSecounds": 89563
+  },
+  {
+    "question": "Valores em um intervalo",
+    "quantity": 264,
+    "timeInSecounds": 192258
+  }
+]

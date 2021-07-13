@@ -1,0 +1,32 @@
+[
+    {
+        "difficulty": "Muito Fácil",
+        "approved": 34,
+        "disapproved": 73,
+        "missing": 15
+    },
+    {
+        "difficulty": "Fácil",
+        "approved": 21,
+        "disapproved": 85,
+        "missing": 16
+    },
+    {
+        "difficulty": "Médio",
+        "approved": 21,
+        "disapproved": 84,
+        "missing": 17
+    },
+    {
+        "difficulty": "Difícil",
+        "approved": 30,
+        "disapproved": 76,
+        "missing": 16
+    },
+    {
+        "difficulty": "Muito Difícil",
+        "approved": 13,
+        "disapproved": 91,
+        "missing": 18
+    }
+]
