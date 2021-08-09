@@ -3,6 +3,8 @@
 # com o dockerfile, sendo este utilizado quando desejamos criar nossa própria imagem de forma mais maleável (mesmo que para isso precisemos utilizar outra imagem como base)
 
 # Observação: uma vez que determinado parâmetro tenha sido comentado, ele só será comentado novamente caso apresente alguma particularidade.
+# Observação 2: Caso o sistema precise ser instalado em uma nova máquina, será necessário revisitar o tutorial da digital ocean para garantir o funcionamento do nginx e do certbot.
+# https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose
 
 # Versão do docker-compose a ser utilizada
 version: "3.7"
@@ -18,30 +20,27 @@ services:
       # Define a localização do dockerfile relativo a este container
       dockerfile: ./container-api-lop/Dockerfile 
     # Define o nome do container (a forma como ele será visualizado pelo docker, uma vez que o container for criado)
+    # Importante evidenciar: o container se chama container-api-lop, mas o serviço se chama api-lop
     container_name: container-api-lop
     # Define o comportamento do container caso ele venha a cair. Neste caso, definimos que sempre que ele cair, irá ser inicializado novamente
     restart: always 
-    # Define que só irá ser inicializado após o serviço db_lop ser inicalizado (isso não quer dizer que ele espera o container db_lop ser totalmente construído)
+    # Define que só irá ser inicializado após o serviço db-lop e db-users serem inicializados (isso não quer dizer que ele espera ambos serem totalmente construídos)
     depends_on:
       - db-lop 
       - db-users
+    # O container recebe o usuário e senha do postgres (definido no próximo serviço) pois o código precisa consultar o banco de dados.
+    # As variáveis são definidas com base em variáveis locais, tendo em vista que se trata de conteúdo sensível. Estão definidas no arquivo oculto .env
     environment:
       USER_DB: ${USER_DB}
       PASSWORD_DB: ${PASSWORD_DB}
-   # Os comentários abaixo eram para inicializar o container desta api apenas quando o container do db_lop estivesse totalmente construído. Contudo, por enquanto estamos deixando isso de lado
-      #sqldb: 
-        #condition: service_healthy
     # Define qual porta local estará associado a qual porta do container (Porta local:porta exposta pelo container)
     ports:
       # Como padrão do Flask, associamos a porta local 5000 como sendo a porta 5000 do container
       - "5000:5000" 
-    # Não sei exatamente como isso funciona, nem se isso é necessário, mas estamos linkando a todos os serviços que será necessário uma comunicação direta
-    links:
-      - db-lop
-      - db-users
-    # Define a qual network o serviço irá se conectar (por padrão, o docker-compose já cria uma network sem precisar especificar, mas pode ser que mais pra frente seja necessário por conta do nginx)
+    # Define a qual network o serviço irá se conectar (por padrão, o docker-compose já cria uma network sem precisar especificar, mas optamos por padronizar e evidenciar)
     networks:
       - backend
+    # Limita o tamanho dos logs que ficarão salvos (os mais antigos são apagados). Caso não fosse limitado, com o tempo passaria a ocupar uma grande quantidade de memória
     logging:
       options:
         max-size: "10m"
@@ -58,7 +57,7 @@ services:
     # A porta padrão do postgres é a 5432
     ports:
       - "5432:5432"
-    # talvez essa linha não seja necessária, mas garante que a porta 5432 está exposta para todos os containers
+    # Atualmente não é necessário, mas evidencia de modo público a porta a qual o banco está utilizando
     expose:
       - 5432
     # Define variáveis de ambientes para o container, as quais serão utilizadas para autenticar o usuário. Todas estão na documentação do postgres para o docker
@@ -67,8 +66,9 @@ services:
       POSTGRES_PASSWORD: ${PASSWORD_DB} #${POSTGRES_PASSWORD} # isso é provisório, qnd o projeto ja estiver tudo ok a gente vai inserir essa senha na hora de dar o docker-compose up
       # Define o nome do database a se conectar
       POSTGRES_DB: dataviewer_lop
+      # Nos permite criar um subdiretório no diretório data (onde serão armazenados os dois bancos de dados do projeto)
       PGDATA: /var/lib/postgresql/data/db-lop
-    # O parâmetro volumes se relaciona a onde os dados armazenados no container estarão localizados fisicamente, na máquina local. Obs: todas são informações 
+    # O parâmetro volumes se relaciona a onde os dados armazenados no container estarão localizados fisicamente, na máquina local.
     # Sintaxe: - (local:virtual)
     volumes:
       # Define onde o script de inicialização das tabelas está localizado.
@@ -81,12 +81,6 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-    # Os comentários abaixo eram para que outros serviços pudessem verificar quando este container estivesse 100% construído, como condição de inicialização de outros serviços. Por enquanto, não está sendo utilizado
-    # healthcheck: # acho q isso n vai ser necessário
-    #  test: ["CMD-SHELL", "pg_isready -U postgres"] 
-    #  interval: 5s
-    #  timeout: 5s
-    #  retries: 5
       
   # Aqui definiremos as condições de inicialização do serviço de atualização do nosso banco de dados do lop no dataviewer    
   update-db-lop:
@@ -94,17 +88,14 @@ services:
       context: . 
       dockerfile: ./container-update-db-lop/Dockerfile
     container_name: update-db-lop-container
-    #restart: always
+    # Ocultamos o restart:always pois o container terá a natureza de encerrar após a execução, e ser inicializado novamente via Cron
     depends_on:
       - db-lop
-      # Os comentários abaixo eram para inicializar o container desta api apenas quando o container do sqldb estivesse totalmente construído. Contudo, por enquanto estamos deixando isso de lado
-      #db_lop: 
-        #condition: service_healthy
     ports:
       - "3000:3000" 
     # Variáveis locais as quais serão utilizadas por este serviço. 
     environment:
-      # O SECRET_KEY não foi especificado pois é conteúdo sensível, e deve ser inserido previamente na máquina
+      # Tendo em vista que o código se utiliza de vários endpoints e precisa ter acesso também ao banco de dados, as variáveis abaixo serão necessárias
       SECRET_KEY: ${SECRET_KEY}
       USER_DB: ${USER_DB}
       PASSWORD_DB: ${PASSWORD_DB}
@@ -114,25 +105,21 @@ services:
       ENDPOINT_ALL_SUBMISSIONS: https://api.lop.natalnet.br:3001/dataScience/submission?key=
       ENDPOINT_ALL_TESTS: https://api.lop.natalnet.br:3001/dataScience/test?key=
       ENDPOINT_TEACHER: https://api.lop.natalnet.br:3001/dataScience/teacher?key=
-    links:
-      - db-lop
     networks:
       - backend
     logging:
       options:
         max-size: "10m"
         max-file: "3"
-    # O comando abaixo não será utilizado, estamos guardando por enquanto apenas para termos uma alternativa de onde recorrer caso seja necessário aguardar o container do banco de dados estar 100% construído
-    #command: ["./scripts/db/wait-for-it.sh", 
 
   api-users:
     build:
-      context: . #na construção deste container, essa linha permite que o dockerfile se localize através da pasta principal todos os diretórios
-      dockerfile: ./container-api-users/Dockerfile # por ser definido um contexto diferente do habitual, é necessário especificar onde está o dockerifle de construção deste container
-    container_name: api-users-container # define o nome do container
-    restart: always # reinicia o container sempre 
+      context: . 
+      dockerfile: ./container-api-users/Dockerfile 
+    container_name: api-users-container 
+    restart: always 
     depends_on: 
-      - db-users # especifica que o container usersdb precisa ser inicializado antes
+      - db-users 
     environment:
       USER_DB: ${USER_DB}
       PASSWORD_DB: ${PASSWORD_DB}
@@ -141,8 +128,6 @@ services:
       PASSWORD_EMAIL: ${PASSWORD_EMAIL}
     ports:
       - "5050:5050"
-    links:
-      - db-users
     networks:
       - backend
     logging:
@@ -155,6 +140,7 @@ services:
     hostname: postgres
     container_name: db-users-container
     restart: always
+    # Tendo em vista que a porta padrão do postgres é a 5432, utilizamos a porta local 5431 conectada a porta do container 5432
     ports:
       - "5431:5432"
     expose:
@@ -173,7 +159,8 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-      
+  
+  #Atualmente, o serviço do nginx está encarregado tanto do nginx como do front-end. O nginx é responsável pelo proxy reverso.
   nginx:
     build:
       context: .
@@ -183,6 +170,7 @@ services:
       - api-lop
     container_name: nginx-container
     restart: always
+    # Por padrão, o container do nginx utiliza a porta 80. Contudo, iremos utilizar a porta 443, mas não podemos descartar a porta 80 tendo em vista que é necessária para o certbot.
     ports:
       - "443:443"
       - "80:80"
@@ -191,6 +179,7 @@ services:
       - 443
     networks:
       - backend
+    # Volumes necessários para sua associação com o certbot e consequente autenticação.
     volumes:
       - web-root:/var/www/html
       - certbot-etc:/etc/letsencrypt
@@ -201,15 +190,19 @@ services:
         max-size: "10m"
         max-file: "3"
       
+  # O certbot é responsável pela autenticação. 
+   
   certbot:
     image: certbot/certbot
     container_name: certbot
+    # Volumes especificados no tutorial da digitalocean
     volumes:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - web-root:/var/www/html
     depends_on:
       - nginx
+    # Comando especificado no tutorial da digitalocean
     command: certonly --webroot --webroot-path=/var/www/html --email erros.dataviewer@gmail.com --agree-tos --no-eff-email --staging -d dataviewer.natalnet.br -d www.dataviewer.natalnet.br
     networks:
       - backend
@@ -218,17 +211,19 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  # Serviço que não tem relevância para o projeto final. O utilizamos para realizar pequenos testes com scripts em Python
   testing:
     build:
       context: .
       dockerfile: ./container-testing/Dockerfile
     container_name: container-testing
-#    restart: no
+    # restart: no
     logging:
       options:
         max-size: "10m"
         max-file: "3"
-       
+
+# Volumes especificados no tutorial da digitalocean. Se relaciona ao nginx e ao certbot.
 volumes:
   certbot-etc:
   certbot-var:
