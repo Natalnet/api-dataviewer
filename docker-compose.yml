@@ -77,8 +77,6 @@ services:
       - ./db-data/db-lop:/var/lib/postgresql/data/db-lop
     networks:
       - backend
-    networks:
-      - backend
     logging:
       options:
         max-size: "10m"
@@ -96,7 +94,7 @@ services:
       context: . 
       dockerfile: ./container-update-db-lop/Dockerfile
     container_name: update-db-lop-container
-    restart: always
+    #restart: always
     depends_on:
       - db-lop
       # Os comentários abaixo eram para inicializar o container desta api apenas quando o container do sqldb estivesse totalmente construído. Contudo, por enquanto estamos deixando isso de lado
@@ -219,7 +217,18 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-        
+
+  testing:
+    build:
+      context: .
+      dockerfile: ./container-testing/Dockerfile
+    container_name: container-testing
+#    restart: no
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+       
 volumes:
   certbot-etc:
   certbot-var:

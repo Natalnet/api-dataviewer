@@ -5,7 +5,7 @@
 # Utiliza uma imagem oficial do python como base
 FROM python:3.8
 
-ENV PYTHONUNBUFFERED=1
+#ENV PYTHONUNBUFFERED=1
 
 # Expõe a porta pela qual o container vai se comunicar. Nesse caso, escolhemos arbitrariamente a porta 3000
 EXPOSE 3000
@@ -31,3 +31,15 @@ RUN pip install -r requirements.txt
 COPY ./container-update-db-lop/update_lop_db.py /app
 # Roda o programa principal do container (update_db.py) do diretório /app quando o container for inicializado.
 CMD python update_lop_db.py
+
+#RUN apt-get update && apt-get -y install cron
+
+#COPY crontab /etc/cron.d/crontab
+
+#RUN chmod 0644 /etc/cron.d/crontab
+#RUN /usr/bin/crontab /etc/cron.d/crontab
+
+#RUN crontab crontab
+
+#CMD ["cron", "-f"]
+#CMD ["crond", "-f"]
