@@ -20,6 +20,7 @@ lop = Lop()
 psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop', user = USER_DB, password = PASSWORD_DB)
 email = Email()
 
+
 #Essa função verifica a base de dados e definirá a data em que
 #será realizada a consulta dessa tabela. Caso a tabela esteja vazia
 #o retorno será a primeira data que se tem cadastro no lop
