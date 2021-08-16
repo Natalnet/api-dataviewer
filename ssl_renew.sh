@@ -5,4 +5,5 @@ DOCKER="/usr/bin/docker"
 
 cd /home/admin/api-dataviewer/
 $COMPOSE run certbot renew && $COMPOSE kill -s SIGHUP nginx
-$DOCKER system prune -af
+$COMPOSE rm -s -v -f nginx 
+$DOCKER image rm -f api-dataviewer_nginx
