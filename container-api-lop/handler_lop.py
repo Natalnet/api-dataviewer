@@ -72,8 +72,8 @@ def get_lists():
 def get_tests():
   try:
     df_tests = psql.search(table='tests')
-    json_lists = df_lists.to_json(force_ascii = False, orient = 'records')
-    return json_lists
+    json_tests = df_tests.to_json(force_ascii = False, orient = 'records')
+    return json_tests
   except Exception as e:
     raise ValueError('Error: reading table lists, ' + str(e))
 
