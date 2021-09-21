@@ -59,6 +59,36 @@ def get_questions():
   except Exception as e:
     raise ValueError('Error: reading table questions, ' + str(e))
 
+@app.route('/get_lists', methods = ['GET'])  
+def get_lists():
+  try:
+    df_lists = psql.search(table='lists')
+    json_lists = df_lists.to_json(force_ascii = False, orient = 'records')
+    return json_lists
+  except Exception as e:
+    raise ValueError('Error: reading table lists, ' + str(e))
+
+@app.route('/get_tests', methods = ['GET'])  
+def get_tests():
+  try:
+    df_tests = psql.search(table='tests')
+    json_lists = df_lists.to_json(force_ascii = False, orient = 'records')
+    return json_lists
+  except Exception as e:
+    raise ValueError('Error: reading table lists, ' + str(e))
+
+@app.route('/get_submissions/<id_class>', methods = ['GET'])
+def get_submissions(id_class):
+  #collect data
+  data = pd.DataFrame([id_class], columns = ['id_class'])
+  try:
+    condition = "WHERE id_class = '" + data.iloc[0,0] + "'"
+    df_submission = psql.search(table='submissions', condition=condition)
+    json_submission = df_submission.to_json(force_ascii = False, orient = 'records')
+    return json_submission
+  except Exception as e:
+    raise ValueError('Error: reading table submissions')
+        
 @app.route('/post_graphs', methods = ['POST'])
 def post_graphs():
   try:
