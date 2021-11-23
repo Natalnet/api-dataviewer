@@ -1,6 +1,6 @@
 # Versão de Developer do DATAVIEWER
 
-Nessa branch, contém os arquivos necessários para rodar a versão atual de desenvolvimento do Dataviewer.é uma branch teste para futuramente ser alocada no repositório oficial do projeto.
+Nessa branch, contém os arquivos necessários para rodar a versão atual de desenvolvimento do Dataviewer.
 
 # Conteúdo dos Containers
 
@@ -20,9 +20,11 @@ Será acessado por [http://localhost:3000/](http://localhost:3000/)
 Para darmos run nos container, basta seguir os seguintes passos:
 
 - Ter o Docker instalado em sua maquina, caso não tenha pode baixar [aqui](https://www.docker.com/products/docker-desktop)
-- Clonar este repositório na sua maquina com ```git clone linkdabranch```
-- Rodar o comando ```docker-compose up -d```, na primeira vez tende a demorar um pouco para fazer o build de todas as imagens
-- Acessar [http://localhost:15432/](http://localhost:15432/) para e utilizar ```postgres@email.com``` para o email e ```postgres``` para senha
+- Clonar este repositório na sua maquina com ```git clone https://github.com/Natalnet/api-dataviewer.git```
+- Entrar na pasta do repositório utilizando ```cd api-dataviewer```
+- Se conectar com a branch da Versão-Dev com o comando ```git checkout Versao-Dev```
+- Dentro da pasta rodar o comando ```docker-compose up -d```, na primeira vez tende a demorar um pouco para fazer o build de todas as imagens
+- Acessar [http://localhost:15432/](http://localhost:15432/) e utilizar ```postgres@email.com``` para o email e ```postgres``` para senha
 - Criar um novo server com o nome de ```Dataviewer``` e na aba Connection, em host colocamos ```db-lop``` , em username colocamos ```postgres``` e password ```postgres``` também
 - Dentro do server criado, criamos um novo DB chamado ```db-lop```
 - Para fazer o restore do banco de dados, clicamos com botão direito em cima do banco de dados e selecionamos o restore.Em file, damos o upload da cópia do db que os desenvolvedores tem disponivel.
