@@ -15,12 +15,12 @@ urllib3.disable_warnings()
 
 
 #Lendo variáveis de ambiente
-PASSWORD_DB = os.getenv('PASSWORD_DB')
-USER_DB = os.getenv('USER_DB')
+PASSWORD_DB = 'postgres'
+USER_DB = 'postgres'
 
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'db-users',
+psql = Manage_db(database = 'db-users', port = '5432', host = 'db-lop',
 				 user = USER_DB, password = PASSWORD_DB)
 #psql = Manage_db(database = 'dataviewer_users', port = '5432', host = 'localhost')
 email = Email()

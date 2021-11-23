@@ -1,13 +1,11 @@
-FROM python:3.8
-
-# Essa porta será exposta para ser utilizada como comunicação com este container
-EXPOSE 5050
+FROM python:3.9.6
 
 # Define o diretório principal do container
 WORKDIR /app
-
+ 
 # Copiando os arquivos necessários para a construção e funcionamento da api
-COPY ./requirements.txt /app
+COPY ./container-api-users/requirements.txt /app
+# Copia o conteúdo da pasta classes (que são os principais códigos utilizados como base para todas as API's do projeto) para este container
 COPY ./classes /app/classes
 COPY ./container-api-users/handler_users.py /app
 

@@ -2,7 +2,6 @@ import sqlalchemy as sql
 import pandas as pd
 import psycopg2 
 import os
-
 #Esta classe possibilita manipular o banco de dados postgresql, seja fazendo querys ou inserções no banco
 
 #Classe com parâmetros de configuração da conexão

@@ -56,7 +56,7 @@ export default function App({ dataQuestion, dataSubmissions }) {
                 <em>Todas as Listas</em>
               </MenuItem>
               {lists.map(item => (
-                <MenuItem key={item.list} value={item.list}>{item.list}</MenuItem>
+                <MenuItem key={item.question} value={item.list}>{item.list}</MenuItem>
               ))}
             </Select>
           </FormControl>

@@ -1,80 +1,30 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Natalnet/api-dataviewer/main/container-front/public/marca.png" width="100">
-</p>
+# Versão de Developer do DATAVIEWER
 
-<h1><p align = "center">API - Dataviewer</p></h1>
+Nessa branch, contém os arquivos necessários para rodar a versão atual de desenvolvimento do Dataviewer.é uma branch teste para futuramente ser alocada no repositório oficial do projeto.
 
-Seja bem vindo ao repositório da API do nosso projeto de visualização de dados acadêmicos! 
+# Conteúdo dos Containers
 
-Nosso projeto se chama `DataViewer`, e aqui, você irá encontrar os arquivos referentes a API que interliga o nosso banco de dados ao Front-end do nosso sistema.
+Em nosso ```docker-compose.yml``` temos um total de 5 containers até o momento :
+- api-lop: É o que contem a api rest do lop que atualmente se encontra no dominio [https://lop.api.dataviewer.natalnet.br](https://lop.api.dataviewer.natalnet.br/).Obs:Nesse site que é o oficial, ela não está funcionando quando vamos fazer as requisições ao db, retornando "Internal Server Error".Já no nosso container de desenvolvimento quando configuramos corretamente o container com o db, funcionará tranquilamente.Depois que rodamos o container ele é acessado pelo [http://localhost:5000/](http://localhost:5050/)
+  
 
----
+- api-users: Essa api ainda esta em desenvolvimento, então ela ainda não funciona e nem retorna nada.Ela está comentada no docker-compose mas não é criada.Para fazer ela ser criada basta apagar os comandos "#" na frente das linhas de comando.Podemos futuramente acessar ele por [http://localhost:5050/](http://localhost:5000/).
+  
+- app: Esse é onde comandamos nosso front que tem como dependencia informações das apis para retornar os json e assim formar as paginas.Por enquanto ele não funciona porque não tem uma conexão com as apis feitas, ele ainda está conectado só com a api do natalnet que não funciona.Ainda está sendo organizada a conexão do front com as apis dos containers.
+Será acessado por [http://localhost:3000/](http://localhost:3000/)
+- db-lop: É o container que criamos um banco de dados para ser conectado com o sistema, ele é criado vazio sem nenhum dado, então para adicionar os dados a serem consumidos nas apis, temos que adicionar uma cópia do nosso db nele(Próximo tópico).
+- pgadmin-compose: É o container que criamos um gerenciamento grafico do postgres para podermos manusear os bancos de dados do projeto de forma grafica.Este container não existirá nos arquivos de produção pois é apenas uma forma de manusearmos o postgres com mais facilidade.Conseguimos acessar ele por [http://localhost:15432/](http://localhost:15432/).Utilizando essa interface conseguimos criar um server e também criar nosso db com base numa cópia que o desenvolvedor tem acesso.
 
-<p align="center">
-  <a href="#1-visão">Visão</a> •
-  <a href="#2-tecnologias-utilizadas">Tecnologias Utilizadas</a> •
-  <a href="#3-funcionamento-da-api">Funcionamento da API</a> •
-  <a href="#4-documentação-do-projeto">Documentação do Projeto</a> •
-  <a href="#5-licença">MIT</a>
-</p>
+# Rodando o serviço
 
----
+Para darmos run nos container, basta seguir os seguintes passos:
 
-## 1. Visão
+- Ter o Docker instalado em sua maquina, caso não tenha pode baixar [aqui](https://www.docker.com/products/docker-desktop)
+- Clonar este repositório na sua maquina com ```git clone linkdabranch```
+- Rodar o comando ```docker-compose up -d```, na primeira vez tende a demorar um pouco para fazer o build de todas as imagens
+- Acessar [http://localhost:15432/](http://localhost:15432/) para e utilizar ```postgres@email.com``` para o email e ```postgres``` para senha
+- Criar um novo server com o nome de ```Dataviewer``` e na aba Connection, em host colocamos ```db-lop``` , em username colocamos ```postgres``` e password ```postgres``` também
+- Dentro do server criado, criamos um novo DB chamado ```db-lop```
+- Para fazer o restore do banco de dados, clicamos com botão direito em cima do banco de dados e selecionamos o restore.Em file, damos o upload da cópia do db que os desenvolvedores tem disponivel.
 
-> O Dataviewer promoverá a **maximização do rendimento dos alunos** e a **minimização de reprovações e evasões**. 
-
-A plataforma fornecerá um meio de ***acompanhamento contínuo e personalizado*** dos alunos, em tempo real, o qual auxiliará professores e alunos a realizar tomadas de decisões estratégicas embasadas. Consequentemente, contribuirá para o ***aprimoramento de processos de ensino e apredizagem***.
-
-## 2. Tecnologias Utilizadas:
-
-* `Python` - realiza toda a lógica por trás da API Dataviewer
-* `PostgreSQL` - armazena os dados utilizando o conceito de Data Warehouse
-* `Docker` - realiza a containerização dos serviços
-* `Nginx` - realiza a função de proxy reverso
-* `Certbot` - nos fornece a certificação SSL para o proxy reverso
-* `Git` - auxilia no versionamento do projeto
-* `CentOS` - distribuição Linux na qual o projeto se encontra em funcionamento
-* `Cron` - realiza tarefas agendadas recorrentes
-
-## 3. Funcionamento da API
-
-### 3.1. Qual a origem dos dados?
-
-Nossos dados são obtidos por meio da API da `plataforma LoP`. O LoP é uma *plataforma de gerenciamento de exercícios* para a disciplina de lógica de programação da UFRN. Se você quiser testar a plataforma, é só acessar o seguinte link <a src= http://lop.ect.ufrn.br>http://lop.ect.ufrn.br</a> e se cadastrar.
-
-### 3.2. Que tipo de dados são obtidos?
-
-Hoje, coletamos 5 tipos de dados. São eles:
-
-1. Professores e suas respectivas turmas
-2. Submissões de questões por usuário
-3. Questões cadastradas
-4. Listas cadastradas
-5. Provas cadastradas
-
-### 3.3. Onde os dados são armazenados?
-
-Os dados obtidos são armazenados em um banco da dados PostgreSQL. Nós usamos o conceito de *Data Warehouse*, ou seja, os dados não são modificados, apenas armazenados e disponibilizados para consulta. Temos um código que realiza a atualização diária do nosso banco de dados.
-
-### 3.4. Como funciona o código de atualização?
-
-Utilizamos o agendador de tarefas recorrentes *Cron* dos sistemas Unix, o qual está programado para executar o código de atualização diariamente às 03:00 BRT.
-
-A atualização é realizada levando em consideração a *data do último registro de cada tabela* armazenada no nosso banco de dados. Assim, faz-se uma requisição passando a data de cada tabela à API do LoP, via URL. Desse modo, o LoP nos retorna todos os registros dessa data em diante. Caso não haja dados para atualizar, é feita a busca da data do primeiro registro no banco de dados da plataforma LoP.
-
-### 3.5. E como funciona a comunicação com o Front-end?
-
-O Front-end realiza uma solicitação dos dados de uma turma em específico à API do Dataviewer. Uma vez recebida a requisição, seguimos para a consulta do nosso banco de dados. Processamos os dados, e retornamos em formato *JSON* todos os dados necessários para o Front-end gerar todos os gráficos projetados.
-
-## 4. Documentação do projeto
-
-Tendo em vista que o funcionamento da API exige que uma série de serviços estejam sendo executados em sincronia, a manutenção do código exige conhecimentos básicos de Docker como criar containers, remover imagens, utilizar variáveis de ambiente e realizar tarefas agendadas com o Cron. 
-
-Desse modo, com o objetivo de promover a gestão do conhecimento, mais informações acerca dos comentários acima podem ser encontradas na <a href="https://github.com/Natalnet/api-dataviewer/tree/main/docs">pasta de documentação</a>.
-
-## 5. Licença
-
-<a href="https://github.com/Natalnet/api-dataviewer/blob/main/LICENSE">MIT</a>
-
----
+Após fazer seguir esses passos, ja da para ver o sistema funcionando acessando o front-end em  [http://localhost:3000/](http://localhost:3000/).

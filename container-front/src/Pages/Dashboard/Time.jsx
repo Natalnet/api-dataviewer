@@ -3,10 +3,9 @@ import ViewChartTime from '../../components/ViewChart/ViewChartTime';
 import { CardTime } from '../../components/BigCard/BigCard';
 import { Box, Container,makeStyles } from '@material-ui/core';
 import { useState } from 'react';
-import maxDayTime from '../../json/df_max_day_time.json';
-import questionSecounds from '../../json/df_questions_secounds.json';
 import maxDayTimeSubject from '../../json/classQuestionsMaxTimeAndDaysAttemptPerSubject.json';
 import maxDayTimeDifficulty from '../../json/df_MaxConsuming.json';
+import { useLocation } from 'react-router-dom';
 
 
 const useStyles = makeStyles({
@@ -23,7 +22,8 @@ export default function App() {
   const [option, setOption] = useState(1);
   const firstOption = "Turma";
   const secondOption = "Histograma";
-
+  const location = useLocation();
+  const { graphs } = location.state;
   //Retorna a tela de escolha do usuário, dentre Histograma e turma
   function handleClick(option) {
     if (option === firstOption)
@@ -39,7 +39,7 @@ export default function App() {
         handleClick={handleClick}>
         {option === 1 ?
 
-          <ViewChartTime dataQuestion={maxDayTime} dataSubmissions={questionSecounds}
+          <ViewChartTime dataQuestion={graphs.GTTMDDL} dataSubmissions={graphs.GTTGQSQ}
             dataSubject={maxDayTimeSubject} dataDifficulty={maxDayTimeDifficulty} />
             : ''
             /*<Histogram dataList={graphs.GTDGL} dataSubject={graphs.GTDGA} dataDifficulty={graphs.GTDGD} />*/

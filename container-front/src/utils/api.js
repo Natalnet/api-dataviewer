@@ -5,7 +5,7 @@ import axios from 'axios';
    facilita nossa vida, uma vez que não necessitamos definir um cabeçalho
    ou o corpo da requisição. */
 const api = axios.create({
-  baseURL: "https://lop.api.dataviewer.natalnet.br/"
+  baseURL: "http://localhost:5000/"
 });
 
 export default api;

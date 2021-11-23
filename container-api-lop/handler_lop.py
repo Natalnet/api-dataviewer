@@ -14,15 +14,15 @@ import time
 import warnings
 warnings.filterwarnings('ignore')
 urllib3.disable_warnings()
-#import sklearn
+#import sklearn 
 
 #Lendo variáveis de ambiente
-PASSWORD_DB = os.getenv('PASSWORD_DB')
-USER_DB = os.getenv('USER_DB')
+PASSWORD_DB = 'postgres'
+USER_DB = 'postgres'
 
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'dataviewer_lop', port = '5432', host = 'db-lop', 
+psql = Manage_db(database = 'db-lop', port = '5432', host = 'db-lop', 
                  user = USER_DB, password = PASSWORD_DB)
 
 #Instanciate Flask

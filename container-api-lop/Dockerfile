@@ -3,10 +3,10 @@
 # a qual, mediante requisição, manipula os dados advindos do banco de dados SQL e os retorna.
 
 # Utiliza uma imagem oficial do python como base
-FROM python:3.8
+FROM python:3.9.6
 
 # Expõe a porta pela qual o container vai se comunicar. Nesse caso, escolhemos a porta padrão do Flask, que é a 5000
-EXPOSE 5000
+#EXPOSE 5000
 
 # Seta um novo diretório padrão para a parte virtualizada (relativa ao container). Caso não exista, o diretório é criado
 WORKDIR /app
@@ -17,7 +17,7 @@ WORKDIR /app
 # Sintaxe: COPY (arquivo/arquivos locais) (diretório virtualizado)
 
 # Copia as dependências (lista de pacotes a serem instalados) para o container
-COPY ./requirements.txt /app
+COPY ./container-api-lop/requirements.txt /app
 
 # Copia o conteúdo da pasta classes (que são os principais códigos utilizados como base para todas as API's do projeto) para este container
 COPY ./classes /app/classes
