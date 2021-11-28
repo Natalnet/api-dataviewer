@@ -21,9 +21,9 @@ services:
     # Define o nome do container (a forma como ele será visualizado pelo docker, uma vez que o container for criado)
     # Importante evidenciar: o container se chama container-api-lop, mas o serviço se chama api-lop
     container_name: container-api-lop
-    #Para ouvir as alterações durante o desenvolvimento
-    volumes:
-      - './container-api-lop:/app'
+    #Para ouvir as alterações durante o desenvolvimento (dando erro no momento)
+    #volumes:
+    #  - './container-api-lop:/app'
 
     # Define qual porta local estará associado a qual porta do container (Porta local:porta exposta pelo container)
     ports:
