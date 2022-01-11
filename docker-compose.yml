@@ -164,7 +164,7 @@ services:
   nginx:
     build:
       context: .
-      dockerfile: ./container-front/Dockerfile
+      dockerfile: ./nginx/Dockerfile
     depends_on:
       - api-users
       - api-lop
@@ -206,18 +206,6 @@ services:
     command: certonly --webroot --webroot-path=/var/www/html --email erros.dataviewer@gmail.com --agree-tos --no-eff-email --staging -d dataviewer.natalnet.br -d www.dataviewer.natalnet.br
     networks:
       - backend
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "3"
-
-  # Serviço que não tem relevância para o projeto final. O utilizamos para realizar pequenos testes com scripts em Python
-  testing:
-    build:
-      context: .
-      dockerfile: ./container-testing/Dockerfile
-    container_name: container-testing
-    # restart: no
     logging:
       options:
         max-size: "10m"
