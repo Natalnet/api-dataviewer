@@ -10,6 +10,33 @@
 version: '3.9'
 # Define os serviços do projeto (containers a serem criados)
 services:
+
+  api-node:
+    # O Dockerfile não ta reconhecendo
+    build: ./container-api-node/ 
+    ports:
+      - 3333:3333
+    container_name: api-node
+    volumes: 
+      - ./container-api-node:/usr/apinode
+    command: yarn dev
+  
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports: 
+      - 27017:27017
+    restart: always
+  
+  # Interface gráfica do MongoDB
+  mongo-express:
+    image: mongo-express
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: mongodb
+    ports:
+      - 8081:8081
+
   # Aqui definiremos as condições de inicialização do serviço de api em flask do dataviewer: 
   api-lop:
     build: 
