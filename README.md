@@ -117,3 +117,5 @@ Acesse a interface gráfica do MongoDB em [http://localhost:8081/](http://localh
 | Username | Password |
 |----------|----------|
 | admin    | mongodb  |
+
+O banco de dados que você deverá visualizar está nomeado como `apinode`. Com o botão direito, clique em `view`e veja as entidades cadastradas nele.
