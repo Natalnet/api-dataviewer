@@ -59,6 +59,8 @@ Container onde podemos acessar uma interface gráfica de gerenciamento de banco 
 > :warning: Este container não existirá nos arquivos de produção pois é apenas uma forma de manusearmos o postgres com mais facilidade. Conseguimos acessar ele por [http://localhost:15432/](http://localhost:15432/). Utilizando essa interface conseguimos criar um server e também criar nosso db com base numa cópia que o desenvolvedor tem acesso.
 ## 3. Rodando o serviço
 
+### 3.1.  Preparando o ambiente
+
 Antes de rodar os serviços, é necessário o Docker instalado em sua maquina, caso não tenha pode baixar [aqui](https://www.docker.com/products/docker-desktop). Com ele instalado, siga os seguintes passos
 
 Clone este repositório na sua maquina com
@@ -87,6 +89,8 @@ docker-compose up -d
 
 > :warning: A primeira vez tende a demorar um pouco para fazer o build de todas as imagens
 
+### 3.2.  Preenchendo o PostgresSQL
+
 Acesse [http://localhost:15432/](http://localhost:15432/) e utilize as credenciais
 
 | Email              | Username | Password |
@@ -99,3 +103,11 @@ Em Add New Server, crie um novo server com o nome de `Dataviewer` e, na aba Conn
 Com o botão direito na aba do menu esquerda do server criado, criamos um novo DB chamado `db-lop` em Database após passar o mouse em Create.
 
 Para fazer o restore do banco de dados, clicamos com botão direito em cima do banco de dados e selecionamos o restore. Em file, damos o upload da cópia do db que os desenvolvedores tem disponivel. Após fazer seguir esses passos, ja da para ver o sistema funcionando acessando o front-end em [http://localhost:3000/](http://localhost:3000/).
+
+### 3.2. MongoDB
+
+Acesse a interface gráfica do MongoDB em [http://localhost:8081/](http://localhost:8081/) por meio dessas credenciais
+
+| Username | Password |
+|----------|----------|
+| admin    | mongodb  |
