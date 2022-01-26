@@ -86,6 +86,7 @@ docker-compose up -d
 ``` 
 
 > :warning: A primeira vez tende a demorar um pouco para fazer o build de todas as imagens
+
 Acesse [http://localhost:15432/](http://localhost:15432/) e utilize as credenciais
 
 | Email              | Username | Password |

@@ -10,6 +10,13 @@ const GEDL = require("../models/GEDL");
 const GEDP = require("../models/GEDP");
 const GEAL = require("../models/GEAL");
 const GEAP = require("../models/GEAP");
+const GTDGL = require("../models/GTDGL");
+const GTDGA = require("../models/GTDGA");
+const GTDGD = require("../models/GTDGD");
+const GTTMQQMDD = require("../models/GTTMQQMDD");
+const GTTMDDL = require("../models/GTTMDDL");
+const GATGQTDD = require("../models/GATGQTDD");
+const GTTGQSQ = require("../models/GTTGQSQ");
 
 const media_GTNL = require("../models/media_GTNL");
 const media_GTNP = require("../models/media_GTNP");
@@ -17,15 +24,6 @@ const media_GEDL = require("../models/media_GEDL");
 const media_GEDP = require("../models/media_GEDP");
 const media_GEAL = require("../models/media_GEAL");
 const media_GEAP = require("../models/media_GEAP");
-
-const GTDGL = require("../models/GTDGL");
-const GTDGA = require("../models/GTDGA");
-const GTDGD = require("../models/GTDGD");
-
-const GTTMQQMDD = require("../models/GTTMQQMDD");
-const GTTMDDL = require("../models/GTTMDDL");
-const GATGQTDD = require("../models/GATGQTDD");
-const GTTGQSQ = require("../models/GTTGQSQ");
 
 class ListGraphsController {
   async handle(request, response) {
