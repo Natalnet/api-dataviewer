@@ -1,13 +1,6 @@
-# O docker-compose.yml consiste em um programa que define as condições de criação e execução de múltiplas imagens pertencentes a um mesmo projeto.
-# As imagens podem tanto ser criadas exclusivamente pelo próprio docker-compose (ao baixar uma imagem, pelo parâmetro 'image'), como podem ser criadas em conjunto
-# com o dockerfile, sendo este utilizado quando desejamos criar nossa própria imagem de forma mais maleável (mesmo que para isso precisemos utilizar outra imagem como base)
-
-# Observação: uma vez que determinado parâmetro tenha sido comentado, ele só será comentado novamente caso apresente alguma particularidade.
-# Observação 2: Caso o sistema precise ser instalado em uma nova máquina, será necessário revisitar o tutorial da digital ocean para garantir o funcionamento do nginx e do certbot.
-# https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose
-
 # Versão do docker-compose a ser utilizada
 version: '3.9'
+
 # Define os serviços do projeto (containers a serem criados)
 services:
 
@@ -19,6 +12,7 @@ services:
     container_name: api-node
     volumes: 
       - ./container-api-node:/usr/apinode
+      - /usr/apinode/node_modules
     command: yarn dev
   
   mongo:
@@ -74,6 +68,7 @@ services:
     #  - "5050:5050"
     #networks:
     #  - backend
+
   #React container
   app:
     container_name: container-front-dev

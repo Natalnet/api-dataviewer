@@ -1,6 +1,8 @@
-FROM node:alpine
+FROM node:14
 
 WORKDIR /usr/apinode
+
+ENV PATH /usr/apinode/node_modules/.bin:$PATH
 
 COPY ./package.json .
 
