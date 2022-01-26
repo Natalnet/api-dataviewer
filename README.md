@@ -24,7 +24,7 @@ Contem a API REST do LOP encontrada em [API Dataviewer](https://lop.api.dataview
 
 ### 2.2. api-users
 
-Por estar em desenvolvimento, esta API retorna nada. Para fazer este container ser criado, basta adicioná-lo com 
+Por estar em desenvolvimento, a API deste container não retorna nada. Para fazer este container ser criado, basta adicioná-lo com 
 
 ```compose
 api-users:
@@ -49,14 +49,20 @@ Container utilizado para administrar o front. O front fará requests para as API
 > :warning: Por enquanto ele não funciona porque não tem uma conexão com as API's feitas, ele ainda está conectado só com a api do natalnet que não funciona. Ainda está sendo organizada a conexão do front com as API's dos containers. Será acessado por [http://localhost:3000/](http://localhost:3000/)
 ### 2.4. db-lop
 
-É o container onde criamos um banco de dados PostgreSQL para ser conectado com o sistema. 
+Container onde criamos um banco de dados PostgreSQL para ser conectado com o sistema. 
 
 > :warning: Ele é criado vazio sem nenhum dado, então para adicionar os dados a serem consumidos nas apis, temos que adicionar uma cópia do nosso db nele (próximo tópico).
+
 ### 2.5. pgadmin-compose
 
 Container onde podemos acessar uma interface gráfica de gerenciamento de banco de dados do PostgreSQL.
 
 > :warning: Este container não existirá nos arquivos de produção pois é apenas uma forma de manusearmos o postgres com mais facilidade. Conseguimos acessar ele por [http://localhost:15432/](http://localhost:15432/). Utilizando essa interface conseguimos criar um server e também criar nosso db com base numa cópia que o desenvolvedor tem acesso.
+
+### 2.6. api-node
+
+Contem a API desenvolvida em NodeJS. A sua rota principal é a `graphs` em que o professor (client) faz uma requisição com o `id_class` da turma e, ao fazer uma seleção de dados já previamente inseridos pela `api-lop` no MongoDB, ela retorna todas as entidades com dados estatísticos referentes a esta turma.
+
 ## 3. Rodando o serviço
 
 ### 3.1.  Preparando o ambiente
