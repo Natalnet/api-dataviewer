@@ -63,6 +63,8 @@ Container onde podemos acessar uma interface gráfica de gerenciamento de banco 
 
 Contem a API desenvolvida em NodeJS. A sua rota principal é a `graphs` em que o professor (client) faz uma requisição com o `id_class` da turma e, ao fazer uma seleção de dados já previamente inseridos pela `api-lop` no MongoDB, ela retorna todas as entidades com dados estatísticos referentes a esta turma.
 
+A arquitetura utilizada para a implementação do código foi a MVC (Model View Controller): o client faz uma requisição para a camada de Controller, o Controller aplica a regra de negócio (services) nesta requisição, a camada de Services interage com as entidades do banco de dados a partir do mapeamento delas por meio do Model, o Model envia um response desses dados para o Controller que por sua fez retorna-os para o client por meio de uma interface, a View.  
+
 ## 3. Rodando o serviço
 
 ### 3.1.  Preparando o ambiente
