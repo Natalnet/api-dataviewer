@@ -37,13 +37,14 @@ services:
       # Para contornar esse problema, definimos como nova pasta default a pasta raiz do projeto através do comando abaixo.
       context: .  
       # Define a localização do dockerfile relativo a este container
-      dockerfile: ./container-api-lop/Dockerfile 
+      dockerfile: ./container-api-lop/Dockerfile
     # Define o nome do container (a forma como ele será visualizado pelo docker, uma vez que o container for criado)
     # Importante evidenciar: o container se chama container-api-lop, mas o serviço se chama api-lop
     container_name: container-api-lop
-    #Para ouvir as alterações durante o desenvolvimento (dando erro no momento)
-    #volumes:
-    #  - './container-api-lop:/app'
+    #Para ouvir as alterações durante o desenvolvimento
+    volumes:
+      - ./classes:/app/classes
+      - ./container-api-lop:/app
 
     # Define qual porta local estará associado a qual porta do container (Porta local:porta exposta pelo container)
     ports:

@@ -1,3 +1,5 @@
+from distutils.log import debug
+from click import password_option
 from flask import Flask, request
 from flask_cors import CORS
 import numpy as np
@@ -12,6 +14,7 @@ import urllib3
 import json
 import time
 import warnings
+import pymongo
 warnings.filterwarnings('ignore')
 urllib3.disable_warnings()
 #import sklearn 
@@ -20,10 +23,21 @@ urllib3.disable_warnings()
 PASSWORD_DB = 'postgres'
 USER_DB = 'postgres'
 
+USER_MONGO = 'admin'
+PASSWORD_MONGO = 'mongodb'
+
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'db-lop', port = '5432', host = 'db-lop', 
-                 user = USER_DB, password = PASSWORD_DB)
+psql = Manage_db(database = 'db-lop', port = '5432', host = 'db-lop', user = USER_DB, password = PASSWORD_DB)
+
+# Conectando ao MongoDB Teste
+try:
+  client = pymongo.MongoClient('localhost' , port =  27017)
+  db_mongo = client.apinode
+  print("Conexão Feita com Sucesso ao DB do Mongo")
+except:
+  print("Erro ao se conectar ao DB do Mongo")
+
 
 #Instanciate Flask
 app = Flask(__name__)
@@ -307,7 +321,7 @@ def get_graphs(id_class):
 
 def main():
   port = int(os.environ.get('PORT', 5000))
-  app.run(host = '0.0.0.0', port = port)   
+  app.run(host = '0.0.0.0', port = port , debug = True)   
 
 if __name__ == '__main__':
   main()
