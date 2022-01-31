@@ -20,6 +20,8 @@ services:
     ports: 
       - 27017:27017
     restart: always
+    networks:
+      - backend
   
   # Interface gráfica do MongoDB
   mongo-express:
@@ -53,6 +55,7 @@ services:
     # Define que só irá ser inicializado após o serviço db-lop e db-users serem inicializados (isso não quer dizer que ele espera ambos serem totalmente construídos)
     depends_on:
       - db-lop
+      - mongo
     # Define a qual network o serviço irá se conectar (por padrão, o docker-compose já cria uma network sem precisar especificar, mas optamos por padronizar e evidenciar)
     networks:
       - backend
