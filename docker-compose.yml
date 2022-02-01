@@ -33,6 +33,8 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: mongodb
     ports:
       - 8081:8081
+    networks:
+      - backend
 
   # Aqui definiremos as condições de inicialização do serviço de api em flask do dataviewer: 
   api-lop:
