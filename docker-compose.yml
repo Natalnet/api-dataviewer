@@ -13,6 +13,8 @@ services:
       - ./container-api-node:/usr/apinode
       - /usr/apinode/node_modules
     command: yarn dev
+    networks:
+      - backend
   
   mongo:
     image: mongo
