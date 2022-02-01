@@ -97,7 +97,19 @@ docker-compose up -d
 
 > :warning: A primeira vez tende a demorar um pouco para fazer o build de todas as imagens
 
-### 3.2.  Preenchendo o PostgresSQL
+### 3.2. Autenticando-se
+
+As rotas da API REST NodeJS usam o sistema de autenticação Sign In do Google. Tais rotas apenas poderão ser acessadas caso o client esteja logado com algum email institucional da UFRN (ufrn.edu.br, ufrn.edu).
+
+> :warning: Para os passos a seguir darem certo, é necessário duplicar o arquivo da pasta `container-api-node` chamado `.env.local`, renomeá-lo como `.env` e preencher os campos KEY_SECRET e CLIENT_ID, que são as credenciais da API do Google as quais permitem usar esse sistema de autenticação. Você pode obtê-las seguindo o guia [Integrating Google Sign-In into your web app](http://localhost:3333/login)
+
+Para efetuar a autenticação é necessário acessar a rota [http://localhost:3333/login](http://localhost:3333/login) 
+
+Clicar no botão Sign In e entrar com seu email institucional
+
+Feito isso, o token de acesso para as rotas desta API é armazenado na forma de cookie no navegador. Assim, a API permitirá o acesso as suas rotas.
+
+### 3.3.  Preenchendo o PostgresSQL
 
 Acesse [http://localhost:15432/](http://localhost:15432/) e utilize as credenciais
 
