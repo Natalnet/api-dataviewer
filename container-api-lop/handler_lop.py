@@ -1,10 +1,11 @@
+from distutils.log import debug
+from click import password_option
 from flask import Flask, request
 from flask_cors import CORS
 import numpy as np
 import pandas as pd
 import os
 import re
-from datetime import datetime
 from classes.manage_lop import Lop
 from classes.manage_db import Manage_db
 from classes.manage_authentication import Authentication
@@ -12,6 +13,8 @@ import urllib3
 import json
 import time
 import warnings
+import pymongo
+
 warnings.filterwarnings('ignore')
 urllib3.disable_warnings()
 #import sklearn 
@@ -20,10 +23,23 @@ urllib3.disable_warnings()
 PASSWORD_DB = 'postgres'
 USER_DB = 'postgres'
 
+# futuramente colocar credenciais do mongo
+USER_MONGO = 'admin'
+PASSWORD_MONGO = 'mongodb'
+
 #Instanciando classes
 lop = Lop()
-psql = Manage_db(database = 'db-lop', port = '5432', host = 'db-lop', 
-                 user = USER_DB, password = PASSWORD_DB)
+psql = Manage_db(database = 'db-lop', port = '5432', host = 'db-lop', user = USER_DB, password = PASSWORD_DB)
+
+# Conectando ao MongoDB Teste
+try:
+  client = pymongo.MongoClient('mongodb://mongo:27017')
+  db_mongo = client.apinode
+  print("Conexão realizada com sucesso")
+  
+except:
+  print("Erro ao se conectar ao DB do Mongo")
+
 
 #Instanciate Flask
 app = Flask(__name__)
@@ -292,6 +308,7 @@ def get_graphs(id_class):
     GTDGD = lop.graph_days_spent_difficulty(df_submission, df_questions_selected)
   except:
     raise ValueError('Error: generate graph days spent per list/subject/difficulty')
+
   #Transformando em um só json
   name_graphs = ['"GENL"','"GENP"','"GTDL"','"GTDP"','"GTAL"','"GTAP"',
                  '"GTNL"','"GTNP"','"GEDL"','"GEDP"','"GEAL"','"GEAP"',
@@ -303,11 +320,166 @@ def get_graphs(id_class):
                  media_GTNL,media_GTNP,media_GEDL,media_GEDP,media_GEAL,media_GEAP,
                  GTDGL,GTDGA,GTDGD,
                  GTTMQQMDD,GTTMDDL,GATGQTDD,GTTGQSQ]
-  return lop.create_unique_json(name_graphs, graphs)
+  
+  teste = lop.create_unique_json(name_graphs, graphs)
+  teste2 = json.loads(teste);
+
+  GENL = teste2['GENL']
+  GENP = teste2['GENP']
+  GTDL = teste2['GTDL']
+  GTDP = teste2['GTDP']
+  GTAL = teste2['GTAL']
+  GTAP = teste2['GTAP']
+  GTNP = teste2['GTNP']
+  GEDL = teste2['GEDL']
+  GEDP = teste2['GEDP']
+  GEAL = teste2['GEAL']
+  GEAP = teste2['GEAP']
+  media_GTNL = teste2['media_GTNL']
+  media_GTNP = teste2['media_GTNP']
+  media_GEDL = teste2['media_GEDL']
+  media_GEDP = teste2['media_GEDP']
+  media_GEAL = teste2['media_GEAL']
+  media_GEAP = teste2['media_GEAP']
+  GTDGL = teste2['GTDGL']
+  GTDGA = teste2['GTDGA']
+  GTDGD = teste2['GTDGD']
+  GTTMQQMDD = teste2['GTTMQQMDD']
+  GTTMDDL = teste2['GTTMDDL']
+  GATGQTDD = teste2['GATGQTDD']
+  GTTGQSQ = teste2['GTTGQSQ']
+  ## Começo da implementação de id_class nos vetores 
+  for i in range(len(GENL)):
+    GENL[i]['id_class']=id_class
+  for i in range(len(GTAL)):
+    GTAL[i]['id_class']=id_class
+  for i in range(len(GTDL)):
+    GTDL[i]['id_class']=id_class
+  for i in range(len(GEDL)):
+    GEDL[i]['id_class']=id_class
+  for i in range(len(GEAL)):
+    GEAL[i]['id_class']=id_class
+
+  for i in range(len(media_GTNL)):
+    media_GTNL[i]['id_class']=id_class
+  for i in range(len(media_GEDL)):
+    media_GEDL[i]['id_class']=id_class
+  for i in range(len(media_GEAL)):
+    media_GEAL[i]['id_class']=id_class
+
+  for i in range(len(GTTMQQMDD)):
+    GTTMQQMDD[i]['id_class']=id_class
+  for i in range(len(GTTMDDL)):
+    GTTMDDL[i]['id_class']=id_class
+  for i in range(len(GATGQTDD)):
+    GATGQTDD[i]['id_class']=id_class
+  for i in range(len(GTTGQSQ)):
+    GTTGQSQ[i]['id_class']=id_class
+
+  for i in range(len(GENP)):
+    GENP[i]['id_class']=id_class
+  for i in range(len(GTDP)):
+    GTDP[i]['id_class']=id_class
+  for i in range(len(GTAP)):
+    GTAP[i]['id_class']=id_class
+
+  for i in range(len(GTNP)):
+    GTNP[i]['id_class']=id_class
+  for i in range(len(GEDP)):
+    GEDP[i]['id_class']=id_class
+  for i in range(len(GEAP)):
+    GEAP[i]['id_class']=id_class
+
+  for i in range(len(media_GTNP)):
+    media_GTNP[i]['id_class']=id_class
+  for i in range(len(media_GEDP)):
+    media_GEDP[i]['id_class']=id_class
+  for i in range(len(media_GEAP)):
+    media_GEAP[i]['id_class']=id_class
+
+  for i in range(len(GTDGL)):
+    GTDGL[i]['id_class']=id_class
+  for i in range(len(GTDGA)):
+    GTDGA[i]['id_class']=id_class
+  for i in range(len(GTDGD)):
+    GTDGD[i]['id_class']=id_class
+
+
+  #Fazer o insert no MongoDB
+
+  #Grafico 1, desempenho por turma analisando notas / lista
+  for i in range(len(GENL)):
+    db_mongo['genls'].insert_one(GENL[i])
+  for i in range(len(GTAL)):
+    db_mongo['gtals'].insert_one(GTAL[i])
+  for i in range(len(GTDL)):
+    db_mongo['gtdls'].insert_one(GTDL[i])
+
+  #Grafico 2, desempenho por aluno analisando notas /lista
+  # Por enquanto não funciona por causa do tamanho não permitido (155640 ITENS)
+  print(len(GTNL));
+  #for i in range(len(GTNL)):
+  #  db_mongo['gtnls'].insert_one(GTNL[i])
+  for i in range(len(GEDL)):
+    db_mongo['gedls'].insert_one(GEDL[i])
+  for i in range(len(GEAL)):
+    db_mongo['geals'].insert_one(GEAL[i])
+
+  #Média geral dos alunos / lista
+  for i in range(len(media_GTNL)):
+    db_mongo['media_gtnls'].insert_one(media_GTNL[i])
+  for i in range(len(media_GEDL)):
+    db_mongo['media_gedls'].insert_one(media_GEDL[i])
+  for i in range(len(media_GEAL)):
+    db_mongo['media_geals'].insert_one(media_GEAL[i])
+
+#Gráfico 4, analise de questões e listas por tempo pra turma e alunos / lista
+  for i in range(len(GTTMQQMDD)):
+    db_mongo['gttmqqmdds'].insert_one(GTTMQQMDD[i])
+  for i in range(len(GTTMDDL)):
+    db_mongo['gttmddls'].insert_one(GTTMDDL[i])
+  for i in range(len(GATGQTDD)):
+    db_mongo['gatgqtdds'].insert_one(GATGQTDD[i])
+  for i in range(len(GTTGQSQ)):
+    db_mongo['gttgqsqs'].insert_one(GTTGQSQ[i])
+
+#Grafico 1, desempenho por turma analisando notas / teste
+  for i in range(len(GENP)):
+    db_mongo['genps'].insert_one(GENP[i])
+  for i in range(len(GTDP)):
+    db_mongo['gtdps'].insert_one(GTDP[i])
+  for i in range(len(GTAP)):
+    db_mongo['gtaps'].insert_one(GTAP[i])
+
+#Grafico 2, desempenho por aluno analisando notas / teste
+  for i in range(len(GTNP)):
+    db_mongo['gtnps'].insert_one(GTNP[i])
+  for i in range(len(GEDP)):
+    db_mongo['gedps'].insert_one(GEDP[i])
+  for i in range(len(GEAP)):
+    db_mongo['geaps'].insert_one(GEAP[i])
+
+#Média geral dos alunos / teste
+  for i in range(len(media_GTNP)):
+    db_mongo['media_gtnps'].insert_one(media_GTNP[i])
+  for i in range(len(media_GEDP)):
+    db_mongo['media_gedps'].insert_one(media_GEDP[i])
+  for i in range(len(media_GEAP)):
+    db_mongo['media_geaps'].insert_one(media_GEAP[i])
+
+#Histograma do dias gastos para concluir uma lista/assunto/dificuldade
+  for i in range(len(GTDGL)):
+    db_mongo['gtdgls'].insert_one(GTDGL[i])
+  for i in range(len(GTDGA)):
+    db_mongo['gtdgas'].insert_one(GTDGA[i])
+  for i in range(len(GTDGD)):
+    db_mongo['gtdgds'].insert_one(GTDGD[i])
+  
+  return teste2
 
 def main():
   port = int(os.environ.get('PORT', 5000))
-  app.run(host = '0.0.0.0', port = port)   
+  app.run(host = '0.0.0.0', port = port , debug = True)   
 
 if __name__ == '__main__':
   main()
