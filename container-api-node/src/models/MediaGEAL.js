@@ -1,6 +1,6 @@
 const mongoose = require("../database");
 
-const media_GEAL = mongoose.model("media_GEAL", new mongoose.Schema({
+const MediaGEAL = mongoose.model("media_GEAL", new mongoose.Schema({
   _id: String,
   user: String,
   registration: String,
@@ -8,4 +8,4 @@ const media_GEAL = mongoose.model("media_GEAL", new mongoose.Schema({
   id_class: String
 }));
 
-module.exports = media_GEAL;
+module.exports = MediaGEAL;

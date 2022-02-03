@@ -17,25 +17,40 @@
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
   <script>
-    function onSignIn(googleUser) {
+    async function onSignIn(googleUser) {
       const profile = googleUser.getBasicProfile();
       const email = profile.getEmail();
-      const allowedDomains = ["ufrn.edu.br", "ufrn.br", "ect.ufrn.br"];
-      const [prefix, domain] = email.split("@");
-      if (!allowedDomains.includes(domain)) {
-        alert("Domain is not in whitelist");
+
+      // api verifica se o domínio email está listado
+      const response = await fetch("/auth", {
+        method: "POST",
+        body: JSON.stringify({
+          email: email
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const data = await response.json()
+
+      if (data.length === 0) {
+        alert("Domain is not in whitelist. Please, sign in again.");
         signOut();
-      } else {
+      }
+
+      else {
+
         // gerar token
         const id_token = googleUser.getAuthResponse().id_token;
+
         // mandar para o backend
         const xhr = new XMLHttpRequest();
-        
+
         xhr.open('POST', '/login');
         xhr.setRequestHeader('Content-Type', 'application/json');
         // ao receber uma resposta, redirecione
         xhr.onload = () => {
-          alert("Token's already generated. You shall be allowed to access routes.");
           window.location.href = 'http://localhost:3000/';
         };
         xhr.send(JSON.stringify({
@@ -43,12 +58,14 @@
         }));
       }
     }
+
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
         console.log('User signed out.');
       });
     }
+
   </script>
 </body>
 

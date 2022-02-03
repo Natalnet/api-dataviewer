@@ -18,12 +18,12 @@ const GTTMDDL = require("../models/GTTMDDL");
 const GATGQTDD = require("../models/GATGQTDD");
 const GTTGQSQ = require("../models/GTTGQSQ");
 
-const media_GTNL = require("../models/media_GTNL");
-const media_GTNP = require("../models/media_GTNP");
-const media_GEDL = require("../models/media_GEDL");
-const media_GEDP = require("../models/media_GEDP");
-const media_GEAL = require("../models/media_GEAL");
-const media_GEAP = require("../models/media_GEAP");
+const MediaGTNL = require("../models/MediaGTNL");
+const MediaGTNP = require("../models/MediaGTNP");
+const MediaGEDL = require("../models/MediaGEDL");
+const MediaGEDP = require("../models/MediaGEDP");
+const MediaGEAL = require("../models/MediaGEAL");
+const MediaGEAP = require("../models/MediaGEAP");
 
 class ListGraphsController {
   async handle(request, response) {
@@ -43,19 +43,19 @@ class ListGraphsController {
       "GEDP": await GEDP.find({ id_class }),
       "GEAL": await GEAL.find({ id_class }),
       "GEAP": await GEAP.find({ id_class }),
-      "media_GTNL": await media_GTNL.find({ id_class }),
-      "media_GTNP": await media_GTNP.find({ id_class }),
-      "media_GEDL": await media_GEDL.find({ id_class }),
-      "media_GEDP": await media_GEDP.find({ id_class }),
-      "media_GEAL": await media_GEAL.find({ id_class }),
-      "media_GEAP": await media_GEAP.find({ id_class }),
+      "media_GTNL": await MediaGTNL.find({ id_class }),
+      "media_GTNP": await MediaGTNP.find({ id_class }),
+      "media_GEDL": await MediaGEDL.find({ id_class }),
+      "media_GEDP": await MediaGEDP.find({ id_class }),
+      "media_GEAL": await MediaGEAL.find({ id_class }),
+      "media_GEAP": await MediaGEAP.find({ id_class }),
       "GTDGL": await GTDGL.find({ id_class }),
       "GTDGA": await GTDGA.find({ id_class }),
       "GTDGD": await GTDGD.find({ id_class }),
       "GTTMQQMDD": await GTTMQQMDD.find({ id_class }),
-      "GTTMDDL": await GTTMDDL.find(),
+      "GTTMDDL": await GTTMDDL.find({ id_class }),
       "GATGQTDD": await GATGQTDD.find({ id_class }),
-      "GTTGQSQ": await GTTGQSQ.find()
+      "GTTGQSQ": await GTTGQSQ.find({ id_class })
     };
 
     return response.json(data);

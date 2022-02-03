@@ -1,6 +1,6 @@
 const mongoose = require("../database");
 
-const media_GEDP = mongoose.model("media_GEDP", new mongoose.Schema({
+const MediaGEDL = mongoose.model("media_GEDL", new mongoose.Schema({
   _id: String,
   user: String,
   registration: String,
@@ -8,4 +8,4 @@ const media_GEDP = mongoose.model("media_GEDP", new mongoose.Schema({
   id_class: String
 }));
 
-module.exports = media_GEDP;
+module.exports = MediaGEDL;

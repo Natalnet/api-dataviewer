@@ -1,6 +1,6 @@
 const mongoose = require("../database");
 
-const media_GTNP = mongoose.model("media_GTNP", new mongoose.Schema({
+const MediaGTNP = mongoose.model("media_GTNP", new mongoose.Schema({
   _id: String,
   user: String,
   registration: String,
@@ -8,4 +8,4 @@ const media_GTNP = mongoose.model("media_GTNP", new mongoose.Schema({
   id_class: String
 }));
 
-module.exports = media_GTNP;
+module.exports = MediaGTNP;

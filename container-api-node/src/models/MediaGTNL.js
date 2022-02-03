@@ -1,6 +1,6 @@
 const mongoose = require("../database");
 
-const media_GTNL = mongoose.model("media_GTNL", new mongoose.Schema({
+const MediaGTNL = mongoose.model("media_GTNL", new mongoose.Schema({
   _id: String,
   user: String,
   registration: String,
@@ -8,4 +8,4 @@ const media_GTNL = mongoose.model("media_GTNL", new mongoose.Schema({
   id_class: String
 }));
 
-module.exports = media_GTNL;
+module.exports = MediaGTNL;
