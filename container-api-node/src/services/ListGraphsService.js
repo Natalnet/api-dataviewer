@@ -70,11 +70,6 @@ class ListGraphsService {
       throw new Error("Invalid identifier");
     }
 
-    // verificar dados vazios: o vetor de dados vazios tem tamanho maior que zero
-    if (empties.length > 0) {
-      throw new Error("There are empty spaces");
-    }
-
     return data;
   }
 
