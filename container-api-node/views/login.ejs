@@ -27,7 +27,7 @@
       // gerar token
       const id_token = googleUser.getAuthResponse().id_token;
 
-      // api verifica se o domínio email está listado para gerar token
+      // api verifica se o domínio email está listado para pôr token nos cookies
       const response = await fetch("/auth", {
         method: "POST",
         body: JSON.stringify({
