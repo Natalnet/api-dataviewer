@@ -24,10 +24,14 @@
       const profile = googleUser.getBasicProfile();
       const email = profile.getEmail();
 
-      // api verifica se o domínio email está listado
+      // gerar token
+      const id_token = googleUser.getAuthResponse().id_token;
+
+      // api verifica se o domínio email está listado para gerar token
       const response = await fetch("/auth", {
         method: "POST",
         body: JSON.stringify({
+          token: id_token,
           email: email
         }),
         headers: {
@@ -40,26 +44,14 @@
       if (data.length === 0) {
         alert("Domain is not in whitelist. Please, sign in again.");
         signOut();
+      } else {
+
+        // Colocar na sessão e redirecionar usuário para o React
+        console.log(data);
+
+        // window.location.href = 'http://localhost:3000/';
       }
 
-      else {
-
-        // gerar token
-        const id_token = googleUser.getAuthResponse().id_token;
-
-        // mandar para o backend
-        const xhr = new XMLHttpRequest();
-
-        xhr.open('POST', '/login');
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        // ao receber uma resposta, redirecione
-        xhr.onload = () => {
-          window.location.href = 'http://localhost:3000/';
-        };
-        xhr.send(JSON.stringify({
-          token: id_token
-        }));
-      }
     }
 
     function signOut() {
