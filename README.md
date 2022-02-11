@@ -4,24 +4,32 @@ Esta branch contém os arquivos necessários para rodar a versão atual de desen
 
 ## 1. Conceitos
 
-### 1.1. Docker Compose
-
-> :exclamation: Algumas observações
+> :exclamation: Algumas observações do Docker Compose
 > - Uma vez que determinado parâmetro tenha sido comentado, ele só será comentado novamente caso apresente alguma particularidade
 > - Caso o sistema precise ser instalado em uma nova máquina, será necessário revisitar o [Tutorial da Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose) para garantir o funcionamento do nginx e do certbot.
  
 ## 2. Containers
 
-O `docker-compose.yml` possui os seguintes containers
+O `docker-compose.yml` possui containers relacionados ao frontend e ao backend do sistema em questão.
 
-### 2.1. api-lop
+## 2.1. Frontend
+
+### app
+
+Container utilizado para administrar o front. O front fará requests para as API's as quais retornarão arquivos `.json` no intuito de formar as páginas do front.
+
+> :warning: Por enquanto ele não funciona porque não tem uma conexão com as API's feitas, ele ainda está conectado só com a api do natalnet que não funciona. Ainda está sendo organizada a conexão do front com as API's dos containers. Será acessado por [http://localhost:3000/](http://localhost:3000/)
+
+## 2.2. Backend
+
+### api-lop
 
 Contem a API REST do LOP encontrada em [API Dataviewer](https://lop.api.dataviewer.natalnet.br/).
 
 > :warning: Nesse site, que é o oficial, ela não está funcionando pois uma vez que fazemos requisições ao DB, é retornado "Internal Server Error". Por outro lado, no nosso container de desenvolvimento, ao configurar o container com o DB, ela funciona tranquilamente. Acesse-a localmente por [http://localhost:5000/](http://localhost:5050/)
   
-
-### 2.2. api-users
+<!-- 
+### api-users
 
 Por estar em desenvolvimento, a API deste container não retorna nada. Para fazer este container ser criado, basta adicioná-lo com 
 
@@ -39,30 +47,26 @@ api-users:
       - backend
 ```
 
-Podemos futuramente acessar ele por [http://localhost:5050/](http://localhost:5000/)
+Podemos futuramente acessar ele por [http://localhost:5050/](http://localhost:5000/) -->
 
-### 2.3. app
+### api-node
 
-Container utilizado para administrar o front. O front fará requests para as API's as quais retornarão arquivos `.json` no intuito de formar as páginas do front.
+Contem a API desenvolvida em NodeJS. A sua rota principal é a `graphs` em que o professor (client) faz uma requisição com o `id_class` da turma e, ao fazer uma seleção de dados já previamente inseridos pela `api-lop` no MongoDB, ela retorna todas as entidades com dados estatísticos referentes a esta turma.
 
-> :warning: Por enquanto ele não funciona porque não tem uma conexão com as API's feitas, ele ainda está conectado só com a api do natalnet que não funciona. Ainda está sendo organizada a conexão do front com as API's dos containers. Será acessado por [http://localhost:3000/](http://localhost:3000/)
-### 2.4. db-lop
+A arquitetura utilizada para a implementação do código foi a MVC (Model View Controller): o client faz uma requisição para a camada de Controller, o Controller aplica a regra de negócio (Services) nesta requisição, a camada de Services interage com as entidades do banco de dados a partir do mapeamento delas por meio do Model, o Model envia um response desses dados para o Controller que por sua vez retorna-os para o client por meio de uma interface, a View.  
+
+### db-lop
 
 Container onde criamos um banco de dados PostgreSQL para ser conectado com o sistema. 
 
 > :warning: Ele é criado vazio sem nenhum dado, então para adicionar os dados a serem consumidos nas apis, temos que adicionar uma cópia do nosso db nele (próximo tópico).
 
-### 2.5. pgadmin-compose
+### pgadmin-compose
 
 Container onde podemos acessar uma interface gráfica de gerenciamento de banco de dados do PostgreSQL.
 
 > :warning: Este container não existirá nos arquivos de produção pois é apenas uma forma de manusearmos o postgres com mais facilidade. Conseguimos acessar ele por [http://localhost:15432/](http://localhost:15432/). Utilizando essa interface conseguimos criar um server e também criar nosso db com base numa cópia que o desenvolvedor tem acesso.
 
-### 2.6. api-node
-
-Contem a API desenvolvida em NodeJS. A sua rota principal é a `graphs` em que o professor (client) faz uma requisição com o `id_class` da turma e, ao fazer uma seleção de dados já previamente inseridos pela `api-lop` no MongoDB, ela retorna todas as entidades com dados estatísticos referentes a esta turma.
-
-A arquitetura utilizada para a implementação do código foi a MVC (Model View Controller): o client faz uma requisição para a camada de Controller, o Controller aplica a regra de negócio (Services) nesta requisição, a camada de Services interage com as entidades do banco de dados a partir do mapeamento delas por meio do Model, o Model envia um response desses dados para o Controller que por sua vez retorna-os para o client por meio de uma interface, a View.  
 
 ## 3. Rodando o serviço
 
