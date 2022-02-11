@@ -6,11 +6,10 @@ Esta branch contém os arquivos necessários para rodar a versão atual de desen
 
 ### 1.1. Docker Compose
 
-O `docker-compose.yml` consiste em um arquivo que define as condições de criação e execução de múltiplas imagens pertencentes a um mesmo projeto. As imagens podem tanto ser criadas exclusivamente por ele (ao baixar uma imagem, pelo parâmetro image), como podem ser criadas em conjunto com o `Dockerfile`, sendo este utilizado quando desejamos criar nossa própria imagem de forma mais maleável (mesmo que para isso precisemos utilizar outra imagem como base)
-
 > :exclamation: Algumas observações
 > - Uma vez que determinado parâmetro tenha sido comentado, ele só será comentado novamente caso apresente alguma particularidade
-> - Caso o sistema precise ser instalado em uma nova máquina, será necessário revisitar o [Tutorial da Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose) para garantir o funcionamento do nginx e do certbot. 
+> - Caso o sistema precise ser instalado em uma nova máquina, será necessário revisitar o [Tutorial da Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose) para garantir o funcionamento do nginx e do certbot.
+ 
 ## 2. Containers
 
 O `docker-compose.yml` possui os seguintes containers
