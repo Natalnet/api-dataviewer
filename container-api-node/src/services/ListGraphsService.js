@@ -67,7 +67,7 @@ class ListGraphsService {
 
     // verificar se id não existe: o vetor de dados vazios tem tamanho n
     if (empties.length === n) {
-      throw new Error("Invalid identifier");
+      throw new Error("Invalid identifier or no data");
     }
 
     return data;

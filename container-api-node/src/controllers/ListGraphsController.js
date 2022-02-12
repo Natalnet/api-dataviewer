@@ -1,6 +1,5 @@
 const ListGraphsService = require("../services/ListGraphsService");
 
-
 class ListGraphsController {
   async handle(request, response) {
 
