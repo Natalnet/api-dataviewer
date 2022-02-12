@@ -9,8 +9,9 @@ class AuthenticateUserController {
     const { email, token } = req.body;
     const user = await AuthenticateUserService.execute(email);
 
-    // colocar token nos cookies
-    res.cookie("session-token", token);
+    // colocar token e id do usuário nos cookies
+    res.cookie("APINJS_AUTH", token);
+    res.cookie("APINJS_UID", user[0]._id)
 
     return res.status(200).json(user);
     
