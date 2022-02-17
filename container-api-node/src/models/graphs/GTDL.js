@@ -1,4 +1,4 @@
-const mongoose = require("../database");
+const mongoose = require("../../database");
 
 const GTDL = mongoose.model("GTDL", new mongoose.Schema({
   _id: String,

@@ -1,4 +1,4 @@
-const mongoose = require("../database");
+const mongoose = require("../../database");
 
 const GTDGA = mongoose.model("GTDGA", new mongoose.Schema({
   _id: String,

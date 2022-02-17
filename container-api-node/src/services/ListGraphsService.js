@@ -1,29 +1,29 @@
-const GENL = require("../models/GENL");
-const GENP = require("../models/GENP");
-const GTDL = require("../models/GTDL");
-const GTDP = require("../models/GTDP");
-const GTAL = require("../models/GTAL");
-const GTAP = require("../models/GTAP");
-const GTNL = require("../models/GTNL");
-const GTNP = require("../models/GTNP");
-const GEDL = require("../models/GEDL");
-const GEDP = require("../models/GEDP");
-const GEAL = require("../models/GEAL");
-const GEAP = require("../models/GEAP");
-const GTDGL = require("../models/GTDGL");
-const GTDGA = require("../models/GTDGA");
-const GTDGD = require("../models/GTDGD");
-const GTTMQQMDD = require("../models/GTTMQQMDD");
-const GTTMDDL = require("../models/GTTMDDL");
-const GATGQTDD = require("../models/GATGQTDD");
-const GTTGQSQ = require("../models/GTTGQSQ");
+const GENL = require("../models/graphs/GENL");
+const GENP = require("../models/graphs/GENP");
+const GTDL = require("../models/graphs/GTDL");
+const GTDP = require("../models/graphs/GTDP");
+const GTAL = require("../models/graphs/GTAL");
+const GTAP = require("../models/graphs/GTAP");
+const GTNL = require("../models/graphs/GTNL");
+const GTNP = require("../models/graphs/GTNP");
+const GEDL = require("../models/graphs/GEDL");
+const GEDP = require("../models/graphs/GEDP");
+const GEAL = require("../models/graphs/GEAL");
+const GEAP = require("../models/graphs/GEAP");
+const GTDGL = require("../models/graphs/GTDGL");
+const GTDGA = require("../models/graphs/GTDGA");
+const GTDGD = require("../models/graphs/GTDGD");
+const GTTMQQMDD = require("../models/graphs/GTTMQQMDD");
+const GTTMDDL = require("../models/graphs/GTTMDDL");
+const GATGQTDD = require("../models/graphs/GATGQTDD");
+const GTTGQSQ = require("../models/graphs/GTTGQSQ");
 
-const MediaGTNL = require("../models/MediaGTNL");
-const MediaGTNP = require("../models/MediaGTNP");
-const MediaGEDL = require("../models/MediaGEDL");
-const MediaGEDP = require("../models/MediaGEDP");
-const MediaGEAL = require("../models/MediaGEAL");
-const MediaGEAP = require("../models/MediaGEAP");
+const MediaGTNL = require("../models/graphs/MediaGTNL");
+const MediaGTNP = require("../models/graphs/MediaGTNP");
+const MediaGEDL = require("../models/graphs/MediaGEDL");
+const MediaGEDP = require("../models/graphs/MediaGEDP");
+const MediaGEAL = require("../models/graphs/MediaGEAL");
+const MediaGEAP = require("../models/graphs/MediaGEAP");
 
 class ListGraphsService {
 
@@ -65,9 +65,10 @@ class ListGraphsService {
     // filtrar dados vazios
     const empties = keys.filter(key => data[key].length === 0);
 
-    // verificar se id não existe: o vetor de dados vazios tem tamanho n
+    // verificar se id_class não existe: o vetor de dados vazios tem tamanho n
     if (empties.length === n) {
-      throw new Error("Invalid identifier or no data");
+      // precisa ter um model Classes para verificar se o id_class existe
+      throw new Error("No data or invalid identifier");
     }
 
     return data;

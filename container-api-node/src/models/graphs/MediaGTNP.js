@@ -1,4 +1,4 @@
-const mongoose = require("../database");
+const mongoose = require("../../database");
 
 const MediaGTNP = mongoose.model("media_GTNP", new mongoose.Schema({
   _id: String,

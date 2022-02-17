@@ -1,6 +1,7 @@
-const mongoose = require("../database");
+const mongoose = require("../../database");
 
-const GEAP = mongoose.model("GEAP", new mongoose.Schema({
+
+const GEAL = mongoose.model("GEAL", new mongoose.Schema({
   _id: String,
   user: String,
   registration: String,
@@ -10,4 +11,4 @@ const GEAP = mongoose.model("GEAP", new mongoose.Schema({
   id_class: String
 }));
 
-module.exports = GEAP;
+module.exports = GEAL;

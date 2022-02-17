@@ -1,4 +1,4 @@
-const mongoose = require("../database");
+const mongoose = require("../../database");
 
 const GTAP = mongoose.model("GTAP", new mongoose.Schema({
   _id: String,

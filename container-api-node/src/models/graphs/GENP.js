@@ -1,4 +1,4 @@
-const mongoose = require("../database");
+const mongoose = require("../../database");
 
 const GENP = mongoose.model("GENP", new mongoose.Schema({
   _id: String,

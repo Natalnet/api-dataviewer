@@ -1,4 +1,4 @@
-const mongoose = require("../database");
+const mongoose = require("../../database");
 
 const MediaGEAP = mongoose.model("media_GEAP", new mongoose.Schema({
   _id: String,
