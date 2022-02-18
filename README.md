@@ -27,7 +27,7 @@ Por enquanto ele não funciona porque não tem uma conexão com as API's feitas,
 
 Contem a API REST do LOP encontrada em [API Dataviewer](https://lop.api.dataviewer.natalnet.br/).
 
-Nesse site, que é o oficial, ela não está funcionando pois uma vez que fazemos requisições ao DB, é retornado *Internal Server Error*. Por outro lado, no nosso container de desenvolvimento, ao configurar o container com o DB, ela funciona tranquilamente. Acesse-a localmente por [http://localhost:5000/](http://localhost:5050/)
+Nesse site, que é o oficial, ela não está funcionando: ao fazer requisições ao DB, é retornado *Internal Server Error*. Por outro lado, no nosso container de desenvolvimento, ao configurar o container com o DB, ela funciona tranquilamente. Acesse-a localmente por [http://localhost:5000/](http://localhost:5050/)
   
 <!-- 
 ### api-users
