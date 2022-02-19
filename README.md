@@ -52,7 +52,17 @@ Podemos futuramente acessar ele por [http://localhost:5050/](http://localhost:50
 
 ### api-node
 
-Contem a API desenvolvida em NodeJS. A sua rota principal é a */graphs* em que o professor (client) faz uma requisição com o *id_class* da turma e, ao fazer uma seleção de dados já previamente inseridos pela *api_lop* no MongoDB, ela retorna todas as entidades com dados estatísticos referentes a esta turma.
+Contem a API desenvolvida em NodeJS que contem os seguintes serviços
+
+**<font color="blue">GET</font> /users/login** retorna a tela de login do Dataviewer
+
+**<font color="blue">GET</font> /users/:id** retorna o email, _id e nome do usuário pelo identificador
+
+**<font color="blue">POST</font> /users/auth** autentica o usuário após ele clicar no botão Entrar com o Google
+
+**<font color="blue">GET</font> /graphs/:id_class** retorna os gráficos relacionados à uma classe (turma)
+
+**<font color="blue">GET</font> /classes/:id_class** retorna dados relacionados a uma classe (turma)
 
 A arquitetura utilizada para a implementação do código foi a MVC (Model View Controller): o client faz uma requisição para a camada de Controller, o Controller aplica a regra de negócio (Services) nesta requisição, a camada de Services interage com as entidades do banco de dados a partir do mapeamento delas por meio do Model, o Model envia um response desses dados para o Controller que por sua vez retorna-os para o client por meio de uma interface, a View.  
 
