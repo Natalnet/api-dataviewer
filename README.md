@@ -54,15 +54,15 @@ Podemos futuramente acessar ele por [http://localhost:5050/](http://localhost:50
 
 Contem a API desenvolvida em NodeJS que contem os seguintes serviços
 
-**<font color="blue">GET</font> /users/login** retorna a tela de login do Dataviewer
+> **GET /users/login** retorna a tela de login do Dataviewer 
 
-**<font color="blue">GET</font> /users/:id** retorna o email, _id e nome do usuário pelo identificador
+> **GET /users/:id** retorna o email, _id e nome do usuário pelo identificador
 
-**<font color="blue">POST</font> /users/auth** autentica o usuário após ele clicar no botão Entrar com o Google
+> **POST /users/auth** autentica o usuário após ele clicar no botão Entrar com o Google
 
-**<font color="blue">GET</font> /graphs/:id_class** retorna os gráficos relacionados à uma classe (turma)
+> **GET /graphs/:id_class** retorna os gráficos relacionados à uma classe (turma)
 
-**<font color="blue">GET</font> /classes/:id_class** retorna dados relacionados a uma classe (turma)
+> **GET /classes/:id_teacher** retorna as classes (turmas) de um professor
 
 A arquitetura utilizada para a implementação do código foi a MVC (Model View Controller): o client faz uma requisição para a camada de Controller, o Controller aplica a regra de negócio (Services) nesta requisição, a camada de Services interage com as entidades do banco de dados a partir do mapeamento delas por meio do Model, o Model envia um response desses dados para o Controller que por sua vez retorna-os para o client por meio de uma interface, a View.  
 
