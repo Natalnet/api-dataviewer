@@ -116,7 +116,7 @@ As rotas da API REST NodeJS usam o sistema de autenticação Sign In do Google. 
 
 Para os passos a seguir darem certo, é necessário duplicar o arquivo da pasta */container-api-node* chamado *.env.local*, renomeá-lo como *.env* e preencher os campos KEY_SECRET e CLIENT_ID, que são as credenciais da API do Google as quais permitem usar esse sistema de autenticação. Você pode obtê-las seguindo o guia [Integrating Google Sign-In into your web app](http://localhost:3333/login)
 
-Para efetuar a autenticação é necessário acessar a rota [http://localhost:3333/login](http://localhost:3333/login) 
+Para efetuar a autenticação é necessário acessar a rota [http://localhost:3333/login](http://localhost:3333/users/login) 
 
 Clicar no botão Sign In e entrar com seu email institucional
 
@@ -124,7 +124,7 @@ Feito isso, o token de acesso para as rotas desta API é armazenado na forma de 
 
 ![Autenticação](/container-api-node/docs/AuthenticateUser.png)
 
-Assim, a API permitirá o acesso as suas rotas apenas se ela identificar o token válido nos cookies do seu navegador. Essa verificação de token para poder acessar as rotas da API pe resumida no seguinte diagrama
+Assim, a API permitirá o acesso as suas rotas apenas se ela identificar o token válido nos cookies do seu navegador. Essa verificação de token para poder acessar as rotas da API é resumida no seguinte diagrama
 
 ![Verificação de integridade](/container-api-node/docs/EnsureTokenIntegrity.png)
 
