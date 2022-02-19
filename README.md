@@ -54,14 +54,10 @@ Podemos futuramente acessar ele por [http://localhost:5050/](http://localhost:50
 
 Contem a API desenvolvida em NodeJS encontrada em [http://localhost:3333/](http://localhost:3333/) que contem os seguintes serviços
 
-> **GET /users/login** retorna a tela de login do Dataviewer 
-
-> **GET /users/:id** retorna o email, _id e nome do usuário pelo identificador
-
-> **POST /users/auth** autentica o usuário após ele clicar no botão Entrar com o Google
-
-> **GET /graphs/:id_class** retorna os gráficos relacionados à uma classe (turma)
-
+> **GET /users/login** retorna a tela de login do Dataviewer <br>
+> **GET /users/:id** retorna o email, _id e nome do usuário pelo identificador <br>
+> **POST /users/auth** autentica o usuário após ele clicar no botão Entrar com o Google <br>
+> **GET /graphs/:id_class** retorna os gráficos relacionados à uma classe (turma) <br>
 > **GET /classes/:id_teacher** retorna as classes (turmas) de um professor
 
 A arquitetura utilizada para a implementação do código foi a MVC (Model View Controller): o client faz uma requisição para a camada de Controller, o Controller aplica a regra de negócio (Services) nesta requisição, a camada de Services interage com as entidades do banco de dados a partir do mapeamento delas por meio do Model, o Model envia um response desses dados para o Controller que por sua vez retorna-os para o client por meio de uma interface, a View.  
@@ -130,10 +126,7 @@ Assim, a API permitirá o acesso as suas rotas apenas se ela identificar o token
 
 Acesse [http://localhost:15432/](http://localhost:15432/) e utilize as credenciais
 
-| Email              | Username | Password |
-|--------------------|----------|----------|
-| postgres@email.com | postgres | postgres |
-
+> **username:** postgres <br> **password:** postgres <br> **email:** postgres@email.com
 
 Em Add New Server, crie um novo server com o nome de *Dataviewer* e, na aba Connection, no campo host colocamos *db_lop*. Em username e password, colocamos as mesmas credenciais anteriores. Clique em save para criar o servidor.
 
@@ -145,8 +138,6 @@ Para fazer o restore do banco de dados, clicamos com botão direito em cima do b
 
 Acesse a interface gráfica do MongoDB em [http://localhost:8081/](http://localhost:8081/) por meio dessas credenciais
 
-| Username | Password |
-|----------|----------|
-| admin    | mongodb  |
+> **username:** admin <br> **password:** mongodb
 
 O banco de dados que você deverá visualizar está nomeado como *apinode*. Com o botão direito, clique em *view* e veja as entidades cadastradas nele.
