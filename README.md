@@ -11,7 +11,9 @@ Algumas observações do Docker Compose
  
 ## 2. Containers
 
-O *docker-compose.yml* possui containers relacionados ao frontend e ao backend do sistema em questão.
+O *docker-compose.yml* possui containers relacionados ao frontend e ao backend do sistema em questão. Abaixo uma representação de como a arquitetura do Dataviewer foi montado a partir desses containers.
+
+![Arquitetura](./container-api-node/docs/Arquitetura.jpg)
 
 ## 2.1. Frontend
 
