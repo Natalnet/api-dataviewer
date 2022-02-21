@@ -60,6 +60,11 @@ services:
     depends_on:
       - db-lop
       - mongo
+    # As variáveis são definidas com base em variáveis locais, tendo em vista que se trata de conteúdo sensível. Estão definidas no arquivo oculto .env
+    environment:
+      USER_DB: ${USER_DB}
+      PASSWORD_DB: ${PASSWORD_DB}
+    # Define qual porta local estará associado a qual porta do container (Porta local:porta exposta pelo container)
     # Define a qual network o serviço irá se conectar (por padrão, o docker-compose já cria uma network sem precisar especificar, mas optamos por padronizar e evidenciar)
     networks:
       - backend
@@ -98,8 +103,8 @@ services:
    # Esse serviço não contem o parâmetro build, pois utilizamos diretamente uma imagem pré-existente, fazendo as configurações pertinentes no próprio docker-compose
     image: postgres:14
     environment:
-      POSTGRES_USERNAME: "postgres"
-      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: ${USER_DB}
+      POSTGRES_PASSWORD: ${PASSWORD_DB} #${POSTGRES_PASSWORD} # isso é provisório, qnd o projeto ja estiver tudo ok a gente vai inserir essa senha na hora de dar o docker-compose up
     # A porta padrão do postgres é a 5432
     ports:
       - "5432:5432"
