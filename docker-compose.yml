@@ -81,6 +81,27 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+  api-node:
+    build: ./container-api-node/ 
+    ports:
+      - 3333:3333
+    container_name: api-node
+    volumes: 
+      - ./container-api-node:/usr/apinode
+      - /usr/apinode/node_modules
+    command: yarn dev
+    networks:
+      - backend
+
+    mongo:
+      image: mongo
+      container_name: mongodb
+      ports: 
+        - 27017:27017
+      restart: always
+      networks:
+        - backend
       
   # Aqui definiremos as condições de inicialização do serviço de atualização do nosso banco de dados do lop no dataviewer    
   #update-db-lop:
@@ -112,53 +133,54 @@ services:
   #      max-size: "10m"
   #      max-file: "3"
 
-  api-users:
-    build:
-      context: . 
-      dockerfile: ./container-api-users/Dockerfile 
-    container_name: api-users-container 
-    restart: always 
-    depends_on: 
-      - db-users 
-    environment:
-      USER_DB: ${USER_DB}
-      PASSWORD_DB: ${PASSWORD_DB}
-      PASSWORD_MASTER_USER: ${PASSWORD_MASTER_USER}
-      EMAIL_PROJECT: ${EMAIL_PROJECT}
-      PASSWORD_EMAIL: ${PASSWORD_EMAIL}
-    ports:
-      - "5050:5050"
-    networks:
-      - backend
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "3"
+  #api-users não esta em funcionamento
+  #api-users:
+  #  build:
+  #    context: . 
+  #    dockerfile: ./container-api-users/Dockerfile 
+  #  container_name: api-users-container 
+  #  restart: always 
+  #  depends_on: 
+  #    - db-users 
+  #  environment:
+  #    USER_DB: ${USER_DB}
+  #    PASSWORD_DB: ${PASSWORD_DB}
+  #    PASSWORD_MASTER_USER: ${PASSWORD_MASTER_USER}
+  #    EMAIL_PROJECT: ${EMAIL_PROJECT}
+  #    PASSWORD_EMAIL: ${PASSWORD_EMAIL}
+  #  ports:
+  #    - "5050:5050"
+  #  networks:
+  #    - backend
+  #  logging:
+  #    options:
+  #      max-size: "10m"
+  #      max-file: "3"
 
-  db-users:
-    image: postgres:13.2-alpine
-    hostname: postgres
-    container_name: db-users-container
-    restart: always
-    # Tendo em vista que a porta padrão do postgres é a 5432, utilizamos a porta local 5431 conectada a porta do container 5432
-    ports:
-      - "5431:5432"
-    expose:
-      - 5431
-    environment:
-      POSTGRES_USER: ${USER_DB}
-      POSTGRES_PASSWORD: ${PASSWORD_DB}
-      POSTGRES_DB: dataviewer_users # nome do db de usuários cadastrados
-      PGDATA: /var/lib/postgresql/data/db-users
-    volumes:
-      - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
-      - ./db-data/db-users:/var/lib/postgresql/data/db-users
-    networks:
-      - backend
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "3"
+  #db-users:
+  #  image: postgres:13.2-alpine
+  #  hostname: postgres
+  #  container_name: db-users-container
+  #  restart: always
+  #  # Tendo em vista que a porta padrão do postgres é a 5432, utilizamos a porta local 5431 conectada a porta do container 5432
+  #  ports:
+  #    - "5431:5432"
+  #  expose:
+  #    - 5431
+  #  environment:
+  #    POSTGRES_USER: ${USER_DB}
+  #    POSTGRES_PASSWORD: ${PASSWORD_DB}
+  #    POSTGRES_DB: dataviewer_users # nome do db de usuários cadastrados
+  #    PGDATA: /var/lib/postgresql/data/db-users
+  #  volumes:
+  #    - ./scripts/db/create_database_dataviewer_users.sql:/docker-entrypoint-initdb.d/create_database_dataviewer_users.sql
+  #    - ./db-data/db-users:/var/lib/postgresql/data/db-users
+  #  networks:
+  #    - backend
+  #  logging:
+  #    options:
+  #      max-size: "10m"
+  #      max-file: "3"
   
   #Atualmente, o serviço do nginx está encarregado tanto do nginx como do front-end. O nginx é responsável pelo proxy reverso.
   nginx:
