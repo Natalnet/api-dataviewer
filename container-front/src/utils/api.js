@@ -5,7 +5,7 @@ import axios from 'axios';
    facilita nossa vida, uma vez que não necessitamos definir um cabeçalho
    ou o corpo da requisição. */
 const api = axios.create({
-  baseURL: "http://localhost:5000/"
+  baseURL: "http://localhost:3333"
 });
 
 export default api;

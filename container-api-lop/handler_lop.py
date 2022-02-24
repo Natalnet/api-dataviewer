@@ -20,12 +20,11 @@ urllib3.disable_warnings()
 #import sklearn 
 
 #Lendo variáveis de ambiente
-PASSWORD_DB = 'postgres'
-USER_DB = 'postgres'
+PASSWORD_DB = os.getenv('PASSWORD_DB')
+USER_DB = os.getenv('USER_DB')
 
-# futuramente colocar credenciais do mongo
-USER_MONGO = 'admin'
-PASSWORD_MONGO = 'mongodb'
+USER_MONGO = os.getenv('USER_DB_MONGO')
+PASSWORD_MONGO = os.getenv('PASSWORD_DB_MONGO')
 
 #Instanciando classes
 lop = Lop()
