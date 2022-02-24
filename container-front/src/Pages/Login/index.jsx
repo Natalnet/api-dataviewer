@@ -53,11 +53,7 @@ export default function App() {
   const classes = useStyles();
 
   //Esta variável está sendo utilizada para guardar todos os dados da requisição
-  const [user, setUser] = useState({
-    _id: "",
-    name: "",
-    email: ""
-  });
+  const [user, setUser] = useState("");
 
   //Do react-router-dom, utilizado para navegar entre as telas.
   const history = useHistory();
@@ -65,8 +61,9 @@ export default function App() {
   //Para definir o token está sendo chamado essa variável.
   const { setToken } = useContext(StoreContext);
 
-  //Esta variável está sendo utilizada para guardar os nomes dos professores.
   const [error, setError] = useState();
+  
+  // Animação do spinner
   const [loading, setLoading] = useState(false);
 
   // Pega ID e token dos cookies
@@ -81,16 +78,16 @@ export default function App() {
 
     // Recupera dados do professor
     try {
+
+      // Abrir requisição
       const response = await api.get(`users/${id_teacher}`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
       });
 
-      const { _id, name, email } = response.data;
-
       // Pôr dados no estado do componente. Desenrola ai matheus
-      setUser(response.data);
+      setUser(response.data.name);
 
     } catch (e) {
       console.log(e.message);
@@ -103,25 +100,28 @@ export default function App() {
     // Chamar requisição
     fetchData();
 
-    // mostrar dados do professor
-    console.log(user);
+    // Coloca dados na sessão
 
     // Fechar spinner
     setLoading(false);
+
   }, []);
 
-  // Coloca dados na sessão
 
 
   return (
     <Container component="main" maxWidth="xs" >
-      {/*Definindo um container geral para todos os componentes
-         e mostrando juntos na tela.*/}
       <div className={classes.paper}>
         <div className={classes.text} >
-          <Typography component="h1" variant="h4">
-            Estamos preparando tudo
-          </Typography>
+          {user ?
+            <Typography component="h3">
+              Olá, prof. {user}
+            </Typography>
+            :
+            <Typography component="h3">
+              Estamos preparando tudo
+            </Typography>
+          }
         </div>
         <List component="nav" className={classes.list} aria-label="Turmas">
           {loading ? <img src={spinnerImg} alt="Loading" style={{ width: 250 }}></img> : false}
