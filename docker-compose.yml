@@ -82,22 +82,22 @@ services:
     #  - backend
 
   #React container
-  #app:
-  #  container_name: container-front-dev
-  #  build: 
-  #    context: .
-  #    dockerfile: ./container-front/Dockerfile-dev
-  #  #Para ouvir as alterações durante o desenvolvimento
-  #  volumes:
-  #    - './container-front:/app'
-  #    - '/app/node_modules'
-  #  ports:
-  #    - 3000:3000
-  #  depends_on: 
-  #    - api-lop
-  #    #- api-users
-  #  networks:
-  #    - backend
+  app:
+   container_name: container-front-dev
+   build: 
+     context: .
+     dockerfile: ./container-front/Dockerfile-dev
+   #Para ouvir as alterações durante o desenvolvimento
+   volumes:
+     - './container-front:/app'
+     - '/app/node_modules'
+   ports:
+     - 3000:3000
+   depends_on: 
+     - api-lop
+     #- api-users
+   networks:
+     - backend
   # Aqui definiremos as condições de inicialização do serviço de banco de dados do lop no dataviewer:
   db-lop:
    # Esse serviço não contem o parâmetro build, pois utilizamos diretamente uma imagem pré-existente, fazendo as configurações pertinentes no próprio docker-compose
