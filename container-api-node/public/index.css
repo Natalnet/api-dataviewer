@@ -1,3 +1,79 @@
 body {
-  background-color: red;
+  background: #cedbf7;
+  font-family: "Roboto", sans-serif;
+}
+
+.logoDoTexto {
+  position: absolute;
+  width: 178.53px;
+  height: 29px;
+  left: 46px;
+  top: 150px;
+}
+
+.texto {
+  position: absolute;
+  width: 701px;
+  height: 122px;
+  left: 44px;
+  top: 214px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  line-height: 1.4;
+}
+
+.rapazSentado {
+  position: absolute;
+  left: 3.37%;
+  right: 48.9%;
+  top: 48.71%;
+  bottom: 2.93%;
+  width: 560px;
+}
+
+.cardBranco {
+  position: absolute;
+  width: 470px;
+  height: 605px;
+  left: 850px;
+  top: 80px;
+  border-radius: 10.7392px;
+}
+
+.retangulo {
+  position: absolute;
+  width: 470px;
+  height: 605px;
+  left: 850px;
+  top: 80px;
+  background: #fafafa;
+  border-radius: 10.7392px;
+}
+
+.logoDoLogin {
+  position: absolute;
+  width: 331px;
+  height: 150.01px;
+  left: 918px;
+  top: 147px;
+}
+
+.g-signin2 {
+  position: absolute;
+  width: 331px;
+  height: 150.01px;
+  left: 1018px;
+  top: 327px;
+}
+
+.teste {
+  position: absolute;
+  width: 363px;
+  height: 40px;
+  left: 906px;
+  top: 507.5px;
+  background: #EFEFEF;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
 }
