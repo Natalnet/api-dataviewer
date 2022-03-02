@@ -56,7 +56,7 @@ Podemos futuramente acessar ele por [http://localhost:5050/](http://localhost:50
 
 Contem a API desenvolvida em NodeJS encontrada em [http://localhost:3333/](http://localhost:3333/) que contem os seguintes serviços
 
-> **GET /users/login** <br> retorna a tela de login do Dataviewer 
+> **GET /** <br> retorna a tela de login do Dataviewer 
 
 > **GET /users/:id** <br> retorna o email, _id e nome do usuário pelo identificador
 
