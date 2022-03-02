@@ -53,7 +53,7 @@ export default function App() {
   const classes = useStyles();
 
   //Esta variável está sendo utilizada para guardar todos os dados da requisição
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
 
   //Do react-router-dom, utilizado para navegar entre as telas.
   const history = useHistory();
@@ -86,8 +86,11 @@ export default function App() {
         }
       });
 
-      // Pôr dados no estado do componente. Desenrola ai matheus
-      setUser(response.data.name);
+      // Pôr dados no estado do componente
+      setUser(response.data);
+
+      // Colocar response.data na sessão do React
+      
 
     } catch (e) {
       console.log(e.message);
@@ -100,14 +103,10 @@ export default function App() {
     // Chamar requisição
     fetchData();
 
-    // Coloca dados na sessão
-
     // Fechar spinner
     setLoading(false);
 
   }, []);
-
-
 
   return (
     <Container component="main" maxWidth="xs" >
@@ -115,7 +114,7 @@ export default function App() {
         <div className={classes.text} >
           {user ?
             <Typography component="h3">
-              Olá, prof. {user}
+              Olá, prof. {user.name}
             </Typography>
             :
             <Typography component="h3">
