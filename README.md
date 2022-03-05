@@ -124,9 +124,17 @@ Feito isso, o token de acesso para as rotas desta API é armazenado na forma de 
 
 ![Autenticação](/container-api-node/docs/AuthenticateUser.png)
 
-Assim, a API permitirá o acesso as suas rotas apenas se ela identificar o token válido nos cookies do seu navegador. Essa verificação de token para poder acessar as rotas da API é resumida no seguinte diagrama
+Assim, a cada requisição que o *app front* fizer para a API, ele precisará recuperar este token no cookie do navegador e colocá-lo no header da requisição da seguinte forma
 
-![Verificação de integridade](/container-api-node/docs/EnsureTokenIntegrity.png)
+```javascript
+const token = Cookies.get("APINJS_AUTH");
+
+const response = await api.method("/resource_name", {
+  headers: {
+    "Authorization": `Bearer ${token}`
+  }
+});
+```
 
 ### 3.3.  Preenchendo o PostgresSQL
 
