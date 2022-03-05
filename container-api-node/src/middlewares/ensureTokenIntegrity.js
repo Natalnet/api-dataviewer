@@ -2,14 +2,15 @@ const { OAuth2Client } = require("google-auth-library");
 
 const ensureTokenIntegrity = async (req, res, next) => {
 
-  // recuperar token do Header
+  // recuperar token do Header da requisição
   const string = req.headers["authorization"];
-  const [bearer, authtoken] = string.split(" ");
-  const token = authtoken;
 
-  if (!token) {
+  if (!string) {
     throw new Error("No token was added. Please sign in.");
   }
+
+  const [bearer, authtoken] = string.split(" ");
+  const token = authtoken;
 
   // verificar integridade dele
   const CLIENT_ID = process.env.CLIENT_ID;

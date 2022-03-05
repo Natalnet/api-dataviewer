@@ -1,6 +1,6 @@
 const { Router } = require("express");
-const classes = require("../classes.routes");
 
+const classes = require("../classes.routes");
 const graphs = require("../graphs.routes");
 const users = require("../users.routes");
 
