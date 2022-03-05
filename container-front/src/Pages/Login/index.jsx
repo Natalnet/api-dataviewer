@@ -62,7 +62,7 @@ export default function App() {
   const { setToken } = useContext(StoreContext);
 
   const [error, setError] = useState();
-  
+
   // Animação do spinner
   const [loading, setLoading] = useState(false);
 
@@ -73,11 +73,13 @@ export default function App() {
   // Recebe dados do professor do GET users/:id
   async function fetchData() {
 
-    // Abrir animação do spinner 
-    setLoading(true);
-
     // Recupera dados do professor
     try {
+
+      if (!id_teacher){
+        window.location.href = "http://localhost:3333";
+        return
+      }
 
       // Abrir requisição
       const response = await api.get(`users/${id_teacher}`, {
@@ -90,7 +92,7 @@ export default function App() {
       setUser(response.data);
 
       // Colocar response.data na sessão do React
-      
+
 
     } catch (e) {
       console.log(e.message);
@@ -100,10 +102,13 @@ export default function App() {
 
   useEffect(() => {
 
+    // Abrir animação do spinner 
+    setLoading(true);
+
     // Chamar requisição
     fetchData();
 
-    // Fechar spinner
+    // Fechar spinner 
     setLoading(false);
 
   }, []);
@@ -112,19 +117,14 @@ export default function App() {
     <Container component="main" maxWidth="xs" >
       <div className={classes.paper}>
         <div className={classes.text} >
-          {user ?
+          {user._id ?
             <Typography component="h3">
               Olá, prof. {user.name}
             </Typography>
             :
-            <Typography component="h3">
-              Estamos preparando tudo
-            </Typography>
+            <img src={spinnerImg} alt="Loading" style={{ width: 250 }}></img>
           }
         </div>
-        <List component="nav" className={classes.list} aria-label="Turmas">
-          {loading ? <img src={spinnerImg} alt="Loading" style={{ width: 250 }}></img> : false}
-        </List>
       </div>
     </Container>
   );
