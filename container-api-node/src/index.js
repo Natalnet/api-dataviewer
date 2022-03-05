@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const cors = require("cors");
 
 const { json } = require("express");
-const router = require("./routes/main");
+const router = require("./routes");
 
 const app = express();
 
@@ -43,5 +43,3 @@ app.use((err, req, res, next) => {
 app.listen(process.env.APP_PORT, () => {
   console.log(`[ OK ] Server is listening on ${process.env.APP_PORT}`);
 });
-
-/* require("./database") */

@@ -1,4 +1,5 @@
 const { Router } = require("express");
+
 const ListClassesController = require("../controllers/ListClassesController");
 const ensureTokenIntegrity = require("../middlewares/ensureTokenIntegrity");
 
