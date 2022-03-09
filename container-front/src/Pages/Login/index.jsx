@@ -92,6 +92,7 @@ export default function App() {
       setUser(response.data);
 
       // Colocar response.data na sessão do React
+      console.log(response.data);
 
 
     } catch (e) {
