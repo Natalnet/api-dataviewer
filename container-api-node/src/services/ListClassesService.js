@@ -1,6 +1,6 @@
 const Classes = require("../models/Classes");
 
-class FetchClassesService {
+class ListClassesService {
   async execute(id) {
 
     const classes = await Classes.find({
@@ -16,4 +16,4 @@ class FetchClassesService {
   }
 }
 
-module.exports = new FetchClassesService;
+module.exports = new ListClassesService;
