@@ -90,6 +90,7 @@ export default function App() {
       setUser(response.data);
 
       // Colocar response.data na sessão do React
+      // Redirecionar o usuario para o dashboard
       
 
     } catch (e) {
