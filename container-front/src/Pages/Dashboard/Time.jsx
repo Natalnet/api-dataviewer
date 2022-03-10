@@ -24,9 +24,9 @@ export default function App() {
   const secondOption = "Histograma";
   const location = useLocation();
   const { graphs } = location.state;
-  //Retorna a tela de escolha do usuário, dentre Histograma e turma
 
-  const id_turma = parametrosDaURL;
+  //Retorna a tela de escolha do usuário, dentre Histograma e turma
+  //const id_turma = parametrosDaURL;
 
   function handleClick(option) {
     if (option === firstOption)
