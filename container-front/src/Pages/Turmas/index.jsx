@@ -42,7 +42,7 @@ export default function App(props) {
   //Essa variável é para recuperar o que foi passado pelo history como parâmetro.
   const location = useLocation();
   //Guardando as turmas passadas em uma variável.
-  const turmas = location.state;
+  // const turmas = location.state;
   //Para navegar entre as telas.
   const history = useHistory();
   //Errors
@@ -50,7 +50,33 @@ export default function App(props) {
 
   const [loading, setLoading] = useState(false);
 
+  const [turmas, setTurmas] = [];
+  
   useEffect(() => {
+    // Recuperar os dados da sessão
+    
+    /*
+      const user = JSON.parse(localStorage.getItem("user"))
+
+      user.name
+      user._id
+
+    */
+
+    // Abrir umar requisição do axios para pegar as turmas do professor
+    const response = await api.get(`classes/${user._id}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+    
+    // Mudar estado do componente
+    setTurmas(response.data);
+
+    // Acessar o id da turma: turma.id
+
+    // dashboard/:turma.id
+
     //Caso não tenha nenhum dado de turma, não há como apresentar. Então ele retorna ao login.
     if (!location.state) {
       history.push("/login");
