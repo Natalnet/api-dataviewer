@@ -91,14 +91,9 @@ export default function App() {
       // Pôr dados no estado do componente
       setUser(response.data);
 
-      // Colocar response.data na sessão do React
-<<<<<<< HEAD
+      // Colocargl response.data na sessão do React
       // Redirecionar o usuario para o dashboard
       
-=======
-      console.log(response.data);
-
->>>>>>> b8cfe5f00c93be7ca1a26472f135fbd716347600
 
     } catch (e) {
       console.log(e.message);
