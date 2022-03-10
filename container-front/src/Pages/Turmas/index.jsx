@@ -64,14 +64,16 @@ export default function App(props) {
     */
 
     // Abrir umar requisição do axios para pegar as turmas do professor
-    const response = await api.get(`classes/${user._id}`, {
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
+
+    // const response = await api.get(`classes/${user._id}`, {
+    //   headers: {
+    //     "Authorization": `Bearer ${token}`
+    //   }
+    // });
     
     // Mudar estado do componente
-    setTurmas(response.data);
+
+    // setTurmas(response.data);
 
     // Acessar o id da turma: turma.id
 
