@@ -9,7 +9,7 @@ Algumas observações do Docker Compose
 
 ## 1. Visão geral
 
-Esta branch contém os arquivos necessários para rodar a versão atual de desenvolvimento do Dataviewer. Neste README, você encontrará uma explicação de como estão organizados os containers do Dataviewer e os procedimentos para rodá-lo de forma localmente.
+Esta branch possui os arquivos necessários para rodar a versão atual de desenvolvimento do Dataviewer. Neste README, você encontrará uma explicação de como estão organizados os containers do Dataviewer e os procedimentos para rodá-lo de forma localmente.
 
 ## 2. Containers
 
