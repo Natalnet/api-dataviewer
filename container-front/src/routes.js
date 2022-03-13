@@ -7,7 +7,6 @@ import {
 import StoreProvider from './components/Store/Provider';
 import RoutesPrivate from './components/Routes/Private/Private';
 import Home from './components/Menu';
-import Login from './Pages/Login';
 import Turmas from './Pages/Turmas';
 
 export default function App() {
@@ -15,7 +14,6 @@ export default function App() {
         <Router>
             <StoreProvider>
                 <Switch>
-                    <Route path="/login" component={Login} />
                     {/*RoutesPrivate é uma rota que está verificando se o token de acesso está disponível.
                        Caso não esteja, retorna para a rota de login. */}
                     <RoutesPrivate path="/turmas" component={Turmas} />
