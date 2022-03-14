@@ -1,14 +1,16 @@
 # Versão de Developer do DATAVIEWER
 
-Esta branch contém os arquivos necessários para rodar a versão atual de desenvolvimento do Dataviewer.
-
-## 1. Conceitos
-
+<!--
+## Conceitos
 Algumas observações do Docker Compose
-
 - Uma vez que determinado parâmetro tenha sido comentado, ele só será comentado novamente caso apresente alguma particularidade
 - Caso o sistema precise ser instalado em uma nova máquina, será necessário revisitar o [Tutorial da Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-secure-a-containerized-node-js-application-with-nginx-let-s-encrypt-and-docker-compose) para garantir o funcionamento do nginx e do certbot.
- 
+ -->
+
+## 1. Visão geral
+
+Esta branch possui os arquivos necessários para rodar a versão atual de desenvolvimento do Dataviewer. Neste README, você encontrará uma explicação de como estão organizados os containers do Dataviewer e os procedimentos para rodá-lo de forma local.
+
 ## 2. Containers
 
 O *docker-compose.yml* possui containers relacionados ao frontend e ao backend do sistema em questão. Abaixo uma representação de como a arquitetura do Dataviewer foi montado a partir desses containers.
@@ -116,7 +118,7 @@ As rotas da API REST NodeJS usam o sistema de autenticação Sign In do Google. 
 
 Para os passos a seguir darem certo, é necessário duplicar o arquivo da pasta */container-api-node* chamado *.env.local*, renomeá-lo como *.env* e preencher os campos KEY_SECRET e CLIENT_ID, que são as credenciais da API do Google as quais permitem usar esse sistema de autenticação. Você pode obtê-las seguindo o guia [Integrating Google Sign-In into your web app](https://developers.google.com/identity/sign-in/web/sign-in) na parte *Create authorization credentials*
 
-Para efetuar a autenticação é necessário acessar a rota [http://localhost:3333](http://localhost:3333/users/login) 
+Para efetuar a autenticação é necessário acessar a rota [http://localhost:3333](http://localhost:3333) 
 
 Clicar no botão Sign In e entrar com seu email institucional
 
