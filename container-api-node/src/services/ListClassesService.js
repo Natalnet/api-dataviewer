@@ -1,10 +1,10 @@
 const Classes = require("../models/Classes");
 
 class ListClassesService {
-  async execute(id) {
+  async execute(id_teacher) {
 
     const classes = await Classes.find({
-      id_teacher: id
+      id_teacher
     });
 
     if (classes.length === 0) {

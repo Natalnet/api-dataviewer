@@ -43,7 +43,7 @@ export default function RoutesPrivate({ component: Component, ...rest }) {
     <Route
       {...rest}
       // Token e id_teacher válidos?
-      render={() => userExists
+      render={() => userExists === true
         ? <Component {...rest} /> // usuário vê o componente
         : window.href = "http://localhost:3333" // usuário redirecionado
       }

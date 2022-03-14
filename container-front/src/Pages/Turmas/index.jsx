@@ -56,7 +56,7 @@ export default function App(props) {
 
     // Mudar estado do componente
     setTurmas(response.data);
-    
+
   }
 
   return (
@@ -65,7 +65,7 @@ export default function App(props) {
         Minhas Turmas
         {
           turmas.length > 0 
-          ? <p>Turmas</p>
+          ? turmas.map((turma) => <p>{turma.name_class}</p>)
           // Retorna 400 se não houver nenhuma turma
           : <p>Nenhuma turma</p>
         }
