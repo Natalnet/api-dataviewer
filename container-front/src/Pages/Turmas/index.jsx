@@ -56,7 +56,7 @@ export default function App(props) {
 
     // Mudar estado do componente
     setTurmas(response.data);
-
+    
   }
 
   return (
