@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 export default function App(props) {
 
   const [turmas, setTurmas] = useState([]);
-
+  
   useEffect(() => {
     fetchData();
   }, [])
