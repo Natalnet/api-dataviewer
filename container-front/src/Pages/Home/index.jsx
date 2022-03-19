@@ -22,7 +22,6 @@ export default function App(props) {
     // Recuperar os dados da sessão
     const user = JSON.parse(localStorage.getItem("user"));
 
-
     // Recuperar os gráficos dessa turma
     const response = await api.get(`graphs/${id_class}`, {
       headers: {

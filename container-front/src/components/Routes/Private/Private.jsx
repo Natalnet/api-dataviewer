@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import api from '../../../utils/api';
 import Cookies from "js-cookie";
+import spinnerImg from '../../../utils/spinner.svg';
 
 export default function RoutesPrivate({ component: Component, ...rest }) {
 
   const id_teacher = Cookies.get("APINJS_UID");
   const token = Cookies.get("APINJS_AUTH");
-  const [userExists, setUserExists] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -29,13 +30,14 @@ export default function RoutesPrivate({ component: Component, ...rest }) {
       // Adicionar token na sessão
       data["token"] = token;
   
-      setUserExists(true);
+      setLoading(true);
   
       // Colocar na sessão
       localStorage.setItem("user", JSON.stringify(data));
 
     } catch(e) {
-      setUserExists(false);
+      window.location.href = "http://localhost:3333"
+      setLoading(false);
     }
 
   }
@@ -44,9 +46,9 @@ export default function RoutesPrivate({ component: Component, ...rest }) {
     <Route
       {...rest}
       // Token e id_teacher válidos?
-      render = {() => userExists === true
+      render = {() => loading === true
         ? <Component {...rest} /> // usuário vê o componente
-        : window.location.href = "http://localhost:3333" // usuário redirecionado
+        : <img src={spinnerImg} alt="Loading" style={{ width: 250 }}></img> 
       }
     />
   )
