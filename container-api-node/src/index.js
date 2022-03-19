@@ -14,7 +14,10 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 // permissões
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET"]
+}));
 
 // formato das resposta/envio das requisições
 app.use(json());
