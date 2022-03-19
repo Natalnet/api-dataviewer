@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
 import api from '../../../utils/api';
 import Cookies from "js-cookie";
 
@@ -7,7 +7,7 @@ export default function RoutesPrivate({ component: Component, ...rest }) {
 
   const id_teacher = Cookies.get("APINJS_UID");
   const token = Cookies.get("APINJS_AUTH");
-  const [userExists, setUserExists] = useState(false);
+  const [userExists, setUserExists] = useState(true);
 
   useEffect(() => {
     fetchData();
