@@ -65,7 +65,7 @@ export default function App(props) {
         Minhas Turmas
         {
           turmas.length > 0 
-          ? turmas.map((turma) => <p>{turma.name_class}</p>)
+          ? turmas.map((turma) => <p key={turma._id}>{turma.name_class}</p>)
           // Retorna 400 se não houver nenhuma turma
           : <p>Nenhuma turma</p>
         }
