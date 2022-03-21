@@ -96,7 +96,9 @@ Pode ser acessado em [http://localhost:15432/](http://localhost:15432/)
 
 ### mongo
 
-Container onde está o banco de dados central do sistema. A API NODE vai interagir o tempo todo com ele para poder retornar dados para o frontend. A interface gráfica de gerenciamento de banco de dados do MongoDB pode ser acessada por [http://localhost:8081/](http://localhost:8081/) com as credenciais apresentadas no tópico 3.2
+Container onde está o banco de dados central do sistema. A API NODE vai interagir o tempo todo com ele para poder retornar dados para o frontend. 
+
+Com as credenciais apresentadas no tópico 3.4, acesse a interface gráfica do MongoDB em [http://localhost:8081/](http://localhost:8081/) 
 
 ## 3. Rodando o serviço
 
@@ -172,7 +174,7 @@ Para preencher o DB, clicamos com botão direito em cima do banco de dados e sel
 
 Após seguir esses passos, veja o sistema funcionando acessando o front-end em [http://localhost:3000/](http://localhost:3000/)
 
-### 3.2. MongoDB
+### 3.4. MongoDB
 
 Acesse a interface gráfica do MongoDB em [http://localhost:8081/](http://localhost:8081/) por meio dessas credenciais
 
