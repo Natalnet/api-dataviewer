@@ -86,7 +86,7 @@ Pode ser acessada em [http://localhost:3333/](http://localhost:3333/)
 
 ### db-lop
 
-Container onde criamos um banco de dados PostgreSQL para ser conectado com o sistema.  Ele é criado vazio sem nenhum dado, então para adicionar os dados a serem consumidos nas apis, temos que adicionar uma cópia do nosso db nele por meio do restore (próximo tópico).
+Container onde criamos um banco de dados PostgreSQL para ser conectado com o sistema.  Ele é criado vazio sem nenhum dado, então para adicionar os dados a serem consumidos nas apis, temos que adicionar uma cópia do nosso DB nele por meio do *Restore* (próximo tópico).
 
 A interface gráfica de gerenciamento de banco de dados do PostgreSQL é feita em um outro container chamado *pgadmin-compose*, que não existirá nos arquivos de produção pois é apenas uma forma de manusearmos o postgres com mais facilidade. 
 
