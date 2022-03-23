@@ -89,8 +89,8 @@ services:
      dockerfile: ./container-front/Dockerfile-dev
    #Para ouvir as alterações durante o desenvolvimento
    volumes:
-     - './container-front:/app'
-     - '/app/node_modules'
+     - /app/node_modules
+     - ./container-front:/app
    ports:
      - 3000:3000
    depends_on: 
