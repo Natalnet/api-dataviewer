@@ -136,11 +136,10 @@ A primeira vez tende a demorar um pouco para fazer o build de todas as imagens
 
 As rotas da API REST NodeJS usam o sistema de autenticação Sign In do Google. Tais rotas apenas poderão ser acessadas caso o client esteja logado com algum email institucional da UFRN (ufrn.edu.br, ufrn.edu).
 
-Para os passos a seguir darem certo, é necessário duplicar o arquivo da pasta ``/container-api-node`` chamado ``.env.local``, renomeá-lo como ``.env`` e preencher os campos ``KEY_SECRET`` e ``CLIENT_ID``, que são as credenciais da API do Google as quais permitem usar esse sistema de autenticação. Você pode obtê-las seguindo o guia [Integrating Google Sign-In into your web app](https://developers.google.com/identity/sign-in/web/sign-in) na parte *Create authorization credentials*
 
-Para efetuar a autenticação é necessário acessar a rota [http://localhost:3333](http://localhost:3333) 
+Acesse a rota [http://localhost:3333](http://localhost:3333), clique no botão Sign In e entre com as seguintes credenciais
 
-Clicar no botão Sign In e entrar com seu email institucional
+> **email:** dataviewer.platform@gmail.com <br> **senha:** Dataviewer2022
 
 Feito isso, o token de acesso para as rotas desta API é armazenado na forma de cookie no navegador. Esse percurso é resumido no seguinte diagrama
 
