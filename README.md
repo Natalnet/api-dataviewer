@@ -136,7 +136,7 @@ A primeira vez tende a demorar um pouco para fazer o build de todas as imagens
 
 As rotas da API REST NodeJS usam o sistema de autenticação Sign In do Google. Tais rotas apenas poderão ser acessadas caso o client esteja logado com algum email institucional da UFRN (ufrn.edu.br, ufrn.edu).
 
-Acesse a CLI do `container-api-node` no Docker e digite
+Acesse a CLI do container *api-node* no Docker e digite
 
 ```
 NAME=users yarn seed
