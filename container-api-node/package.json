@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -r dotenv/config ./src/index.js"
+    "dev": "nodemon -r dotenv/config ./src/index.js",
+    "seed": "nodemon ./src/database/seeders/demo-$NAME.js",
+    "seed:all": "nodemon ./src/database/seeders/*.js"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
