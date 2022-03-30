@@ -96,7 +96,7 @@ Pode ser acessado em [http://localhost:15432/](http://localhost:15432/)
 
 ### mongo
 
-Container onde está o banco de dados central do sistema. A API NODE vai interagir o tempo todo com ele para poder retornar dados para o frontend. 
+Container onde está o banco de dados central do sistema. A API Node.js vai interagir o tempo todo com ele para poder retornar dados para o frontend. Veja a [Documentação dos Schemas](https://whimsical.com/graficos-X4DpKuuCsowrLaUNL48yxw) utilizados nele 
 
 Com as credenciais apresentadas no tópico 3.4, acesse a interface gráfica do MongoDB em [http://localhost:8081/](http://localhost:8081/) 
 
