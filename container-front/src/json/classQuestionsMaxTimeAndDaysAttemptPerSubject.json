@@ -1,0 +1,758 @@
+[
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Altura abaixo da média",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 973
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Altura acima de média",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 7996
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Aprendendo a usar repetição aninhada",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 2155
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Calculando expressões - parte 1",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 7318
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Calculando um ano bissexto.",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 20675
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Calcular Índice de Massa Corporal (IMC) - parte 1",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 9199
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Categorias de natação",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 35942
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Categorias de natação com 4 casos",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 783
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Cinco vezes Bom dia!",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 19866
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Compara com 10",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1517
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Compara com 20",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 3280
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Compara com 20 parte 2",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 3548
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Contagem progressiva até 10",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 438
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Contando de 2 em 2",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 699
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Contar quantos são maiores de 18 anos",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 14785
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Conversão de Temperatura entre paises",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 44816
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Cálculo do novo Salário",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 18115
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Data válida",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 462466
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Dez vezes Bom dia!",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1617
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisão por 0",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 8559
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisível por 3 e por 4  ao mesmo tempo.",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 2986
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisível por 3 e por 4 - versão ainda mais complexa",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 18707
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisível por 3 e por 4 - versão mais complexa",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 79424
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisível por 3 e por 5",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 5233
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisível por 3 valores ao mesmo tempo",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 11530
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisível por 3, mas não por 4",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 4577
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisível por 4 valores ao mesmo tempo",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 6099
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Divisível por 5",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 81043
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Duas ou mais condições com &&",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 545
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Encontrando números pares",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1457
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Fatorial simples",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 39438
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "IMC novamente com 2 decisões",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1039
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "IMC simples com 2 decisões",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1085
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Idades e permissões",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 3740
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Identificando os primos",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 3039
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Identificação de Bimestres",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1867
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Impar ou multiplo de 6",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 42915
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Maior de 10 números",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 13969
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Menor de 3 números",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 36343
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Média com 3 situações de decisão",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 12320
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Média com 3 situações de decisão - parte 2",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 8988
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Não é divisivel por 3",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 23280
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "O quadrado ou raiz",
+    "studentMaxDifferentDaysAttempts": 3,
+    "studentMaxTotalTimeAttemptInSeconds": 21483
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Par ou impar",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1002
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Programa Bom Dia!",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 5978
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Qual o dia da semana?",
+    "studentMaxDifferentDaysAttempts": 3,
+    "studentMaxTotalTimeAttemptInSeconds": 28197
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Soma dos pares e ímpares digitados",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 6295
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Sucessor de um número com uma váriavel",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 23724
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "divisível por 2 números ao mesmo tempo",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 3944
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "É preciso praticar muito!",
+    "studentMaxDifferentDaysAttempts": 3,
+    "studentMaxTotalTimeAttemptInSeconds": 4433
+  },
+  {
+    "subject": "ASSUNTO_EM_BRANCO",
+    "question": "Índice de Massa Corporal (IMC)  - parte 2",
+    "studentMaxDifferentDaysAttempts": 3,
+    "studentMaxTotalTimeAttemptInSeconds": 47242
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Buscar em vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1250
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Classificando um número",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 30483
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Elementos do vetor múltiplos de 3 e de 4 simultaneamente.",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 4346
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Imprimir o índice par",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 4453
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Intercalar Vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 5702
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "N termos de Fibonacci",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 20828
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Número primo ou não?",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 11049
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "O maior valor de cada vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 5223
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Pesando os bois",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 10175
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Retirar repetidos",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 4894
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Separando Vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 6970
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Separar números em três vetores",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 37786
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Soma de fatoriais",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 22966
+  },
+  {
+    "subject": "Estruturas Condicionais",
+    "question": "Tempo de vida de um material radioativo",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 54296
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "A média de 4 alunos",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 35724
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Aprendendo a somar",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 9429
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Concatenar vetores",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 13922
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Contagem de 22 a 53",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 17965
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Contagem regressiva",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 5164
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Entendendo o contador",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 2846
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Falsa multiplicação",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 28727
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Idades",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 9484
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Inversão de vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 4153
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Inverter uma palavra",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 21899
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Matriz de asteriscos",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 4200
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Menor e posição",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 4025
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Método de Herão para calcular raízes quadradas",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 4894
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Múltiplos de 8 entre 0 e 40",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 7000
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "O quadrado dos 5 números",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 6598
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Par ou ímpar com N números",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 35693
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Para quando digitar 2",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 8444
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Pare no 22",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 83395
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Positivos e soma",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 34099
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Preenchimento de vetor I",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 8417
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Preenchimento de vetor II",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1629
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Seleção no vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 3751
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Soma de valores ímpares",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 13744
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Somar dois vetores",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 6651
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Substituição no vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 4842
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Tabela de contagens",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 295618
+  },
+  {
+    "subject": "Estruturas de Repetição",
+    "question": "Todos os divisores de N",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 5267
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Calculando expressões - parte 2",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 6271
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Calculando expressões - parte 3",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 937
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Calculando expressões - parte 4",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 44254
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Calculando expressões com raiz",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 2790
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Calcular expressões",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 28583
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Calculo de expressão com expoente",
+    "studentMaxDifferentDaysAttempts": 4,
+    "studentMaxTotalTimeAttemptInSeconds": 5482
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Comissão do garçom no restaurante",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 9723
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Convertendo de horas para dias",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 66833
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Convertendo de metros para polegadas",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 7804
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Convertendo pés, jardas e milhas.",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 22063
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Crescimento populacional",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 8905
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Custo ao consumidor de um carro novo",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 10206
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Cálculo do IMC",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 8194
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Equivalente em dias e horas",
+    "studentMaxDifferentDaysAttempts": 3,
+    "studentMaxTotalTimeAttemptInSeconds": 9326
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Fórmula de Bháskara",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 10416
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Imprimindo uma mensagem com um valor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 1972
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Introdução Soma",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 9240
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Introdução a Raiz Quadrada",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 3219
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Média Ponderada",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 3943
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Perímetro de raio R",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 5313
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Porcentagem dos maiores que 15",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 43731
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Raízes de uma equação de segundo grau",
+    "studentMaxDifferentDaysAttempts": 3,
+    "studentMaxTotalTimeAttemptInSeconds": 32092
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Resto da divisão inteira",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 7356
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Separando em Dezena e Unidade",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 22187
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Troca de dígitos UCD",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 39767
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Troca de dígitos UDC",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 4218
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Troca de valores entre variáveis",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 12105
+  },
+  {
+    "subject": "Operadores Aritméticos",
+    "question": "Área e Volume do círculo de raio R",
+    "studentMaxDifferentDaysAttempts": 3,
+    "studentMaxTotalTimeAttemptInSeconds": 567407
+  },
+  {
+    "subject": "Operadores Lógicos",
+    "question": "Cálculo da média válida",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 5169
+  },
+  {
+    "subject": "Operadores Lógicos",
+    "question": "Múltiplo de 3 ou 7",
+    "studentMaxDifferentDaysAttempts": 2,
+    "studentMaxTotalTimeAttemptInSeconds": 28040
+  },
+  {
+    "subject": "Operadores Lógicos",
+    "question": "Sistema Inteligente - Identificação de Espécie de Pássaro",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 93440
+  },
+  {
+    "subject": "Vetores",
+    "question": "Aprendendo a armazenar vários elementos em um vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 10712
+  },
+  {
+    "subject": "Vetores",
+    "question": "Aprendendo a usar um Vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 3972
+  },
+  {
+    "subject": "Vetores",
+    "question": "Evoluindo a busca de um elemento em um vetor",
+    "studentMaxDifferentDaysAttempts": 1,
+    "studentMaxTotalTimeAttemptInSeconds": 3554
+  }
+]
