@@ -138,8 +138,8 @@ services:
       context: .
       dockerfile: ./nginx/Dockerfile
     depends_on:
-      - api-users
       - api-lop
+      - api-node
     container_name: nginx-container
     restart: always
     # Por padrão, o container do nginx utiliza a porta 80. Contudo, iremos utilizar a porta 443, mas não podemos descartar a porta 80 tendo em vista que é necessária para o certbot.
