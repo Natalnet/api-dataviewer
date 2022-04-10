@@ -94,14 +94,14 @@ services:
     networks:
       - backend
 
-    mongo:
-      image: mongo
-      container_name: mongodb
-      ports: 
-        - 27017:27017
-      restart: always
-      networks:
-        - backend
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports: 
+      - 27017:27017
+    restart: always
+    networks:
+      - backend
       
   # Aqui definiremos as condições de inicialização do serviço de atualização do nosso banco de dados do lop no dataviewer    
   #update-db-lop:
