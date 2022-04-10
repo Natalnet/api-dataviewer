@@ -27,7 +27,6 @@ services:
     # Define que só irá ser inicializado após o serviço db-lop e db-users serem inicializados (isso não quer dizer que ele espera ambos serem totalmente construídos)
     depends_on:
       - db-lop 
-      - db-users
     # O container recebe o usuário e senha do postgres (definido no próximo serviço) pois o código precisa consultar o banco de dados.
     # As variáveis são definidas com base em variáveis locais, tendo em vista que se trata de conteúdo sensível. Estão definidas no arquivo oculto .env
     environment:
