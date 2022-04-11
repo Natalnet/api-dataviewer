@@ -86,10 +86,7 @@ services:
     ports:
       - 3333:3333
     container_name: api-node
-    volumes: 
-      - ./container-api-node:/usr/apinode
-      - /usr/apinode/node_modules
-    command: yarn dev
+    command: yarn start
     networks:
       - backend
 
