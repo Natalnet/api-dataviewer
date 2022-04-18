@@ -6,8 +6,8 @@ WORKDIR /app
 # Adicionando `/app/node_modules/.bin` para o $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 # Armazenando as dependências no app
-COPY ./container-front/package.json /app/package.json
-RUN npm i
+COPY ./container-front/package*.json ./
+RUN npm install
 # Copiando todos os outros arquivos
 COPY ./container-front .
 # Criando o pacote de produção
