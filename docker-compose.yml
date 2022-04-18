@@ -86,7 +86,7 @@ services:
     ports:
       - 3333:3333
     container_name: api-node
-    command: yarn start
+    command: yarn dev
     networks:
       - backend
 
