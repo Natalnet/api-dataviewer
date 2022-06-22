@@ -95,6 +95,9 @@ services:
     container_name: mongodb
     ports: 
       - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${USER_DB_MONGO}
+      MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD_DB_MONGO}
     restart: always
     networks:
       - backend
