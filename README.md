@@ -168,7 +168,7 @@ Acesse [http://localhost:15432/](http://localhost:15432/) e utilize as credencia
 
 > **username:** postgres <br> **password:** postgres <br> **email:** postgres@email.com
 
-Em *Add New Server*, crie um novo server com o nome de *Dataviewer* e, na aba *Connection*, no campo *host* colocamos *db_lop*. 
+Em *Add New Server*, crie um novo server com o nome de *Dataviewer* e, na aba *Connection*, no campo *host* colocamos *db-lop*. 
 
 Em *username* e *password*, colocamos as mesmas credenciais anteriores. Clique em *save* para criar o servidor.
 
