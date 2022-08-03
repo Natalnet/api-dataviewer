@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "start": "node -r dotenv/config ./src/index.js",
     "dev": "nodemon -r dotenv/config ./src/index.js",
     "seed": "nodemon ./src/database/seeders/demo-$NAME.js",
     "seed:all": "nodemon ./src/database/seeders/*.js"

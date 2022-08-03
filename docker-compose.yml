@@ -1,132 +1,82 @@
+#docker-compose que entrará para a fase de produção
 # Versão do docker-compose a ser utilizada
 version: '3.9'
 
 # Define os serviços do projeto (containers a serem criados)
 services:
-
+  # Serviço de API 
   api-node:
     build: ./container-api-node/ 
     ports:
       - 3333:3333
     container_name: api-node
-    volumes: 
-      - ./container-api-node:/usr/apinode
-      - /usr/apinode/node_modules
-    command: yarn dev
-    networks:
-      - backend
+    command: yarn start
   
+  #Banco de dados MongoDB
   mongo:
     image: mongo
     container_name: mongodb
     ports: 
       - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${USER_DB_MONGO}
+      MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD_DB_MONGO}
     restart: always
-    networks:
-      - backend
-  
-  # Interface gráfica do MongoDB
-  mongo-express:
-    image: mongo-express
-    environment:
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: mongodb
-    ports:
-      - 8081:8081
-    networks:
-      - backend
 
-  # Aqui definiremos as condições de inicialização do serviço de api em flask do dataviewer: 
-  api-lop:
-    build: 
-      # o dockerfile por default define como pasta raiz a mesma em que ele está localizado. Desse modo, por padrão, ele não consegue acessar pastas superiores.
-      # Para contornar esse problema, definimos como nova pasta default a pasta raiz do projeto através do comando abaixo.
-      context: .  
-      # Define a localização do dockerfile relativo a este container
-      dockerfile: ./container-api-lop/Dockerfile
-    # Define o nome do container (a forma como ele será visualizado pelo docker, uma vez que o container for criado)
-    # Importante evidenciar: o container se chama container-api-lop, mas o serviço se chama api-lop
-    container_name: container-api-lop
-    #Para ouvir as alterações durante o desenvolvimento
-    volumes:
-      - ./classes:/app/classes
-      - ./container-api-lop:/app
-
-    # Define qual porta local estará associado a qual porta do container (Porta local:porta exposta pelo container)
-    ports:
-      # Como padrão do Flask, associamos a porta local 5000 como sendo a porta 5000 do container
-      - 5000:5000
-    # Define que só irá ser inicializado após o serviço db-lop e db-users serem inicializados (isso não quer dizer que ele espera ambos serem totalmente construídos)
+  #Proxy Reverso
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
     depends_on:
-      - db-lop
-      - mongo
-    # As variáveis são definidas com base em variáveis locais, tendo em vista que se trata de conteúdo sensível. Estão definidas no arquivo oculto .env
-    environment:
-      USER_DB: ${USER_DB}
-      PASSWORD_DB: ${PASSWORD_DB}
-    # Define qual porta local estará associado a qual porta do container (Porta local:porta exposta pelo container)
-    # Define a qual network o serviço irá se conectar (por padrão, o docker-compose já cria uma network sem precisar especificar, mas optamos por padronizar e evidenciar)
-    networks:
-      - backend
-
-  #api-users:
-    #build:
-    #  context: . 
-    #  dockerfile: ./container-api-users/Dockerfile 
-    #container_name: container-api-users  
-    #depends_on: 
-    #  - db-lop 
-    #ports:
-    #  - "5050:5050"
-    #networks:
-    #  - backend
-
-  #React container
-  app:
-   container_name: container-front-dev
-   build: 
-     context: .
-     dockerfile: ./container-front/Dockerfile-dev
-   #Para ouvir as alterações durante o desenvolvimento
-   volumes:
-     - /app/node_modules
-     - ./container-front:/app
-   ports:
-     - 3000:3000
-   depends_on: 
-     - api-lop
-     #- api-users
-   networks:
-     - backend
-  # Aqui definiremos as condições de inicialização do serviço de banco de dados do lop no dataviewer:
-  db-lop:
-   # Esse serviço não contem o parâmetro build, pois utilizamos diretamente uma imagem pré-existente, fazendo as configurações pertinentes no próprio docker-compose
-    image: postgres:14
-    environment:
-      POSTGRES_USER: ${USER_DB}
-      POSTGRES_PASSWORD: ${PASSWORD_DB} #${POSTGRES_PASSWORD} # isso é provisório, qnd o projeto ja estiver tudo ok a gente vai inserir essa senha na hora de dar o docker-compose up
-    # A porta padrão do postgres é a 5432
+      - api-node
+    container_name: nginx-container
+    restart: always
     ports:
-      - "5432:5432"
+      - "443:443"
+      - "80:80"
+    expose:
+      - 80
+      - 443
+    # Volumes necessários para sua associação com o certbot e consequente autenticação.
     volumes:
-     # Onde os dados do banco de dados estarão armazenados. Essa pasta não existe no repositório, mas ela é criada na máquina local.
-      - /home/duducp/PostgreSQL:/var/lib/postgresql/data
-    networks:
-      - backend
-  #criamos esse container para versão de desenvolvedor para poder trabalhar graficamente com o DB    
-  pgadmin-compose:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "postgres@email.com"
-      PGADMIN_DEFAULT_PASSWORD: "postgres"
-    ports:
-      - "15432:80"
-    depends_on:
-      - db-lop
-    networks:
-      - backend
+      - web-root:/var/www/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
-#Aqui configuramos a comunicação entre os conteiners pela bridge
-networks:
-  backend:
-    driver: "bridge"
+  # O certbot é responsável pela autenticação(tutorial da digitalocean).  
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - nginx
+    command: certonly --webroot --webroot-path=/var/www/html --email erros.dataviewer@gmail.com --agree-tos --no-eff-email --staging -d dataviewer.natalnet.br -d www.dataviewer.natalnet.br
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  certbot-etc:
+  certbot-var:
+  web-root:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/admin/api-dataviewer/views/
+      o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/admin/api-dataviewer/dhparam/
+      o: bind

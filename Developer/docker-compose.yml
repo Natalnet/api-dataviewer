@@ -1,0 +1,20 @@
+# Versão do docker-compose a ser utilizada
+version: '3.9'
+
+# Define os serviços do projeto (containers a serem criados)
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    ports: 
+      - 27017:27017
+    restart: always
+  
+  # Interface gráfica do MongoDB
+  mongo-express:
+    image: mongo-express
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: mongodb
+    ports:
+      - 8081:8081
